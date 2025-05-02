@@ -1,0 +1,17 @@
+
+#header-offer {
+    background-color: black;
+    color: white;
+}
+
+#header-offer p {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 12px;
+}
+
+#header-offer a {
+    padding: 0 0 0 10px;
+    color: #FFAB00;
+    text-decoration: none;
+}

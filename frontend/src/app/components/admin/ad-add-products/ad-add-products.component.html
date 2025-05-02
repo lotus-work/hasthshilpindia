@@ -1,0 +1,236 @@
+<app-ad-navbar></app-ad-navbar>
+<div class="container my-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
+        <a href="admin/dashboard">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Product</li>
+    </ol>
+  </nav>
+  <h4 class="mb-4">Add Product</h4>
+  <form (ngSubmit)="submitProduct()" #productForm="ngForm" novalidate>
+    <!-- Product Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Product Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        [(ngModel)]="product.title"
+        name="title"
+        placeholder="Enter product title"
+        #title="ngModel"
+      />
+      <div class="text-danger" *ngIf="title.invalid && title.touched">
+        Title is required
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Product Description</label>
+      <quill-editor
+        [(ngModel)]="product.description"
+        name="description"
+        [style]="{ height: '200px', width: '100%' }"
+        [modules]="quillModules"
+        #desc="ngModel"
+      ></quill-editor>
+      <div class="text-danger" *ngIf="desc.invalid && desc.touched">
+        Description is required
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            required
+            [(ngModel)]="product.price"
+            name="price"
+            placeholder="Enter product price"
+            #price="ngModel"
+          />
+          <div class="text-danger" *ngIf="price.invalid && price.touched">
+            Price is required
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <label for="qty" class="form-label">Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="qty"
+            required
+            [(ngModel)]="product.quantity"
+            name="quantity"
+            placeholder="Enter quantity"
+            #quantity="ngModel"
+          />
+          <div class="text-danger" *ngIf="quantity.invalid && quantity.touched">
+            Quantity is required
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <!-- Listing -->
+        <div class="mb-3">
+          <label for="listing" class="form-label">Listing</label>
+          <select
+            class="form-select"
+            id="listing"
+            required
+            [(ngModel)]="product.tags"
+            name="tags"
+            #tags="ngModel"
+          >
+            <option value="" disabled selected hidden>
+              Select listing type
+            </option>
+            <option value="featured">Featured</option>
+            <option value="popular">Popular</option>
+            <option value="special">Special</option>
+          </select>
+          <div class="text-danger" *ngIf="tags.invalid && tags.touched">
+            Listing is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand / Category / Type -->
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="brand" class="form-label">Brand</label>
+        <select
+          class="form-select"
+          id="brand"
+          required
+          [(ngModel)]="product.brand"
+          name="brand"
+          #brand="ngModel"
+        >
+          <option value="" disabled selected hidden>Select brand</option>
+          <option *ngFor="let brand of brands" [value]="brand.title">
+            {{ brand.title }}
+          </option>
+        </select>
+        <div class="text-danger" *ngIf="brand.invalid && brand.touched">
+          Brand is required
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select
+          class="form-select"
+          id="category"
+          required
+          [(ngModel)]="product.category"
+          name="category"
+          #category="ngModel"
+        >
+          <option value="" disabled selected hidden>Select category</option>
+          <option *ngFor="let cat of categories" [value]="cat.title">
+            {{ cat.title }}
+          </option>
+        </select>
+        <div class="text-danger" *ngIf="category.invalid && category.touched">
+          Category is required
+        </div>
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label class="form-label">Varients</label>
+      
+        <div class="mb-2 d-flex flex-wrap gap-2">
+          <span
+            *ngFor="let selected of selectedColors"
+            class="badge bg-primary d-flex align-items-center px-2 py-1"
+          >
+            {{ selected.title }}
+            <button
+              type="button"
+              class="btn-close btn-close-white btn-sm ms-2"
+              aria-label="Remove"
+              (click)="removeColor(selected._id)"
+            ></button>
+          </span>
+        </div>
+      
+        <!-- Dropdown to Add Colors -->
+        <select
+          class="form-select"
+          #colorSelect
+          (change)="addColor(colorSelect.value)"
+        >
+          <option value="" selected>Select Varients</option>
+          <option *ngFor="let c of availableColors()" [value]="c._id">
+            {{ c.title }}
+          </option>
+        </select>
+      </div>
+      
+    </div>
+
+    <!-- Image Upload -->
+    <div
+      class="border p-4 text-center"
+      (drop)="onFileDrop($event)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      [ngClass]="{ 'border-success': isDragging, 'border-danger': uploadError }"
+    >
+      <p class="mb-2">Drag and drop images here (JPG/PNG, max 400KB)</p>
+      <input
+        type="file"
+        multiple
+        (change)="onImageSelect($event)"
+        accept=".jpg, .jpeg, .png"
+      />
+    </div>
+
+    <!-- Uploaded Images -->
+    <div class="row mt-3">
+      <div class="col-3 mb-3" *ngFor="let img of product.images; let i = index">
+        <div class="position-relative border rounded">
+          <img
+            [src]="img.url"
+            class="img-fluid rounded"
+            style="height: 120px; object-fit: cover"
+          />
+          <button
+            type="button"
+            class="btn-close position-absolute top-0 end-0 m-1 bg-white"
+            (click)="removeImage(i)"
+            aria-label="Remove"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-2">
+      <span *ngIf="uploadError" class="text-danger">{{ uploadError }}</span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-3">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!productForm.form.valid"
+      >
+        Add Product
+      </button>
+    </div>
+  </form>
+</div>

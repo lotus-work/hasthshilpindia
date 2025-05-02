@@ -1,0 +1,27 @@
+<section class="new-arrivals">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2 gy-3">
+            <div class="col" *ngFor="let product of products; let i = index">
+                <div class="card mb-3"
+                    [ngStyle]="{'background-color': i % 2 === 0 ? getRandomBlue() : getRandomGrey()}">
+                    <div class="row g-0">
+                        <div class="col-md-5" [ngClass]="{'order-md-2': i % 2 !== 0, 'order-md-1': i % 2 === 0}">
+                            <img src="../../../../assets/img/categories/DSC_1744.webp" class="img-fluid rounded-start"
+                                alt="...">
+                        </div>
+                        <div class="col-md-7" [ngClass]="{'order-md-1': i % 2 !== 0, 'order-md-2': i % 2 === 0}">
+                            <div class="card-body" [ngClass]="{'text-end': i % 2 === 0, 'text-start': i % 2 !== 0}">
+                                <div>
+                                    <p>New Arrivals</p>
+                                    <h2 class="fw-bold">Paintings</h2>
+                                    <h5 class="mb-4">Up to 60% Off</h5>
+                                    <a href="" class="btn btn-outline-dark">Shop Now <i class="fa-solid fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

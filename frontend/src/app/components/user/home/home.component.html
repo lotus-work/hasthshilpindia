@@ -1,0 +1,90 @@
+<app-navbar [categories]="categories" [cartCount]="userCartProducts.length" [allProducts]="allProducts"></app-navbar>
+<section class="header">
+  <div class="container">
+    <div class="row">
+      <div class="nav-scroller py-1 mb-3">
+        <nav class="nav nav-underline justify-content-between">
+          <a
+            *ngFor="let category of categories.slice(0, 9)"
+            class="nav-item nav-link link-body-emphasis"
+            [routerLink]="['/categories']"
+            [queryParams]="{ name: category.title }"
+          >
+            {{ category.title }}
+          </a>
+          <div *ngIf="categories.length > 9">
+            <a
+              class="nav-item nav-link link-body-emphasis dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              More
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li *ngFor="let category of categories.slice(9)">
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['/categories']"
+                  [queryParams]="{ name: category.title }"
+                  >{{ category.title }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="banner">
+    <div
+      class="row g-5 d-flex justify-content-between align-items-between px-3"
+    >
+      <div class="col-lg-6 text-center">
+        <img src="assets/img/header/header.svg" width="90%" alt="" />
+      </div>
+      <div class="col-lg-6">
+        <h1>
+          Authentic <span id="color-blue">Handlooms and</span> Crafts of India
+        </h1>
+        <p class="mb-3">
+          Welcome to Hasthshilp, India's first National Award-winning
+          marketplace that directly connects artisans, weavers' cooperatives and
+          groups with consumers across the globe. We enable sustainable
+          livelihood for the artisans by ensuring you get reasonable prices and
+          authentic handlooms and crafts.
+        </p>
+        <a class="btn btn-dark" href="javascript:void(0);" (click)="scrollToSection('shoppingNow')">Shopping Now</a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-features></app-features>
+<app-popular-categories
+  [categories]="categories"
+  [availableProductsOnlyCategories]="availableProductsOnlyCategories"
+></app-popular-categories>
+<app-featured-products
+  [featured]="displayedFeatured"
+  [wishlistProducts]="wishlistProducts"
+></app-featured-products>
+
+<app-special-products
+  [special]="displayedSpecial"
+  [wishlistProducts]="wishlistProducts"
+></app-special-products>
+
+<app-popular-products
+  [popular]="displayedPopular"
+  [wishlistProducts]="wishlistProducts"
+>
+</app-popular-products>
+
+<!-- <app-flash-sale></app-flash-sale> -->
+<!-- <app-explore-more></app-explore-more>
+<app-new-arrivals></app-new-arrivals>
+<app-suggested-products></app-suggested-products> -->
+<app-footer></app-footer>

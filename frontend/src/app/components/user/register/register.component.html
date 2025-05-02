@@ -1,0 +1,55 @@
+<section class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-5">
+          <main class="form-signin">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <h5 class="mb-3">Create new account</h5>
+  
+              <div class="form-floating">
+                <input type="text" class="form-control" id="firstname" placeholder="First Name" formControlName="firstname" />
+                <label for="firstname">First Name</label>
+              </div>
+  
+              <div class="form-floating">
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name" formControlName="lastname" />
+                <label for="lastname">Last Name</label>
+              </div>
+  
+              <div class="form-floating">
+                <input type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile" />
+                <label for="mobile">Mobile</label>
+              </div>
+  
+              <div class="form-floating">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email" />
+                <label for="email">Email address</label>
+              </div>
+  
+              <div class="form-floating">
+                <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" />
+                <label for="password">Password</label>
+              </div>
+  
+              <button class="btn btn-primary w-100 py-2 mt-3" type="submit" [disabled]="isLoading || registerForm.invalid">
+                {{ isLoading ? 'Creating account...' : 'Create new account' }}
+              </button>
+  
+              <a class="btn btn-dark w-100 my-2" href="/login">Login</a>
+  
+              <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
+              <p class="text-center"><a href="/terms-of-service" class="no-underline">Terms of Service</a></p>
+              <p class="text-center"><a href="/shipping-policy" class="no-underline">Shipping Policy</a></p>
+            </form>
+          </main>
+        </div>
+  
+        <div class="col-lg-7 welcome-section d-flex flex-column justify-content-center align-items-center text-white text-center">
+          <div class="w-80">
+            <img src="../../../../assets/img/logo.svg" width="350" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

@@ -1,0 +1,24 @@
+.welcome-section {
+    background: url('https://th-i.thgim.com/public/news/national/is1l9j/article68869714.ece/alternates/LANDSCAPE_1200/iStock-171135988.jpg') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.welcome-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+}
+
+.welcome-section img{
+    position: relative;
+    z-index: 1;
+}

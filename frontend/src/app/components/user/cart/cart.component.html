@@ -1,0 +1,216 @@
+<app-navbar [cartCount]="userCartProducts.length"></app-navbar>
+
+<section class="cart">
+  <div class="bg-white">
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-lg-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
+                <a href="#">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Cart</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <ng-container *ngIf="userCartProducts.length > 0; else emptyCart">
+      <div class="row products">
+        <!-- Iterate over userCartProducts -->
+        <div class="col-12 mb-3" *ngFor="let product of userCartProducts">
+          <div class="card">
+            <div class="row g-0">
+              <!-- Product Image -->
+              <div class="col-md-3 d-flex justify-content-start align-items-center text-center ms-auto">
+                <img [src]="
+                    product.productId.images[0]?.url || 'default-image.jpg'
+                  " class="d-block w-100" alt="{{ product.productId.title }}" />
+              </div>
+
+              <!-- Product Details -->
+              <div class="col-md-7 d-flex justify-content-center align-items-center">
+                <div class="card-body">
+                  <h5 class="card-title fst-italic">
+                    {{ product.productId.title }}
+                  </h5>
+
+                  <!-- Product Price under the title -->
+                  <span class="fw-bold">₹ {{ product.productId.price }}</span>
+
+                  <div class="mt-2" *ngIf="product?.color && product.color.length">
+                    <span 
+                      *ngFor="let variant of product.color" 
+                      class="badge rounded-pill text-bg-secondary me-1"
+                    >
+                      {{ variant.title }}
+                    </span>
+                  </div>
+                  <!-- Quantity Controls -->
+                  <div class="mt-4 d-flex align-items-center">
+                    <button class="btn btn-outline-secondary" (click)="decrement(product)"
+                      [disabled]="product.quantity <= 1">
+                      -
+                    </button>
+
+                    <input type="number" class="form-control mx-2 text-center" style="width: 60px"
+                      [(ngModel)]="product.quantity" min="1" [max]="product.productId.quantity"
+                      (ngModelChange)="updateTotal()" />
+
+                    <button class="btn btn-outline-secondary" (click)="increment(product)" [disabled]="
+                        product.quantity >= product.productId.quantity
+                      ">
+                      +
+                    </button>
+                  </div>
+
+                  <div class="action-buttons mt-3">
+                    <button (click)="viewProductDetails(product.productId._id)" class="btn btn-primary me-2">
+                      View Details
+                    </button>
+                    <button (click)="deleteProductFromCart(product._id)" class="btn btn-dark">
+                      Remove from Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total per item (quantity * price) -->
+              <div class="col-md-2 d-flex justify-content-end align-items-end text-end">
+                <div class="card-body">
+                  <h5 class="card-text">
+                    <span class="fw-bold">₹ {{ product.productId.price * product.quantity }}</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bill Details Section -->
+      <div class="row pt-5">
+        <div class="col-lg-12">
+          <h2>Bill Details</h2>
+          <div class="row">
+            <div class="col-lg-6 col-6">
+              <h5>Item Total</h5>
+              <h5>Delivery Charge</h5>
+              <hr />
+              <h3>Grand Total</h3>
+            </div>
+            <div class="col-lg-6 col-6 text-end">
+              <h5>₹ {{ itemTotal }}</h5>
+              <h5>₹ {{ deliveryCharge }}</h5>
+              <hr />
+              <h3>₹ {{ grandTotal }}</h3>
+            </div>
+            <button class="btn btn-primary mt-3" (click)="showCheckoutForm = !showCheckoutForm">
+              Checkout
+            </button>
+        </div>
+      </div>
+      <div class="col-lg-12" *ngIf="showCheckoutForm">
+       <hr/>
+        <h4 class="mb-3">Deliver To Address</h4>
+        <div class="checkout-form mt-4 p-4 border rounded " > 
+          
+          <form [formGroup]="checkoutForm">
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input type="text" id="firstName" class="form-control" formControlName="firstName" placeholder="first name" />
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input type="text" id="lastName" class="form-control" formControlName="lastName" placeholder="last name" />
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="phone number" />
+                </div>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label for="city" class="form-label">City</label>
+                  <input type="text" id="city" class="form-control" formControlName="city" placeholder="city" />
+            
+                  </div>
+             </div>
+          
+              <div class="col">
+                <div class="mb-3">
+                  <label for="state" class="form-label">State</label>
+                  <input type="text" id="state" class="form-control" formControlName="state" placeholder="state" />
+              
+                  </div>
+                </div>
+          
+              <div class="col">
+                <div class="mb-3">
+                  <label for="zipcode" class="form-label">Zip Code</label>
+                  <input type="text" id="zipcode" class="form-control" formControlName="zipcode" placeholder="zip code" />
+                
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" id="address" class="form-control" formControlName="address" placeholder="address"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label for="address2" class="form-label">Apartment, Colony, House No ..</label>
+                  <input  type="text" id="address2" class="form-control" formControlName="address2" placeholder="apartment, colony, house no.."/>
+                </div>
+              </div>
+             </div>
+            
+          
+             <div class="text-end mt-3">
+              <button type="button" class="btn btn-secondary me-2" (click)="showCheckoutForm = false">
+                Cancel
+              </button>
+              <button type="button" class="btn btn-secondary me-2" (click)="clearForm()">
+                Clear
+              </button>
+              <button type="button" class="btn btn-primary" (click)="checkout()">
+                Place Order
+              </button>
+            </div>
+          </form>
+          
+        </div>
+        
+      </div>
+      </div>
+    </ng-container>
+    <ng-template #emptyCart>
+      <div class="empty-cart text-center text-muted">
+        <img src="../../../../assets/img/mis/empty-cartt.png" alt="Empty Cart" class="img-fluid"
+          style="max-width: 300px" />
+        <h5 class="mt-4">Oops! Your cart is feeling lonely 😢</h5>
+        <p>Why not add something awesome to it?</p>
+        <a href="categories" class="btn btn-dark mt-3"> Start Shopping Now </a>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<app-footer></app-footer>

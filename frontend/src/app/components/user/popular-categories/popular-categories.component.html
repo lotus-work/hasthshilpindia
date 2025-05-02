@@ -1,0 +1,27 @@
+<section class="categories bg-light py-5" id="shoppingNow">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h1>Popular Categories</h1>
+      </div>
+    </div>
+
+    <div class="slider-container" #sliderTrack>
+      <div class="slider-item category-card" *ngFor="let item of availableProductsOnlyCategories">
+        <a
+        class="text-center text-decoration-none"
+        [routerLink]="['/categories']"
+        [queryParams]="{ name: item.category?.title }"
+      >
+        <img [src]="item.product.images[0]?.url" alt="{{ item.category.title }}" hre />
+        <div class="category-overlay">
+          <p>{{ item.category.title }}</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    
+
+  </div>
+</section>

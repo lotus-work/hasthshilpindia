@@ -1,0 +1,126 @@
+<app-ad-navbar></app-ad-navbar>
+
+<div class="bg-white">
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-lg-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="fa fa-arrow-left me-2" aria-hidden="true"></i><a href="admin/orders">Orders</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Order Details / {{order._id}}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container mt-4">
+
+    <div class="card ">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Order Details</h5>
+        <span class="badge bg-success px-3 py-2" [ngClass]="'status-' + order.orderStatus">{{ order?.orderStatus }}</span>
+      </div>
+      
+      <div class="card-body">
+        <!-- Order Summary -->
+        <div class="row">
+          <div class="col-md-6">
+            <h6><strong>Order ID:</strong> {{ order?._id }}</h6>
+            <h6><strong>Order Date:</strong> {{ order?.createdAt | date:'medium' }}</h6>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <h6><strong>Total Price:</strong> ₹{{ order?.totalPriceAfterDiscount | number }}</h6>
+            <h6><strong>Payment Status: </strong> 
+              <span class="badge bg-success" *ngIf="order?.paidAt">Paid</span>
+              <span class="badge bg-danger" *ngIf="!order?.paidAt">Pending</span>
+            </h6>
+          </div>
+          <div class="text-end mt-4">
+            <label for="orderStatus" class="me-2"><strong>Update Status:</strong></label>
+            <select id="orderStatus" class="form-select d-inline-block w-auto" [(ngModel)]="order.orderStatus" (change)="updateOrderStatus(order.orderStatus)">
+              <option *ngFor="let status of orderStatusOptions" [value]="status">{{ status }}</option>
+            </select>
+            
+            <button class="btn btn-success ms-2 btn-sm" (click)="downloadReceipt(order)">
+              <i class="fa fa-download me-1"></i> Download Receipt
+              </button>
+          </div>
+        </div>
+  
+        <hr />
+  
+        <!-- User & Shipping Details -->
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="text-primary">Customer Details</h5>
+            <p><strong>Id:</strong> {{ order?.user?._id }}</p>
+            <p><strong>Name:</strong> {{ order?.user?.firstname }} {{ order?.user?.lastname }}</p>
+            <p><strong>Email:</strong> {{ order?.user?.email }}</p>
+            <p><strong>Mobile:</strong> {{ order?.user?.mobile }}</p>
+          </div>
+  
+          <div class="col-md-6">
+            <h5 class="text-primary">Shipping Address</h5>
+            <p><strong>Address:</strong> {{ order?.shippingInfo?.address }}</p>
+            <p><strong>Landmark:</strong> {{ order?.shippingInfo?.other }}</p>
+            <p><strong>City:</strong> {{ order?.shippingInfo?.city }} <strong>State:</strong> {{ order?.shippingInfo?.state }}</p>
+            <p><strong>Pincode:</strong> {{ order?.shippingInfo?.pincode }} <strong>Country:</strong> India</p>
+          </div>
+        </div>
+  
+        <hr />
+  
+        <!-- Order Items -->
+        <h5 class="text-primary">Order Items</h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="bg-dark text-white">
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Variants</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order?.orderItems">
+                <td>
+                  <img [src]="item?.product?.images[0]?.url" alt="Product Image" class="img-thumbnail" width="80">
+                </td>
+                <td>{{ item?.product?.title }}</td>
+                <td>
+                  <span *ngIf="item.color?.length">
+                   {{ getVariantTitles(item.color) }}
+                  </span>
+                </td>
+                <td>₹{{ item?.price | number }}</td>
+                <td>{{ item?.quantity }}</td>
+                <td>₹{{ item?.price * item?.quantity | number }}</td>
+              </tr>
+              <tr>
+                <td colspan="5" class="custom-dark"><strong>Grand Total</strong></td>
+                <td class="custom-dark">₹{{ order?.totalPrice | number }}</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+  
+        <hr />
+  
+        <!-- Payment Information -->
+        <h5 class="text-primary">Payment Information</h5>
+        <p><strong>Order ID:</strong> {{ order?.paymentInfo?.razorpayOrderId }}</p>
+        <p><strong>Payment ID:</strong> {{ order?.paymentInfo?.razorpayPaymentId }}</p>
+
+      </div>
+    </div>
+  </div>
+  

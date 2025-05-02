@@ -1,0 +1,56 @@
+<app-ad-navbar></app-ad-navbar>
+<app-ad-analytics></app-ad-analytics>
+<div class="container mt-4">
+
+   <div class="d-flex justify-content-between mb-2">
+    <h4 class="mb-4">Recent Orders</h4>
+    <a href="admin/orders" class="btn btn-success">View all order</a>
+   </div>
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="!isLoading && orders.length > 0" class="table-responsive">
+      <table id="ordersTable" class="table table-striped table-hover align-middle">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Order Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of paginatedOrders; let i = index">
+            <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>{{ order.user.firstname }} {{ order.user.lastname ? order.user.lastname : '' }}</td>
+            <td>{{ order.user.email }}</td>
+            <td>₹ {{ order.totalPrice }}</td>
+            <td>{{ order.createdAt | date }}</td>
+            <td [ngClass]="'status-' + order.orderStatus">
+                {{ order.orderStatus }}
+              </td>
+            <td>
+                <a href="admin/order/details/{{order._id}}" class="btn btn-primary btn-sm">View Order</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Show this when there are no enquiries -->
+    <div *ngIf="!isLoading && orders.length === 0" class="text-center mt-4">
+      <p class="text-muted">No orders yet.</p>
+    </div>
+
+  </div>
+  

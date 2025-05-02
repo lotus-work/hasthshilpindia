@@ -1,0 +1,29 @@
+.flash-sale{
+    padding: 40px 0;
+    background-color: #FAEEE0;
+}
+
+.time-unit {
+    display: inline-block;
+    margin: 0 10px;
+    text-align: center;
+  }
+  
+  .time-value {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  .time-label {
+    font-size: 0.8em;
+    color: gray;
+  }
+
+  #countdown p, h2{
+    padding: 0;
+    margin: 0;
+  }
+  
+  #countdown h2{
+    font-weight: 700;
+  }

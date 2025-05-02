@@ -1,0 +1,32 @@
+    /* Styling for each list item */
+  .list-unstyled li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+  }
+  
+  /* Styling for the icons */
+  .list-unstyled i {
+    background: #fff;
+    color: #000000; /* Bootstrap Primary Color */
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Hover effect */
+  .list-unstyled i:hover {
+    background: #4a4a4a;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  

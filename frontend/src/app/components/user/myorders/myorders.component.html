@@ -1,0 +1,99 @@
+<app-navbar [cartCount]="userCartProducts"></app-navbar>
+
+<section class="myaccount">
+  <div class="bg-white shadow-sm py-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <i class="fa fa-arrow-left me-2"></i>
+            <a href="#" class="text-decoration-none">Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">My Orders</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <div *ngIf="userOrders.length > 0; else noOrders">
+      <h4 class="mb-3 fw-bold">Order History</h4>
+
+      <div class="row">
+        <div *ngFor="let order of userOrders; let i = index" class="col-lg-12">
+          <div class="order-card p-4 mb-4 shadow-sm rounded bg-white">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="order-info">
+                  <h5 class="mb-1">Order ID: <span class="text-danger">{{ order._id }}</span></h5>
+                  <p class="text-muted small mb-0">
+                    <strong>Date:</strong> {{ order.createdAt | date: 'short' }} | 
+                    <strong>Total:</strong> ₹{{ order.totalPriceAfterDiscount }}
+                  </p>
+                </div>
+                <div class="order-status">
+                  <span class="badge bg-success px-3 py-2" [ngClass]="'status-' + order.orderStatus">{{ order?.orderStatus }}</span>
+                </div>
+              </div>
+
+            <hr class="my-3">
+
+            <h6 class="fw-bold">Shipping Details:</h6>
+            <p class="text-muted small">
+              {{ order.shippingInfo.firstname }} {{ order.shippingInfo.lastname }}<br>
+              {{ order.shippingInfo.address }}, {{ order.shippingInfo.city }},
+              {{ order.shippingInfo.state }} - {{ order.shippingInfo.pincode }}, India
+            </p>
+
+            <button class="btn btn-primary btn-sm mt-2"
+              (click)="toggleOrderDetails(i)">
+              {{ expandedOrderIndex === i ? 'Hide Details' : 'View Details' }}
+            </button>
+            <!-- New Button for Downloading Receipt -->
+<button class="btn btn-outline-success btn-sm mt-2 ms-2"
+(click)="downloadReceipt(order)">
+<i class="fa fa-download me-1"></i> Download Receipt
+</button>
+
+            <!-- Order Details (Collapsible) -->
+            <div *ngIf="expandedOrderIndex === i" class="order-details mt-3">
+              <h6 class="fw-bold">Order Items:</h6>
+              <div class="list-group">
+                <div *ngFor="let item of order.orderItems" class="list-group-item border-0">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                      <a [routerLink]="['/details', item.product._id]" class="text-decoration-none fw-bold">
+                        {{ item.product.title }}
+                      </a>
+                      <p class="text-muted small mb-0">
+                        <strong>Quantity:</strong> {{ item.quantity }} | 
+                        <strong>Price:</strong> ₹{{ item.price }} | 
+                        <span *ngIf="item.color?.length">
+                          <strong>Variants:</strong> {{ getVariantTitles(item.color) }}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noOrders>
+      <div class="mt-4">
+        <div class="empty-cart text-center text-muted">
+          <img src="../../../../assets/img/mis/empty-cartt.png" alt="Empty Cart" class="img-fluid"
+            style="max-width: 300px" />
+          <h5 class="mt-4">Looks like you haven't placed an order yet. 😢</h5>
+          <p>Start shopping now and bring home something amazing!</p>
+          <a href="categories" class="btn btn-dark mt-3"> Start Shopping Now </a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<app-footer></app-footer>

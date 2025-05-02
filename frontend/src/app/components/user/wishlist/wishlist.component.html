@@ -1,0 +1,97 @@
+<app-navbar [cartCount]="userCartProducts"></app-navbar>
+
+<section class="wishlist">
+  <div class="bg-white">
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-lg-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="fa fa-arrow-left me-2" aria-hidden="true"></i><a routerLink="/">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Wishlist
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <div class="row products g-3">
+      <div class="col-12" *ngFor="let product of wishlistProducts; let i = index">
+
+        <!-- Main clickable area -->
+        <div
+          class="card"
+          [routerLink]="['/details', product._id]"
+          style="cursor: pointer; position: relative;"
+        >
+          <div class="row g-0">
+            <!-- Left Section: Product Details -->
+            <div class="col-md-9 order-lg-1 order-2 d-flex justify-content-center align-items-center">
+              <div class="card-body">
+                <h5 class="card-title fst-italic">
+                  {{ product.title }}
+                </h5>
+                <h5 class="card-text">
+                  <span class="card-subtitle me-2 text-body-secondary" id="strike">
+                    ₹{{ product.originalPrice || product.price * 2 }}
+                  </span>
+                  <span class="fw-bold">₹{{ product.price }}</span>
+                </h5>
+
+                <div class="mt-4">
+                  <!-- STOP click bubbling so buttons don't trigger product navigation -->
+                  <button
+                    type="button"
+                    class="btn btn-primary me-2"
+                    (click)="addToCart(product); $event.stopPropagation();"
+                  >
+                    Go and add to cart
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    (click)="removeFromWishlist(product._id); $event.stopPropagation();"
+                  >
+                    Remove item
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Section: Product Image -->
+            <div
+              class="col-md-3 d-flex justify-content-center align-items-center text-center ms-auto order-lg-2 order-1"
+            >
+              <img
+                [src]="product.images[0]?.url || 'assets/img/default-image.jpg'"
+                class="d-block w-100 p-2"
+                alt="{{ product.title }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- If Wishlist is Empty -->
+      <div *ngIf="wishlistProducts.length === 0" class="text-center text-muted mt-5">
+        <div class="empty-cart text-center">
+          <img src="../../../../assets/img/mis/empty-cartt.png"  alt="Empty Cart" class="img-fluid" style="max-width: 300px;" />
+          <h5 class="mt-4">Uh-oh! Your wishlist is feeling neglected 💔</h5>
+          <p>Start adding your favorite products and show it some love!</p>
+          <a href="categories" class="btn btn-dark mt-3">
+            Browse Products
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

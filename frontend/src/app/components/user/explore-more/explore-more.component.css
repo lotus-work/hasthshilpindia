@@ -1,0 +1,34 @@
+.explore-more{
+    padding: 40px 0;
+}
+
+.explore-more .card {
+    border: none;
+}
+.explore-more .card-body{
+    margin: 0;
+    padding: 0;
+}
+
+.explore-more .card-body p {
+    margin: 7px 0;
+    padding: 0;
+}
+
+.explore-more .card-body #offer-price {
+    color: red;
+}
+
+.explore-more .card-body #original-price {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.explore-more .card #reviews i {
+    color: gold;
+}
+
+.explore-more .card #review-comment {
+    margin: -4px 0 0 4px;
+    padding: 0;
+}

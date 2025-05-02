@@ -1,0 +1,32 @@
+
+<app-ad-navbar></app-ad-navbar>
+<div class="container mt-4">
+  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
+        <a href="admin/dashboard">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Brand</li>
+    </ol>
+  </nav>
+    <div class="card2">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="brandName" class="form-label">Brand Name</label>
+          <input
+            type="text"
+            id="brandName"
+            class="form-control"
+            [(ngModel)]="brandName"
+            placeholder="Enter brand name"
+          />
+        </div>
+        <button class="btn btn-primary" (click)="addBrand()">Add Brand</button>
+        <a class="btn btn-success ms-2" href="admin/brand/list">Go to Brand List</a>
+        <p class="mt-2 text-success" *ngIf="message">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+  

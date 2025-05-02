@@ -1,0 +1,84 @@
+.products #all-images img{
+width: 70%;
+}
+
+.products #all-images img:hover{
+    border: 2px solid black;
+}
+
+.circle-img-container {
+    width: 50px;   /* adjust size as needed */
+    height: 50px;  /* same as width for circle */
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f0f0f0; /* optional background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle-img-container img {
+    width: 70%; /* make image fit well inside */
+    height: auto;
+  }
+
+  .other-info li{
+   list-style-type: none;
+   margin: 0 0 0 -25px;
+   padding: 10px 0;
+  }
+
+  .other-info span{
+    font-size: 12px;
+  }
+
+  /* Smaller image on small screens (mobile, tablets) */
+@media (max-width: 768px) {
+  .smallImages img {
+    width: 70px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .smallImages img {
+    width: 50px !important;
+  }
+}
+.product-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adds space between title and icon */
+  position: relative;
+}
+
+.product-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.wishlist-icon {
+  font-size: 1.6rem;
+  color: #bbb;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: relative;
+  top: 2px; /* slight vertical nudge if needed */
+}
+
+.wishlist-icon.wishlisted {
+  color: red;
+}
+
+.wishlist-icon i {
+  font-size: 1.6rem;
+}
+.nav-pills .nav-link {
+  color: black; /* Unselected tab text */
+  background-color: transparent;
+}
+
+.nav-pills .nav-link.active {
+  background-color: black;  /* Active tab background */
+  color: white;              /* Active tab text */
+}

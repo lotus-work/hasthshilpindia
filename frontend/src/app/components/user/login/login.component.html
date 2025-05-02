@@ -1,0 +1,59 @@
+<section class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-5">
+        <main class="form-signin">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <h5 class="mb-3">Please sign in</h5>
+
+            <div class="form-floating">
+              <input
+                type="email"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                formControlName="email"
+              />
+              <label for="floatingInput">Email address</label>
+            </div>
+
+            <div class="form-floating">
+              <input
+                type="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Password"
+                formControlName="password"
+              />
+              <label for="floatingPassword">Password</label>
+              <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">
+                Password must be at least 6 characters
+              </div>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2 mt-3" type="submit" [disabled]="loginForm.invalid">
+              Login
+            </button>
+
+            <a class="btn btn-dark w-100 my-2" routerLink="/register">
+              Register
+            </a>
+           <div class="text-center mb-4">
+            <a href="forgot-password" class="text-muted text-decoration-none">Forgot Password ?</a>
+           </div>
+
+            <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
+            <p class="text-center"><a routerLink="/terms-of-service" class="no-underline">Terms of Service</a></p>
+            <p class="text-center"><a routerLink="/shipping-policy" class="no-underline">Shopping Policy</a></p>
+          </form>
+        </main>
+      </div>
+
+      <div class="col-lg-7 welcome-section d-flex flex-column justify-content-center align-items-center text-white text-center">
+        <div class="w-80">
+            <img src="../../../../assets/img/logo.svg" width="350" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

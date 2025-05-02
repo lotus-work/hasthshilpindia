@@ -1,0 +1,200 @@
+<app-navbar [cartCount]="userCartProducts.length"></app-navbar>
+<section class="products">
+  <div class="bg-white">
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-lg-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="fa fa-arrow-left me-2" aria-hidden="true"></i><a href="#">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ product?.title }}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row my-5 g-4">
+      <div class="col-lg-1 d-flex justify-content-center align-items-center" id="all-images">
+        <div class="row g-2 smallImages justify-content-start">
+          <div class="col-auto" *ngFor="let img of product?.images; let i = index">
+            <img 
+              [src]="img.url" 
+              class="img-fluid" 
+              alt="{{ product?.title || 'Product Image' }}"  
+              (click)="makeItSelectedImage(img)" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <img *ngIf="selectedImage" [src]="selectedImage.url" class="img-fluid"
+          [alt]="selectedImage?.title || 'Product Image'" width="100%" />
+      </div>
+
+      <div class="col-lg-6">
+        <div class="product-header d-flex align-items-center">
+          <h1 class="product-title mb-0 me-2">{{ product?.title }}</h1>
+          <div
+            class="wishlist-icon"
+            (click)="toggleWishlist(product); $event.stopPropagation();"
+            [ngClass]="{ 'wishlisted': isWishlisted(product) }"
+          >
+            <i
+              class="fa-heart"
+              [ngClass]="{
+                'fa-solid': isWishlisted(product),
+                'fa-regular': !isWishlisted(product)
+              }"
+            ></i>
+          </div>
+        </div>
+        <div class="price d-flex mt-4" >
+          <h2 id="offer-price">₹{{ product?.price }}</h2>
+          <h4 class="mt-1 ms-2" style="text-decoration: line-through">
+            ₹{{ product?.price * 2 }}
+          </h4>
+          <span class="mt-1 ms-2" >
+            50% off
+            <!-- <i class="fa fa-info-circle fs-4" aria-hidden="true" data-bs-toggle="popover" data-bs-placement="bottom"
+              data-bs-custom-class="custom-popover" data-bs-title="Price Details" data-bs-html="true" data-bs-content="
+                <small>MRP is inclusive of all taxes</small><br><br>
+                <small>This product has an MRP (Maximum Retail Price) set by the supplier. As per govt. guidelines, we recommend that you do not sell the product at higher price than MRP.</small>
+              "></i> -->
+          </span>
+        </div>
+
+        <div class="quantity-selector d-flex align-items-center my-3">
+          <button class="btn btn-outline-secondary btn-lg" (click)="decreaseQuantity()">
+            -
+          </button>
+          <span class="mx-3 fs-4">{{ quantity }}</span>
+          <button class="btn btn-outline-secondary btn-lg" (click)="increaseQuantity()">
+            +
+          </button>
+        </div>
+        <div *ngIf="variantGroupKeys.length" >
+          <div *ngFor="let groupKey of variantGroupKeys" style="font-size: 12px !important;">
+            <div *ngIf="selectionError" class="alert alert-danger">
+              {{ selectionError }}
+            </div>
+            
+            <p class="fw-bold mb-2">Select below {{ groupKey }}</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <button
+                class="btn"
+                *ngFor="let variant of variantGroups[groupKey]"
+                [class.btn-outline-light]="selectedVariants[groupKey] !== variant"
+                [class.btn-dark]="selectedVariants[groupKey] === variant"
+                (click)="selectedVariants[groupKey] = variant"
+                style="font-size: 12px !important;"
+              >
+                {{ variant.value }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="purchase d-flex my-4">
+          <!-- If quantity is 0, show disabled out of stock button -->
+          <button 
+            *ngIf="product.quantity === 0" 
+            class="btn btn-outline-secondary btn-lg col" 
+            disabled>
+            Item Out of Stock
+          </button>
+        
+          <!-- Else, show purchase buttons -->
+          <ng-container *ngIf="product.quantity > 0">
+            <button (click)="buyNow()" class="btn btn-primary btn-lg me-2 col">Buy Now</button>
+        
+            <button
+              class="btn btn-outline-dark btn-lg col"
+              *ngIf="productExistsInCart; else addToCartButton"
+              (click)="router.navigate(['/checkout/cart'])"
+            >
+              Go to Cart
+            </button>
+        
+            <ng-template #addToCartButton>
+              <button class="btn btn-outline-dark btn-lg col" (click)="addProductToCart()">Add to Cart</button>
+            </ng-template>
+          </ng-container>
+        </div>
+        
+
+        <div class="other-info">
+          <ul>
+            <li>Category : {{ product?.category }}</li>
+            <li>Brand : {{ product?.brand }}</li>
+            <li>
+              Tags :
+              <span class="badge rounded-pill text-bg-dark"><i class="fa fa-tags" aria-hidden="true"></i>
+                {{ product?.tags }}</span>
+            </li>
+          </ul>
+          <div class="mt-4">
+            <div class="d-flex align-items-center my-3">
+              <div class="circle-img-container me-3">
+                <img src="../../../../../assets/img/delivery-truck.svg" alt="Free Delivery" class="img-fluid" />
+              </div>
+              <div>
+                <span class="d-block fw-bold">Free Delivery</span>
+                <span>Within 1-2 weeks</span>
+              </div>
+            </div>
+    
+            <div class="d-flex align-items-center">
+              <div class="circle-img-container me-3">
+                <img src="../../../../../assets/img/safepayments.png" alt="Safe Payments" class="img-fluid" />
+              </div>
+              <div>
+                <span class="d-block fw-bold">Safe and Secure Payments</span>
+                <span>Easy returns.100% Authentic products</span>
+              </div>
+            </div>
+           </div>
+      
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row ">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 section-2 my-auto pt-lg-0 py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-12">
+              <ul id="pills-tab" role="tablist" class="nav nav-pills">
+                <li role="presentation" class="nav-item me-3">
+                  <button id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
+                    role="tab" aria-controls="pills-home" aria-selected="false" tabindex="-1" class="nav-link active">
+                    <span class="fw-bold">Details</span>
+                  </button>
+                </li>
+                <li role="presentation" class="nav-item">
+                  <button id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
+                    role="tab" aria-controls="pills-profile" aria-selected="false" tabindex="-1" class="nav-link">
+                    <span class="fw-bold">Reviews</span>
+                  </button>
+                </li>
+              </ul>
+              <div id="pills-tabContent" class="tab-content mt-4">
+                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade active show">
+                  <app-description [description]="product?.description" [title]="product?.title"></app-description>
+                </div>
+                <div id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" class="tab-pane fade">
+                  <app-reviews [ratings]="product?.ratings" [totalRating]="product?.totalrating" [userData]="userData" [productId]="product._id"></app-reviews>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

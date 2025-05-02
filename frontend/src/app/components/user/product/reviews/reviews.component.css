@@ -1,0 +1,24 @@
+.gold {
+    color: gold;
+  }
+  
+  .fa-star-half-o {
+    color: gold;
+  }
+  
+  .fa-edit {
+    color: #007bff;
+  }
+  
+  .star-rating i {
+    color: #ccc;
+  }
+  
+  .star-rating i.gold {
+    color: #FFD700;
+  }
+  
+  .star-rating i:hover {
+    color: #FFD700;
+  }
+  

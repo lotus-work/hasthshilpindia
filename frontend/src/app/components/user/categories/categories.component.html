@@ -1,0 +1,121 @@
+<app-navbar [cartCount]="userCartProducts"></app-navbar>
+
+<section class="my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Shop by category</h5>
+                <ul>
+                  <li>
+                    <span [ngClass]="{ 'fw-bold text-primary': selectedCategory === '' || selectedCategory === 'All' }"
+                      (click)="selectCategory('All')">
+                      All
+                    </span>
+                  </li>
+
+                  <li *ngFor="let category of categories">
+                    <span [ngClass]="{ 'fw-bold text-primary': selectedCategory === category.title }"
+                      (click)="selectCategory(category.title)">
+                      {{ category.title }}
+                    </span>
+                  </li>
+                </ul>
+                <hr />
+                <!-- 1st Section: Sort By -->
+                <h5 class="card-title">Sort by</h5>
+                <select class="form-select mb-3" [(ngModel)]="selectedSortOption" (change)="applyFilters()">
+                  <option value="">Default</option>
+                  <option value="az">Alphabetically A-Z</option>
+                  <option value="za">Alphabetically Z-A</option>
+                  <option value="lowToHigh">Price Low to High</option>
+                  <option value="highToLow">Price High to Low</option>
+                </select>
+
+                <hr />
+
+                <!-- 2nd Section: Price Range -->
+                <h5 class="card-title">Filter by Price</h5>
+                <div class="d-flex flex-column gap-2 mb-3">
+                  <input type="number" class="form-control" placeholder="Price from" [(ngModel)]="priceFrom" />
+                  <input type="number" class="form-control" placeholder="Price to" [(ngModel)]="priceTo" />
+                  <button class="btn btn-primary" (click)="applyFilters()">Apply Price Filter</button>
+                  <button  class="btn btn-light" (click)="clearPriceFilter()">Clear Price Filter</button>
+                </div>
+
+                <hr />
+
+                <!-- 3rd Section: Product Tags -->
+                <h5 class="card-title">Product Tags</h5>
+                <div class="d-flex flex-column gap-2 mb-3">
+                  <div>
+                    <input type="checkbox" [(ngModel)]="tagFilters.special" (change)="applyFilters()" /> Special
+                  </div>
+                  <div>
+                    <input type="checkbox" [(ngModel)]="tagFilters.popular" (change)="applyFilters()" /> Popular
+                  </div>
+                  <div>
+                    <input type="checkbox" [(ngModel)]="tagFilters.featured" (change)="applyFilters()" /> Featured
+                  </div>
+                </div>
+
+                <hr/>
+                <div class="d-flex flex-column gap-2 mb-3">
+                  <button class="btn btn-light" (click)="clearAllFilters()">Clear All Filters</button>
+                  </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 products">
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 gy-5  justify-content-start align-items-start">
+          <div class="col" *ngFor="let product of products" [routerLink]="['/details', product._id]"
+            style="cursor: pointer;">
+            <div class="card product-card">
+              <div class="image-wrapper">
+                <img *ngIf="product.images && product.images.length" [src]="product.images[0]?.url"
+                  alt="{{ product.title }}" class="card-img-top product-image" />
+              </div>
+              <div class="card-body">
+                <p class="text-body-tertiary">{{product.category}}</p>
+                <p class="fw-bold fs-6">{{ product.title | slice:0:20 }}{{ product.title.length > 20 ? '...' : '' }}</p>
+                <p>
+                  <span id="offer-price" class="fs-5">₹{{ product.price }}</span>&nbsp;&nbsp;
+                  <span id="original-price">₹{{ product.originalPrice || product.price * 2 }}</span>
+                </p>
+
+                <div class="d-flex align-items-center" id="reviews">
+                  <ng-container *ngIf="product.totalrating > 0; else noRating">
+                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                      <i class="fa-star" [ngClass]="i < product.totalrating ? 'fa-solid' : 'fa-regular'"></i>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #noRating>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                  </ng-template>
+
+                  <span id="review-comment">({{ product.ratings.length || 0 }})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="products.length === 0" class="text-center text-muted mt-5">
+            <h4>Not product found</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,6 @@
+.wishlist{
+    background-color: rgba(151, 151, 151, 0.099);
+}
+.wishlist .products img{
+    width: 60% !important;
+}

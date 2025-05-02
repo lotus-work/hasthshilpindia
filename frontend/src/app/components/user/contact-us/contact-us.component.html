@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+<section class="container py-5">
+    <div class="row g-4">
+        <!-- Contact Form Section -->
+        <div class="col-lg-6">
+            <h4 class="mb-4">Contact</h4>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name" />
+                    <div *ngIf="submitted && contactForm.controls['name'].errors?.['required']" class="text-danger">
+                        Name is required.
+                    </div>
+                </div>
+        
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+                    <div *ngIf="submitted && contactForm.controls['email'].errors?.['required']" class="text-danger">
+                        Email is required.
+                    </div>
+                    <div *ngIf="submitted && contactForm.controls['email'].errors?.['email']" class="text-danger">
+                        Enter a valid email address.
+                    </div>
+                </div>
+        
+                <div class="mb-3">
+                    <input type="tel" class="form-control" placeholder="Mobile Number" formControlName="mobile" />
+                    <div *ngIf="submitted && contactForm.controls['mobile'].errors?.['required']" class="text-danger">
+                        Mobile number is required.
+                    </div>
+                    <div *ngIf="submitted && contactForm.controls['mobile'].errors?.['pattern']" class="text-danger">
+                        Enter a valid 10-digit mobile number.
+                    </div>
+                </div>
+        
+                <div class="mb-3">
+                    <textarea class="form-control" placeholder="Comments" rows="4" formControlName="comment"></textarea>
+                    <div *ngIf="submitted && contactForm.controls['comment'].errors?.['required']" class="text-danger">
+                        Comments are required.
+                    </div>
+                </div>
+        
+                <button type="submit" class="btn btn-dark px-4 py-2" [disabled]="contactForm.invalid">Submit</button>
+            </form>
+        </div>
+        
+        
+
+        <!-- Get in Touch Section -->
+        <div class="col-lg-6">
+            <h4 class="mb-4">Get in touch with us</h4>
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <i class="fas fa-home me-2"></i><a class="nav-link" href="https://maps.app.goo.gl/7Tvayom3Ln2Qmc6y7" target="_blank">Plot no 11, Lane no. 2, Doon Hills Colony, Ring Road, Ladpur, Dehradun, Uttarakhand, India (248001)</a>
+                </li>
+                <li class="mb-2"><i class="fas fa-phone me-2"></i> <a class="nav-link" href="tel:+919027700914">+91 9027700914</a></li>
+                <li class="mb-2">
+                    <i class="fas fa-envelope me-2"></i> <a class="nav-link" href="mailto:support@Hasthshilp.com">support&#64;Hasthshilp.com</a>
+                </li>
+                <li>
+                    <i class="fas fa-info-circle me-2"></i> Monday - Friday 10 AM - 8 PM
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <h4>Information about us</h4>
+            <hr />
+            <div [innerHTML]="aboutUsContent" class="description-content"></div>
+        </div>
+    </div>
+</section>
+
+<app-footer></app-footer>

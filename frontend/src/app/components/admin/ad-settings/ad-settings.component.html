@@ -1,0 +1,71 @@
+<app-ad-navbar></app-ad-navbar>
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
+                        <a href="admin/dashboard">Home</a>
+                      </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Manage Page Settings
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <form (ngSubmit)="updatePageSettings()">
+                    <div class="mb-3">
+                        <label for="aboutUs" class="form-label fw-bold">About Us</label>
+                        <quill-editor [(ngModel)]="pageSettings.aboutUs" name="aboutUs" [style]="{ height: '200px', width: '100%' }"
+                          [modules]="quillModules" #aboutUs="ngModel"></quill-editor>
+                        <div class="text-danger" *ngIf="aboutUs.invalid && aboutUs.touched">
+                          About us is required
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="termsOfService" class="form-label fw-bold">Terms of Service</label>
+                        <quill-editor [(ngModel)]="pageSettings.termsOfService" name="termsOfService" [style]="{ height: '200px', width: '100%' }"
+                          [modules]="quillModules" #termsOfService="ngModel"></quill-editor>
+                        <div class="text-danger" *ngIf="termsOfService.invalid && termsOfService.touched">
+                            Terms of Service is required
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="privacyPolicy" class="form-label fw-bold">Privacy Policy</label>
+                        <quill-editor [(ngModel)]="pageSettings.privacyPolicy" name="privacyPolicy" [style]="{ height: '200px', width: '100%' }"
+                          [modules]="quillModules" #privacyPolicy="ngModel"></quill-editor>
+                        <div class="text-danger" *ngIf="privacyPolicy.invalid && privacyPolicy.touched">
+                          Privacy Policy is required
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="shippingPolicy" class="form-label fw-bold">Shipping Policy</label>
+                        <quill-editor [(ngModel)]="pageSettings.shippingPolicy" name="shippingPolicy" [style]="{ height: '200px', width: '100%' }"
+                          [modules]="quillModules" #shippingPolicy="ngModel"></quill-editor>
+                        <div class="text-danger" *ngIf="shippingPolicy.invalid && shippingPolicy.touched">
+                            Shipping Policy is required
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="returnAndRefundPolicy" class="form-label fw-bold">Return and Refund Policy</label>
+                        <quill-editor [(ngModel)]="pageSettings.returnAndRefundPolicy" name="returnAndRefundPolicy" [style]="{ height: '200px', width: '100%' }"
+                          [modules]="quillModules" #returnAndRefundPolicy="ngModel"></quill-editor>
+                        <div class="text-danger" *ngIf="returnAndRefundPolicy.invalid && returnAndRefundPolicy.touched">
+                            Return and Refund Policy is required
+                        </div>
+                      </div>
+                  
+                    <!-- Disable button until all fields are filled -->
+                    <button type="submit" class="btn btn-primary" [disabled]="!allFieldsFilled()">
+                        Update
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

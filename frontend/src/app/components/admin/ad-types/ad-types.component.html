@@ -1,0 +1,32 @@
+
+<app-ad-navbar></app-ad-navbar>
+<div class="container mt-4">
+  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
+        <a href="admin/dashboard">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Varients</li>
+    </ol>
+  </nav>
+    <div class="card2">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="typesName" class="form-label">Varients Name</label>
+          <input
+            type="text"
+            id="typeName"
+            class="form-control"
+            [(ngModel)]="typeName"
+            placeholder="Enter types name"
+          />
+        </div>
+        <button class="btn btn-primary" (click)="addTypes()">Add Varients</button>
+        <a class="btn btn-success ms-2" href="admin/types/list">Go to Varients List</a>
+        <p class="mt-2 text-success" *ngIf="message">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+  

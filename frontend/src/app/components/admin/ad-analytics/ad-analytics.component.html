@@ -1,0 +1,43 @@
+<div class="container mt-5">
+    <!-- Year Dropdown -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3>Order Analytics Dashboard</h3>
+      <select class="form-select w-auto" [(ngModel)]="selectedYear" (change)="onYearChange()">
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+  
+    <!-- Cards -->
+    <div class="row mb-5">
+      <div class="col-md-6 mb-3">
+        <div class="card text-white bg-primary">
+          <div class="card-body">
+            <h5 class="card-title">{{selectedYear}} Total Income (Rs)</h5>
+            <p class="card-text fs-3">₹{{ totalIncome | number }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="card text-white bg-success">
+          <div class="card-body">
+            <h5 class="card-title">{{selectedYear}} Total Sales (Orders)</h5>
+            <p class="card-text fs-3">{{ totalSales }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Charts -->
+    <div class="row">
+      <div class="col-md-12 mb-5">
+        <h4>{{selectedYear}} Monthly Income (Rs)</h4>
+        <canvas id="incomeChart"></canvas>
+      </div>
+  
+      <div class="col-md-12">
+        <h4>{{selectedYear}} Monthly Sales (Orders)</h4>
+        <canvas id="salesChart"></canvas>
+      </div>
+    </div>
+  </div>
+  

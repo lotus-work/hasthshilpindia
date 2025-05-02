@@ -1,0 +1,34 @@
+.suggested-products{
+    padding: 40px 0;
+}
+
+.suggested-products .card {
+    border: none;
+}
+.suggested-products .card-body{
+    margin: 0;
+    padding: 0;
+}
+
+.suggested-products .card-body p {
+    margin: 7px 0;
+    padding: 0;
+}
+
+.suggested-products .card-body #offer-price {
+    color: red;
+}
+
+.suggested-products .card-body #original-price {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.suggested-products .card #reviews i {
+    color: gold;
+}
+
+.suggested-products .card #review-comment {
+    margin: -4px 0 0 4px;
+    padding: 0;
+}

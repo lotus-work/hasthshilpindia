@@ -1,0 +1,71 @@
+.footer {
+    color: white;
+    background-color: black;
+    padding: 40px 0;
+}
+
+
+.footer-header{
+    font-weight: 800 !important;
+    font-size: 15px !important;
+}
+.footer p, li{
+    font-size: 13px;
+}
+.footer .nav-item {
+    padding: 5px 0;
+    margin: 0;
+}
+
+.footer .nav-link {
+    padding: 5px 0;
+    margin: 0;
+}
+
+.footer .nav-link {
+    color: #fafafa;
+}
+
+.footer .nav-link:hover {
+    color: rgb(160, 157, 157);
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px; /* Adds spacing between icons */
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .social-icon i {
+    color: #333;
+    transition: color 0.3s;
+  }
+  
+  /* Specific colors for each social media */
+  .facebook:hover {
+    background: #1877f2;
+  }
+  .facebook:hover i {
+    color: white;
+  }
+  
+  .instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  }
+  .instagram:hover i {
+    color: white;
+  }
+  

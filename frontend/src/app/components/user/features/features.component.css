@@ -1,0 +1,24 @@
+.features{
+    padding: 40px 0;
+}
+.features i{
+    color: #0066CB;
+    font-size: 25px;
+}
+
+#deals-of-the-day #shop-now h3{
+    color: #FEBD3D !important;
+}
+#deals-of-the-day #shop-now a:hover{
+    text-decoration: none;
+}
+
+#deals-of-the-day #shop-now i{
+    color: #FEBD3D !important;
+    font-size: 15px;
+}
+
+#deals-of-the-day #countdown p,h2{
+    padding: 0;
+    margin: 0;
+  }

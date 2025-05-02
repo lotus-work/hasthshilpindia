@@ -1,0 +1,63 @@
+.navbar-section {
+    background: linear-gradient(90deg, #FFDEAC 0%, #FFC368 100%);
+}
+
+.w-80 {
+    width: 80%;
+}
+
+
+.form-control {
+    background-color: transparent;
+    border-color: #0066CB;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#search-box button,
+input {
+    border-radius: 0px;
+}
+
+#search-box #search-btn {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+
+}
+#right-menu span{
+    padding: 0 10px ;
+}
+
+.btn-transparent{
+    background-color: transparent;
+    border-color: #0066CB;
+}
+
+@media only screen and (max-width: 600px) {
+    .w-80 {
+        width: 100%;
+    }
+  }
+
+  .badge {
+   
+    padding: 10px;
+  }
+
+  .profile-dropdown-container {
+    cursor: pointer;
+  }
+  
+  .dropdown-menu-dark {
+    min-width: 180px;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+  }
+
+  .search-container {
+    position: relative;
+    z-index: 999;
+    font-size: 14px;
+  }
+  

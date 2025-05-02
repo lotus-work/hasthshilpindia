@@ -34,7 +34,6 @@ app.use("/api/enquiry", require("./routes/enqRoute"));
 app.use("/api/upload", require("./routes/uploadRoute"));
 app.use("/api/page", require("./routes/pageSettings"));
 
-
  const frontendPath = path.join(__dirname, '../frontend/dist/app-name/browser');
  app.use(express.static(frontendPath));
 

@@ -1,0 +1,293 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+    /* font-family: "Quicksand", serif; */
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3,h4,h5{
+  font-family: "Anton", sans-serif;
+
+}
+
+.tns-nav {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tns-nav button {
+    height: 13px;
+    width: 8px;
+    background-color: #a5a5a5;
+    border: none;
+    margin-left: 7px;
+    border-radius: 50%;
+}
+
+.tns-nav .tns-nav-active {
+    background-color: black;
+}
+
+.scale {
+    animation-name: scale;
+    transform-origin: center
+}
+
+@keyframes scale {
+    from {
+        transform: rotate(90deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.tns-nav button {
+    width: 12px !important;
+}
+
+ .btn-link{
+    color: rgb(9, 9, 9);
+    text-decoration: none;
+}
+
+ .btn-link:hover{
+    color: rgb(68, 66, 66);
+    text-decoration: underline;
+}
+
+li{
+    padding: 5px 0;
+}
+
+#strike{
+    text-decoration: line-through;;
+}
+
+.btn{
+    text-transform: capitalize;
+    padding: 10px 20px;
+    border-radius: 17px;
+}
+.btn-primary{
+    background: linear-gradient(90deg, #e8aa4d 0%, #ffc368d8 100%);
+    color: black !important;
+    border: #FFC368;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #FFC368 80%, #FFC368 100%);
+    color: black;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.no-underline{
+    text-decoration: none;
+    color: #a5a5a5;
+}
+
+  
+  .products .card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    height: 100%;
+  }
+  
+  .products .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Image Wrapper to maintain aspect ratio */
+  .products .card .image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* square - adjust to 4/3 or 16/9 as needed */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+  }
+  
+  .products .card .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures image covers without distortion */
+    transition: transform 0.3s ease;
+  }
+  
+  .products .card:hover .product-image {
+    transform: scale(1.05);
+  }
+  
+  .products .card-body {
+    margin: 0;
+    padding: 15px;
+  }
+  
+  .products .card-body p {
+    margin: 7px 0;
+    padding: 0;
+  }
+  
+#offer-price {
+    color: red !important;
+    font-weight: 600;
+    font-family: "Anton", sans-serif;
+    letter-spacing: 2px;
+  }
+  
+  .products .card-body #original-price {
+    color: gray;
+    text-decoration: line-through;
+  }
+  
+  .products .card #reviews {
+    margin-top: 10px;
+  }
+  
+  .products .card #reviews i {
+    color: gold;
+    margin-right: 2px;
+  }
+  
+  .products .card #review-comment {
+    margin-left: 8px;
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+
+  .wishlist-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+  }
+  
+  .wishlist-icon.wishlisted {
+    color: rgb(255, 4, 4);
+  }
+  
+  .wishlist-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  .status-Pending {
+    background-color: #ffc107 !important; /* yellow */
+    color: #ffffff !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+
+  .status-Failed {
+    background-color: #ff0707 !important; /* yellow */
+    color: #ffffff !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+
+  .status-Ordered {
+    background-color: #ffc107 !important; /* yellow */
+    color: #000 !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+  .status-Processing {
+    background-color: #17a2b8 !important; /* light blue */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+  .status-Processed {
+    background-color: #007bff !important; /* blue */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+  .status-Shipped {
+    background-color: #6f42c1 !important; /* purple */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+  .status-Out_For_Delivery {
+    background-color: #fd7e14 !important; /* orange */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+ .status-Refund_Initiated{
+    background-color: #14fd33 !important; /* orange */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+
+  .status-Refunded {
+    background-color: #14fd33 !important; /* orange */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+  .status-Delivered {
+    background-color: #28a745 !important; /* green */
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+  
+
+  .btn-outline-light{
+    background-color: gainsboro;
+    color: black;
+  }
+
+
+  .description-content {
+    max-width: 100%;
+    white-space: normal;          /* Natural wrapping */
+    word-break: normal;           /* Do NOT break mid-word */
+    overflow-wrap: break-word;    /* Break only if word is too long */
+    overflow-x: hidden;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .description-content p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .description-content * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
