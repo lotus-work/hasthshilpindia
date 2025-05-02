@@ -345,13 +345,32 @@ const forgotPasswordToken = asyncHandler(async (req, res) => {
 
     await user.save();
     console.log(token);
-    const resetURL = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='http://localhost:4200/reset-password/${token}'>Click Here</>`;
-
+    const resetURL = `
+  <div style="font-family: Arial, sans-serif; color: #000000; padding: 20px;">
+    <h2>Reset Your Password</h2>
+    <p>
+      Hi,<br/><br/>
+      Please follow the link below to reset your password. This link is valid for the next 10 minutes.
+    </p>
+    <p>
+      <a href="https://hasthshilp.com/reset-password/${token}" style="color: #000000; text-decoration: underline;">
+        Click here to reset your password
+      </a>
+    </p>
+    <p>
+      If you did not request this change, please ignore this email.
+    </p>
+    <p>
+      Regards,<br/>
+      Team Hasthshilp
+    </p>
+  </div>
+`;
     const data = {
       to: email,
       text: "Hey User",
       subject: "Forgot Password Link",
-      htm: resetURL,
+      html: resetURL,
     };
     sendEmail(data);
     res.json(token);
