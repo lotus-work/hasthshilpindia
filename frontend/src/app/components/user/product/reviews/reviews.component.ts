@@ -68,13 +68,11 @@ export class ReviewsComponent {
       return;
     }
 
-    const token = localStorage.getItem('token') || '';
-
     this.productService.updateProductRating(
       this.productId,
       this.editReview.star,
       this.editReview.comment,
-      token
+      this.token
     ).subscribe({
       next: (response) => {
         console.log('Review submitted!', response);

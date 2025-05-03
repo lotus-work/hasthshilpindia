@@ -7,9 +7,14 @@
     font-weight: 500;
 }
 
-.intro #color-blue{
-    color: #377DFF;
+.banner .main-heading{
+  color: #0464cb !important;
+}
+.banner #color-blue{
+    color: #f86824 !important;
 } 
+
+
 
 .nav-scroller {
     z-index: 2;
@@ -33,6 +38,22 @@
     overflow: hidden;
   }
 
-  .banner h1{
-    font-size: 4.8vw;
+  .banner h1 {
+    font-size: 80px;
+  }
+  
+  @media (max-width: 576px) {
+    .banner h1 {
+      font-size: 60px;
+    }
+  }
+  
+
+  .fade-text {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .fade-out {
+    opacity: 0;
   }

@@ -8,6 +8,19 @@ import { forkJoin, firstValueFrom } from 'rxjs';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  messages: string[] = [
+    'Celebrate India’s Heritage with Authentic Handlooms and Crafts',
+    'Crafted by Hands, Cherished by Hearts',
+    'From Rural Roots to Global Homes—Experience True Craftsmanship',
+    'Elevate Your Lifestyle with Timeless Indian Artistry',
+    'Support Artisans, Embrace Sustainable Elegance',
+    'Every Piece Tells a Story of Tradition and Skill',
+    'Shop Handmade Treasures, Straight from Indian Artisans'
+  ];
+  currentMessage = '';
+  currentIndex = 0;
+  isFading = false;
+
   categories: any[] = [];
   featuredProducts: any[] = [];
   specialProducts: any[] = [];
@@ -25,6 +38,18 @@ export class HomeComponent implements OnInit {
   constructor(private productService: ProductService) {}
 
   async ngOnInit(): Promise<void> {
+    this.currentMessage = this.messages[this.currentIndex];
+
+    setInterval(() => {
+      this.isFading = true;
+
+      setTimeout(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+        this.currentMessage = this.messages[this.currentIndex];
+        this.isFading = false;
+      }, 1000); // match with CSS transition duration
+    }, 3000);
+
     const token = localStorage.getItem('token') || '';
     await this.loadCategoriesAndProductsAsync();
     this.loadWishlist(token);

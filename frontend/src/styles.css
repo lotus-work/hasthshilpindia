@@ -281,10 +281,12 @@ li{
     overflow-x: hidden;
     line-height: 1.6;
     font-size: 1rem;
+    text-align: justify !important;
   }
   
   .description-content p {
     margin-bottom: 0.5rem;
+    text-align: justify !important;
   }
   
   .description-content * {
