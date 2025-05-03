@@ -13,11 +13,20 @@ const checkout = async (req, res) => {
     amount: amount * 100,
     currency: "INR",
   };
-  const order = await instance.orders.create(option);
-  res.json({
-    success: true,
-    order,
-  });
+  
+  try {
+    const order = await instance.orders.create(option);
+    res.json({
+      success: true,
+      order,
+    });
+  } catch (err) {
+    console.error('Error creating order:', err);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while creating the order',
+    });
+  }
 };
 
 const paymentVerification = async (req, res) => {
