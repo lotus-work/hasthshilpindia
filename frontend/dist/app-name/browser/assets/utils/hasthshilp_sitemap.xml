@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+		<!--	created with www.mysitemapgenerator.com	-->
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+	<loc>https://hasthshilp.com/</loc>
+	<lastmod>2025-05-04T09:35:09+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/login/</loc>
+	<lastmod>2025-05-04T09:35:11+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/register/</loc>
+	<lastmod>2025-05-04T09:35:12+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/myprofile/</loc>
+	<lastmod>2025-05-04T09:35:13+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/myorders/</loc>
+	<lastmod>2025-05-04T09:35:14+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/categories/</loc>
+	<lastmod>2025-05-04T09:35:14+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/wishlist/</loc>
+	<lastmod>2025-05-04T09:35:15+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/checkout/cart/</loc>
+	<lastmod>2025-05-04T09:35:15+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/checkout/shipping/</loc>
+	<lastmod>2025-05-04T09:35:15+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/forgot-password/</loc>
+	<lastmod>2025-05-04T09:35:16+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/terms-of-service/</loc>
+	<lastmod>2025-05-04T09:35:16+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/refund-returns/</loc>
+	<lastmod>2025-05-04T09:35:16+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/shipping-policy/</loc>
+	<lastmod>2025-05-04T09:35:17+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://hasthshilp.com/contactus/</loc>
+	<lastmod>2025-05-04T09:35:17+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+</urlset>
