@@ -1,3 +1,8 @@
 label{
     font-weight: 600;
 }
+
+.prompts-required{
+    font-size: 10px;
+    color: red;
+}

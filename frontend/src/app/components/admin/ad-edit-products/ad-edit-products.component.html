@@ -13,7 +13,7 @@
   <form (ngSubmit)="submitProduct()" #productForm="ngForm" novalidate>
     <!-- Product Title -->
     <div class="mb-3">
-      <label for="title" class="form-label">Product Title</label>
+      <label for="title" class="form-label">Product Title <span class="prompts-required">(Required: must be unique)</span></label>
       <input type="text" class="form-control" id="title" required [(ngModel)]="product.title" name="title"
         placeholder="Enter product title" #title="ngModel" />
       <div class="text-danger" *ngIf="title.invalid && title.touched">
@@ -23,7 +23,7 @@
 
     <!-- Description -->
     <div class="mb-3">
-      <label for="title" class="form-label">Product Description</label>
+      <label for="title" class="form-label">Product Description <span class="prompts-required">(Required)</span></label>
       <quill-editor [(ngModel)]="product.description" name="description" [style]="{ height: '200px', width: '100%' }"
         [modules]="quillModules" #desc="ngModel"></quill-editor>
       <div class="text-danger" *ngIf="desc.invalid && desc.touched">
@@ -33,7 +33,7 @@
     <div class="row">
       <div class="col">
         <div class="mb-3">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Price <span class="prompts-required">(Required)</span></label>
           <input type="number" class="form-control" id="price" required [(ngModel)]="product.price" name="price"
             placeholder="Enter product price" #price="ngModel" />
           <div class="text-danger" *ngIf="price.invalid && price.touched">
@@ -44,7 +44,7 @@
 
       <div class="col">
         <div class="mb-3">
-          <label for="qty" class="form-label">Quantity</label>
+          <label for="qty" class="form-label">Quantity <span class="prompts-required">(Required)</span></label>
           <input type="number" class="form-control" id="qty" required [(ngModel)]="product.quantity" name="quantity"
             placeholder="Enter quantity" #quantity="ngModel" />
           <div class="text-danger" *ngIf="quantity.invalid && quantity.touched">
@@ -55,7 +55,7 @@
 
       <div class="col">
         <div class="mb-3">
-          <label for="listing" class="form-label">Listing</label>
+          <label for="listing" class="form-label">Listing <span class="prompts-required">(Required)</span></label>
           <select class="form-select" id="listing" required [(ngModel)]="product.tags" name="tags" #tags="ngModel">
             <option value="" disabled>Select listing type</option>
             <option value="featured">Featured</option>
@@ -72,7 +72,7 @@
     <!-- Brand / Category / Type -->
     <div class="row">
       <div class="col-md-4 mb-3">
-        <label for="brand" class="form-label">Brand</label>
+        <label for="brand" class="form-label">Brand <span class="prompts-required">(Required)</span></label>
         <select class="form-select" id="brand" required [(ngModel)]="product.brand" name="brand" #brand="ngModel">
           <option value="" disabled>Select brand</option>
           <option *ngFor="let brand of brands" [value]="brand.title">
@@ -85,7 +85,7 @@
       </div>
 
       <div class="col-md-4 mb-3">
-        <label for="category" class="form-label">Category</label>
+        <label for="category" class="form-label">Category <span class="prompts-required">(Required)</span></label>
         <select class="form-select" id="category" required [(ngModel)]="product.category" name="category"
           #category="ngModel">
           <option value="" disabled>Select category</option>
@@ -128,7 +128,7 @@
     <!-- Image Upload -->
     <div class="border p-4 text-center" (drop)="onFileDrop($event)" (dragover)="onDragOver($event)"
       (dragleave)="onDragLeave($event)" [ngClass]="{ 'border-success': isDragging, 'border-danger': uploadError }">
-      <p class="mb-2">Drag and drop images here (JPG/PNG, max 400KB)</p>
+      <p class="mb-2">Drag and drop images here (JPG/PNG, max 300KB)</p>
       <input type="file" multiple (change)="onImageSelect($event)" accept=".jpg, .jpeg, .png" />
     </div>
 

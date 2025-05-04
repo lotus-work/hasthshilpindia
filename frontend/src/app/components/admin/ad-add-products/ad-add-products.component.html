@@ -13,7 +13,7 @@
   <form (ngSubmit)="submitProduct()" #productForm="ngForm" novalidate>
     <!-- Product Title -->
     <div class="mb-3">
-      <label for="title" class="form-label">Product Title</label>
+      <label for="title" class="form-label">Product Title <span class="prompts-required">(Required: must be unique)</span></label>
       <input
         type="text"
         class="form-control"
@@ -31,7 +31,7 @@
 
     <!-- Description -->
     <div class="mb-3">
-      <label for="title" class="form-label">Product Description</label>
+      <label for="title" class="form-label">Product Description <span class="prompts-required">(Required)</span></label>
       <quill-editor
         [(ngModel)]="product.description"
         name="description"
@@ -46,7 +46,7 @@
     <div class="row">
       <div class="col">
         <div class="mb-3">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Price <span class="prompts-required">(Required)</span></label>
           <input
             type="number"
             class="form-control"
@@ -64,7 +64,7 @@
       </div>
       <div class="col">
         <div class="mb-3">
-          <label for="qty" class="form-label">Quantity</label>
+          <label for="qty" class="form-label">Quantity <span class="prompts-required">(Required)</span></label>
           <input
             type="number"
             class="form-control"
@@ -84,7 +84,7 @@
       <div class="col">
         <!-- Listing -->
         <div class="mb-3">
-          <label for="listing" class="form-label">Listing</label>
+          <label for="listing" class="form-label">Listing <span class="prompts-required">(Required)</span></label>
           <select
             class="form-select"
             id="listing"
@@ -110,7 +110,7 @@
     <!-- Brand / Category / Type -->
     <div class="row">
       <div class="col-md-4 mb-3">
-        <label for="brand" class="form-label">Brand</label>
+        <label for="brand" class="form-label">Brand <span class="prompts-required">(Required)</span></label>
         <select
           class="form-select"
           id="brand"
@@ -130,7 +130,7 @@
       </div>
 
       <div class="col-md-4 mb-3">
-        <label for="category" class="form-label">Category</label>
+        <label for="category" class="form-label">Category <span class="prompts-required">(Required)</span></label>
         <select
           class="form-select"
           id="category"
@@ -149,8 +149,8 @@
         </div>
       </div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label">Varients</label>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Variants</label>
       
         <div class="mb-2 d-flex flex-wrap gap-2">
           <span
@@ -190,7 +190,7 @@
       (dragleave)="onDragLeave($event)"
       [ngClass]="{ 'border-success': isDragging, 'border-danger': uploadError }"
     >
-      <p class="mb-2">Drag and drop images here (JPG/PNG, max 400KB)</p>
+      <p class="mb-2">Drag and drop images here (JPG/PNG, max 300KB)</p>
       <input
         type="file"
         multiple

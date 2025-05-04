@@ -11,7 +11,7 @@
                 <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
                 <a href="admin/dashboard">Home</a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Varients List</li>
+              <li class="breadcrumb-item active" aria-current="page">Variants List</li>
             </ol>
           </nav>
         </div>
@@ -65,7 +65,7 @@
 
   <!-- No Records Found -->
   <div *ngIf="!isLoading && typesList.length === 0" class="alert alert-info text-center" role="alert">
-    No type found.
+    No variants found.
   </div>
 </div>
 
@@ -74,12 +74,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateTypeModalLabel">Update Type</h5>
+          <h5 class="modal-title" id="updateTypeModalLabel">Update Variant</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="typeTitle" class="form-label">Type Name</label>
+            <label for="typeTitle" class="form-label">Variant Name</label>
             <input type="text" class="form-control" id="typeTitle" [(ngModel)]="typeTitle">
           </div>
         </div>

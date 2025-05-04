@@ -8,23 +8,31 @@
         <i class="fa fa-arrow-left me-2" aria-hidden="true"></i>
         <a href="admin/dashboard">Home</a>
       </li>
-      <li class="breadcrumb-item active" aria-current="page">Add Varients</li>
+      <li class="breadcrumb-item active" aria-current="page">Add Variants</li>
     </ol>
   </nav>
     <div class="card2">
       <div class="card-body">
+        <div class="mb-3 p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+          <span>IMPORTANT :</span> Its mandatory to maintain the below following format while adding the variants.
+          <br/>
+           <ul>
+            <li>Color: Green</li>
+            <li>Size: Small</li>
+           </ul>
+        </div>
         <div class="mb-3">
-          <label for="typesName" class="form-label">Varients Name</label>
+          <label for="typesName" class="form-label fw-bold">Variants Name</label>
           <input
             type="text"
             id="typeName"
             class="form-control"
             [(ngModel)]="typeName"
-            placeholder="Enter types name"
+            placeholder="Enter variant name"
           />
         </div>
-        <button class="btn btn-primary" (click)="addTypes()">Add Varients</button>
-        <a class="btn btn-success ms-2" href="admin/types/list">Go to Varients List</a>
+        <button class="btn btn-primary" (click)="addTypes()">Add Variants</button>
+        <a class="btn btn-success ms-2" href="admin/types/list">Go to Variants List</a>
         <p class="mt-2 text-success" *ngIf="message">{{ message }}</p>
       </div>
     </div>

@@ -111,7 +111,7 @@ export class AdAddProductsComponent implements OnInit {
       const isValidType = ['image/jpeg', 'image/jpg', 'image/png'].includes(
         file.type
       );
-      const isValidSize = file.size <= 400 * 1024;
+      const isValidSize = file.size <= 300 * 1024;
 
       if (!isValidType) {
         setTimeout(() => {

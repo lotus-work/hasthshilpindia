@@ -31,9 +31,32 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5">
-        <img *ngIf="selectedImage" [src]="selectedImage.url" class="img-fluid"
-          [alt]="selectedImage?.title || 'Product Image'" width="100%" />
+      <div class="col-lg-5 position-relative">
+        <!-- Left arrow -->
+        <button 
+        class="btn btn-light btn-arrow position-absolute top-50 start-0 translate-middle-y z-1"
+        (click)="showPreviousImage()"
+        [disabled]="selectedImageIndex === 0"
+      >
+        &#8592;
+      </button>
+      
+        <!-- Main image display -->
+        <img 
+          *ngIf="selectedImage" 
+          [src]="selectedImage.url" 
+          class="img-fluid"
+          [alt]="selectedImage?.title || 'Product Image'" 
+          width="100%" 
+        />
+      
+        <button 
+        class="btn btn-light btn-arrow position-absolute top-50 end-0 translate-middle-y z-1"
+        (click)="showNextImage()"
+        [disabled]="selectedImageIndex === product?.images?.length - 1"
+      >
+        &#8594;
+      </button>
       </div>
 
       <div class="col-lg-6">

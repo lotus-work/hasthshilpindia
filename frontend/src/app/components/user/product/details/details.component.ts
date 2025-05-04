@@ -22,6 +22,7 @@ export class DetailsComponent implements OnInit {
   selectedVariants: { [key: string]: any } = {};
   selectionError: string = '';
   selectedImage: any;
+  selectedImageIndex: number = 0;
   wishlistProducts: any;
   constructor(
     private route: ActivatedRoute,
@@ -156,9 +157,23 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  makeItSelectedImage(img : any){
+  makeItSelectedImage(img: any) {
     this.selectedImage = img;
-    console.log(this.selectedImage)
+    this.selectedImageIndex = this.product?.images?.indexOf(img) || 0;
+  }
+  
+  showPreviousImage() {
+    if (this.selectedImageIndex > 0) {
+      this.selectedImageIndex--;
+      this.selectedImage = this.product?.images[this.selectedImageIndex];
+    }
+  }
+  
+  showNextImage() {
+    if (this.selectedImageIndex < this.product?.images?.length - 1) {
+      this.selectedImageIndex++;
+      this.selectedImage = this.product?.images[this.selectedImageIndex];
+    }
   }
 
   buyNow() {
