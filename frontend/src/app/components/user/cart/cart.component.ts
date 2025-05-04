@@ -303,7 +303,7 @@ export class CartComponent {
     }
   
     const options = {
-      key: 'rzp_test_KyiVilvxBv7eeL',
+      key: 'rzp_live_eAFTtUTOFdUQoi',
       amount: order.amount,
       currency: order.currency,
       name: 'Hasthshilp',
