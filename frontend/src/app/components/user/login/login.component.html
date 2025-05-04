@@ -1,10 +1,15 @@
 <section class="d-flex justify-content-center align-items-center min-vh-100">
   <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-      <div class="col-lg-5">
+      <div class="col-lg-5 col-12">
+        <!-- Logo shown only on md and smaller screens -->
+        <div class="d-lg-none text-center mb-4">
+          <img src="../../../../assets/img/logo.svg" width="200" alt="Logo">
+        </div>
+
         <main class="form-signin">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <h5 class="mb-3">Please sign in</h5>
+            <h5 class="mb-3 text-center text-lg-start">Please sign in</h5>
 
             <div class="form-floating">
               <input
@@ -38,20 +43,22 @@
             <a class="btn btn-dark w-100 my-2" routerLink="/register">
               Register
             </a>
-           <div class="text-center mb-4">
-            <a href="forgot-password" class="text-muted text-decoration-none">Forgot Password ?</a>
-           </div>
+
+            <div class="text-center mb-4">
+              <a href="forgot-password" class="text-muted text-decoration-none">Forgot Password ?</a>
+            </div>
 
             <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
-            <p class="text-center"><a routerLink="/terms-of-service" class="no-underline">Terms of Service</a></p>
-            <p class="text-center"><a routerLink="/shipping-policy" class="no-underline">Shopping Policy</a></p>
+            <p class="text-center" style="font-size: 12px;"><a routerLink="/terms-of-service" class="no-underline">Terms of Service</a></p>
+            <p class="text-center" style="font-size: 12px;"><a routerLink="/shipping-policy" class="no-underline">Shopping Policy</a></p>
           </form>
         </main>
       </div>
 
-      <div class="col-lg-7 welcome-section d-flex flex-column justify-content-center align-items-center text-white text-center">
+      <!-- welcome-section visible only on lg and up -->
+      <div class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center">
         <div class="w-80">
-            <img src="../../../../assets/img/logo.svg" width="350" alt="">
+          <img src="../../../../assets/img/logo.svg" width="350" alt="Logo">
         </div>
       </div>
     </div>
