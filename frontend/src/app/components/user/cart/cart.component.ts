@@ -61,6 +61,7 @@ export class CartComponent {
     'Lakshadweep',
     'Puducherry'
   ];
+
   constructor(private productService: ProductService,    private _toast: NgToastService, private router: Router, private paymentsService: PaymentsService, private fb: FormBuilder) {
     this.checkoutForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -79,6 +80,11 @@ export class CartComponent {
     const storedUser = localStorage.getItem('customer');
     if (storedUser) {
       this.userData = JSON.parse(storedUser);
+      this.checkoutForm.patchValue({
+        firstName: this.userData.firstname,
+        lastName: this.userData.lastname,
+        phone: this.userData.mobile,
+      });
     }
     this.token = this.userData.token;
     this.loadUserCart(this.token);
