@@ -27,10 +27,11 @@
           <div class="card">
             <div class="row g-0">
               <!-- Product Image -->
-              <div class="col-md-3 d-flex justify-content-start align-items-center text-center ms-auto">
+              <div class="col-12 col-md-3 d-flex justify-content-start align-items-center text-center ms-md-auto">
                 <img [src]="
                     product.productId.images[0]?.url || 'default-image.jpg'
-                  " class="d-block w-100" alt="{{ product.productId.title }}" />
+                  " class="w-100 h-100" style="object-fit: cover; display: block"
+                  alt="{{ product.productId.title }}" />
               </div>
 
               <!-- Product Details -->
@@ -44,10 +45,7 @@
                   <span class="fw-bold">₹ {{ product.productId.price }}</span>
 
                   <div class="mt-2" *ngIf="product?.color && product.color.length">
-                    <span 
-                      *ngFor="let variant of product.color" 
-                      class="badge rounded-pill text-bg-secondary me-1"
-                    >
+                    <span *ngFor="let variant of product.color" class="badge rounded-pill text-bg-secondary me-1">
                       {{ variant.title }}
                     </span>
                   </div>
@@ -70,7 +68,7 @@
                   </div>
 
                   <div class="action-buttons mt-3">
-                    <button (click)="viewProductDetails(product.productId._id)" class="btn btn-primary me-2">
+                    <button (click)="viewProductDetails(product.productId._id)" class="btn btn-primary m-1">
                       View Details
                     </button>
                     <button (click)="deleteProductFromCart(product._id)" class="btn btn-dark">
@@ -112,93 +110,127 @@
             <button class="btn btn-primary mt-3" (click)="showCheckoutForm = !showCheckoutForm">
               Checkout
             </button>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-12" *ngIf="showCheckoutForm">
-       <hr/>
-        <h4 class="mb-3">Deliver To Address</h4>
-        <div class="checkout-form mt-4 p-4 border rounded " > 
-          
-          <form [formGroup]="checkoutForm">
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label for="firstName" class="form-label">First Name</label>
-                  <input type="text" id="firstName" class="form-control" formControlName="firstName" placeholder="first name" />
-                </div>
-              </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label for="lastName" class="form-label">Last Name</label>
-                  <input type="text" id="lastName" class="form-control" formControlName="lastName" placeholder="last name" />
-                </div>
-              </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Phone Number</label>
-                  <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="phone number" />
-                </div>
-              </div>
-            </div>
-    
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label for="city" class="form-label">City</label>
-                  <input type="text" id="city" class="form-control" formControlName="city" placeholder="city" />
-            
-                  </div>
-             </div>
-          
-              <div class="col">
-                <div class="mb-3">
-                  <label for="state" class="form-label">State</label>
-                  <input type="text" id="state" class="form-control" formControlName="state" placeholder="state" />
-              
+        <div class="col-lg-12" *ngIf="showCheckoutForm">
+          <hr />
+          <h4 class="mb-3">Deliver To Address</h4>
+          <div class="checkout-form mt-4 p-4 border rounded">
+            <form [formGroup]="checkoutForm">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" class="form-control" formControlName="firstName" />
                   </div>
                 </div>
-          
-              <div class="col">
-                <div class="mb-3">
-                  <label for="zipcode" class="form-label">Zip Code</label>
-                  <input type="text" id="zipcode" class="form-control" formControlName="zipcode" placeholder="zip code" />
-                
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" formControlName="lastName" />
                   </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" formControlName="phone" />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label for="address" class="form-label">Address</label>
-                  <input type="text" id="address" class="form-control" formControlName="address" placeholder="address"/>
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" id="city" class="form-control" formControlName="city" />
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <select id="state" class="form-select" formControlName="state">
+                      <option value="" disabled>Select State</option>
+                      <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="zipcode" class="form-label">Zip Code</label>
+                    <input type="text" id="zipcode" class="form-control" formControlName="zipcode" />
+                  </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label for="address2" class="form-label">Apartment, Colony, House No ..</label>
-                  <input  type="text" id="address2" class="form-control" formControlName="address2" placeholder="apartment, colony, house no.."/>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" class="form-control" formControlName="address" />
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="mb-3">
+                    <label for="address2" class="form-label">Apartment, Colony, House No ..</label>
+                    <input type="text" id="address2" class="form-control" formControlName="address2" />
+                  </div>
                 </div>
               </div>
-             </div>
-            
-          
-             <div class="text-end mt-3">
-              <button type="button" class="btn btn-secondary me-2" (click)="showCheckoutForm = false">
-                Cancel
-              </button>
-              <button type="button" class="btn btn-secondary me-2" (click)="clearForm()">
-                Clear
-              </button>
-              <button type="button" class="btn btn-primary" (click)="checkout()">
-                Place Order
-              </button>
-            </div>
-          </form>
-          
+
+              <div class="row">
+                <div class="mt-3">
+                  <button type="button" class="btn btn-secondary" (click)="showCheckoutForm = false">
+                    Cancel
+                  </button>
+                  <button type="button" class="btn btn-secondary m-2" (click)="clearForm()">
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <!-- Payment Method Section -->
+              <hr />
+              <h4 class="mb-4">Choose Payment Method</h4>
+
+              <div class="payment-methods bg-light p-3 rounded shadow-sm">
+                <div class="form-check border rounded p-3 mb-3 d-flex align-items-center justify-content-between"
+                  [class.border-primary]="checkoutForm.controls['paymentMethod'].value === 'razorpay'">
+                  <div>
+                    <input class="form-check-input me-2" type="radio" name="paymentMethod" id="razorpay"
+                      value="razorpay" formControlName="paymentMethod"
+                      [checked]="checkoutForm.controls['paymentMethod'].value === 'razorpay'" />
+                    <label class="form-check-label fw-bold" for="razorpay">
+                      Razorpay <span class="badge bg-success ms-2">Recommended</span>
+                      <div class="small text-muted mt-1">Pay securely via UPI, cards or net banking.</div>
+                    </label>
+                  </div>
+                  <img src="../../../../assets/img/safepayments.png" alt="Razorpay" height="32" />
+                </div>
+
+                <div
+                  class="form-check border rounded p-3 d-flex align-items-center justify-content-between bg-light text-muted">
+                  <div>
+                    <input class="form-check-input me-2" type="radio" name="paymentMethod" id="cod" value="cod"
+                      disabled />
+                    <label class="form-check-label fw-bold" for="cod">
+                      Cash on Delivery
+                      <div class="small text-muted mt-1">Currently unavailable. Please choose Razorpay.</div>
+                    </label>
+                  </div>
+                  <i class="fa fa-ban fa-lg text-muted"></i>
+                </div>
+              </div>
+
+              <div class="text-end mt-4">
+                <button type="button" class="btn btn-primary "   [disabled]="!checkoutForm.valid" (click)="checkout()">
+                  <i class="fa fa-shopping-cart me-2"></i> Place Order
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        
-      </div>
       </div>
     </ng-container>
     <ng-template #emptyCart>

@@ -22,6 +22,45 @@ export class CartComponent {
   showCheckoutForm = false;
   userData: any = {};
   checkoutForm: FormGroup;
+
+  states: string[] = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+    'Andaman and Nicobar Islands',
+    'Chandigarh',
+    'Dadra and Nagar Haveli and Daman and Diu',
+    'Delhi',
+    'Jammu and Kashmir',
+    'Ladakh',
+    'Lakshadweep',
+    'Puducherry'
+  ];
   constructor(private productService: ProductService,    private _toast: NgToastService, private router: Router, private paymentsService: PaymentsService, private fb: FormBuilder) {
     this.checkoutForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -32,6 +71,7 @@ export class CartComponent {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zipcode: ['', Validators.required],
+      paymentMethod: ['razorpay', Validators.required]
     });
   }
 
@@ -303,7 +343,7 @@ export class CartComponent {
     }
   
     const options = {
-      key: 'rzp_live_eAFTtUTOFdUQoi',
+      key: 'rzp_live_fIqx9JMwnEg7Jx',
       amount: order.amount,
       currency: order.currency,
       name: 'Hasthshilp',

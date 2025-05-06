@@ -534,7 +534,6 @@ const createOrder = asyncHandler(async (req, res) => {
       orderStatus: 'Ordered', // Default status
     });
 
-    // Step 3: Update product stock
     for (const item of orderItems) {
       const product = await Product.findById(item.product);
       if (!product) {
