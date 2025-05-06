@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();  // Ensure this is at the top of your main server file (e.g., index.js)
+
 const queue = [];
 const sendEmail = require('../controller/emailCtrl');
 
@@ -133,7 +136,42 @@ Phone: +91 9027700914
   };
 
   try {
+    // Send email to customer
     await sendEmail(data);
+  
+    // Send admin copy only if order is newly placed
+    const bccList = process.env.BCC_EMAILS
+  ? process.env.BCC_EMAILS.split(',').map(email => email.trim())
+  : [];
+  console.log(bccList);
+    if (status === 'Ordered') {
+      const adminData = {
+        to: process.env.MAIL_ID, 
+        bcc: bccList, 
+        subject: `New Order Placed: ${orderId}`,
+        subject: `New Order Placed: ${orderId}`,
+        text: `
+      A new order has been placed on Hasthshilp.
+      
+      Order ID: ${orderId}
+      Customer Name: ${name}
+      Customer Email: ${email}
+      
+      Please process the order from the admin dashboard:
+      https://hasthshilp.com/admin/orders
+        `,
+        html: `
+          <p><strong>📦 New Order Notification from Hasthshilp</strong></p>
+          <p><strong>Order ID:</strong> ${orderId}</p>
+          <p><strong>Customer Name:</strong> ${name}</p>
+          <p><strong>Customer Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <p>Please log in to the <strong>admin dashboard</strong> to process the order:</p>
+          <p><a href="https://hasthshilp.com/admin/orders" target="_blank">https://hasthshilp.com/admin/orders</a></p>
+        `,
+      };
+  
+      await sendEmail(adminData);
+    }
   } catch (err) {
     console.error('❌ Failed to send email:', err);
   }
