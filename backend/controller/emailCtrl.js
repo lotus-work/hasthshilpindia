@@ -5,12 +5,15 @@ const asyncHandler = require("express-async-handler");
 const sendEmail = asyncHandler(async (data, req, res) => {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: "mail.hasthshilp.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: process.env.MAIL_ID, // generated ethereal user
       pass: process.env.MP, // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false, // <== Allow self-signed certs
     },
   });
 
@@ -18,6 +21,7 @@ const sendEmail = asyncHandler(async (data, req, res) => {
   let info = await transporter.sendMail({
       from: `"Hasthshilp" <${process.env.MAIL_ID}>`,
     to: data.to, // list of receivers
+    bcc: data.bcc,
     // bcc: "support@hasth", 
     subject: data.subject, // Subject line
     text: data.text, // plain text body
