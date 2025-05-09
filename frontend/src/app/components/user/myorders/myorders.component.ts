@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { handleSessionExpiration } from '../../../session-utils';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-myorders',
   templateUrl: './myorders.component.html',
@@ -14,7 +16,7 @@ export class MyordersComponent {
   token : any;
   userOrders: any[] = [];
   expandedOrderIndex: number | null = null;
- constructor(private authService: AuthService) {}
+ constructor(private authService: AuthService,  private router: Router) {}
 
  ngOnInit(): void {
 
@@ -29,7 +31,7 @@ export class MyordersComponent {
     this.userData = JSON.parse(storedUser);
   }
   this.token = this.userData.token;
-
+  handleSessionExpiration(this.token, this.router);
   this.fetchOrders();
 }
 

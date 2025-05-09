@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { isTokenExpired } from '../../jwt-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -23,17 +24,5 @@ export class AuthGuardService implements CanActivate {
 
     this.router.navigate(['/login']);
     return false;
-  }
-}
-
-function isTokenExpired(token: string): boolean {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const exp = payload.exp;
-    const now = Math.floor(Date.now() / 1000);
-    return now >= exp;
-  } catch (error) {
-    console.error('Token parsing failed', error);
-    return true;
   }
 }

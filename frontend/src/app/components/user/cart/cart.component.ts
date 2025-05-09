@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PaymentsService } from '../../../services/payments/payments.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { handleSessionExpiration } from '../../../session-utils';
 
 @Component({
   selector: 'app-cart',
@@ -87,6 +88,7 @@ export class CartComponent {
       });
     }
     this.token = this.userData.token;
+    handleSessionExpiration(this.token, this.router);
     this.loadUserCart(this.token);
     localStorage.setItem('userCart', JSON.stringify(this.userCartProducts));
   }

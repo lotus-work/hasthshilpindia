@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product/product.service';
 import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
+import { handleSessionExpiration } from '../../../session-utils';
 
 @Component({
   selector: 'app-wishlist',
@@ -22,6 +23,7 @@ export class WishlistComponent implements OnInit {
   ngOnInit(): void {
     
     this.token = localStorage.getItem('token') || '';
+    handleSessionExpiration(this.token, this.router);
     const cartData = localStorage.getItem('userCart') ?? '[]';
     this.userCart = JSON.parse(cartData);
     console.log(this.userCart);

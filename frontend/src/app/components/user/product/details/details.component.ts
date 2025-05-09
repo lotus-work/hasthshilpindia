@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { NgToastService } from 'ng-angular-popup';
+import { handleSessionExpiration } from '../../../../session-utils';
 
 @Component({
   selector: 'app-details',
@@ -33,6 +34,7 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token') || '';
+    handleSessionExpiration(this.token, this.router);
     this.loadUserCart(this.token);
     this.productId = this.route.snapshot.paramMap.get('id');
     console.log('Product ID:', this.productId);
@@ -247,7 +249,7 @@ export class DetailsComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding to cart:', error);
-          alert('Failed to add product to cart.');
+          alert('Failed to add product to cart. ' + error);
         },
       });
   }
