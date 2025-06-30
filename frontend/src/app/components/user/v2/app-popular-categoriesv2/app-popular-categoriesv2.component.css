@@ -1,0 +1,31 @@
+.item-card {
+  border: 1px solid black;
+  overflow: hidden;
+  height: 100%;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Makes it a square */
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.label-overlay {
+  position: absolute;
+  bottom: 50px;
+  background: rgba(255, 255, 255, 0.85);
+  width: 100%;
+  text-align: center;
+  padding: 6px 0;
+  font-weight: bold;
+  color: #333;
+  border-top: 1px solid #ccc;
+}
+

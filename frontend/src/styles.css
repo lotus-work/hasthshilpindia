@@ -1,9 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -15,12 +11,12 @@ html{
 }
 
 body {
-    /* font-family: "Quicksand", serif; */
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 h1, h2, h3,h4,h5{
-  font-family: "Anton", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 
 }
 
@@ -83,7 +79,12 @@ li{
 .btn{
     text-transform: capitalize;
     padding: 10px 20px;
-    border-radius: 17px;
+
+}
+.btn-blue{
+    background: linear-gradient(90deg, #0464cb 0%, #0464cb 100%);
+    color: rgb(255, 255, 255) !important;
+    border: #0464cb;
 }
 .btn-primary{
     background: linear-gradient(90deg, #e8aa4d 0%, #ffc368d8 100%);
@@ -149,16 +150,16 @@ li{
     margin: 7px 0;
     padding: 0;
   }
-  
+
+
 #offer-price {
-    color: red !important;
+    color: rgb(0, 0, 0) !important;
     font-weight: 600;
-    font-family: "Anton", sans-serif;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   }
   
   .products .card-body #original-price {
-    color: gray;
+    color: gray !important;
     text-decoration: line-through;
   }
   
@@ -167,13 +168,13 @@ li{
   }
   
   .products .card #reviews i {
-    color: gold;
+    color: gold !important;
     margin-right: 2px;
   }
   
   .products .card #review-comment {
     margin-left: 8px;
-    color: #6c757d;
+    color: #6c757d !important;
     font-size: 0.9rem;
   }
   

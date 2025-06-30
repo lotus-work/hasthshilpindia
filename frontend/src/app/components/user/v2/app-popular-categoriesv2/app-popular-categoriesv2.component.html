@@ -1,0 +1,30 @@
+<div class="container pt-5" id="shoppingNow">
+  <div class="row mb-5">
+    <div class="col-12 text-center">
+      <h1>Popular Categories</h1>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div
+      class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4"
+      *ngFor="let item of availableProductsOnlyCategories"
+    >
+      <div class="card item-card">
+        <a
+          class="text-center text-decoration-none"
+          href="/category/{{item.category?.title}}"
+        >
+          <div class="image-container">
+            <img
+              [src]="item.product.images[0]?.url"
+              class="card-img-top"
+              alt="{{ item.category.title }}"
+            />
+            <div class="label-overlay">{{ item.category.title }}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

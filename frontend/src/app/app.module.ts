@@ -63,6 +63,12 @@ import { QuillModule } from 'ngx-quill';
 import { AdEditUserComponent } from './components/admin/ad-edit-user/ad-edit-user.component';
 import { AdSettingsComponent } from './components/admin/ad-settings/ad-settings.component';
 import { AdAnalyticsComponent } from './components/admin/ad-analytics/ad-analytics.component';
+import { Homev2Component } from './components/user/v2/homev2/homev2.component';
+import { AppPopularCategoriesv2Component } from './components/user/v2/app-popular-categoriesv2/app-popular-categoriesv2.component';
+import { SocialVideoComponent } from './components/user/social-video/social-video.component';
+import { Productsgalleryv2Component } from './components/user/v2/productsgalleryv2/productsgalleryv2.component';
+import { CategoryPageComponent } from './components/user/v2/category-page/category-page.component';
+import { RelatedProductsComponent } from './components/user/related-products/related-products.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,7 +122,13 @@ import { AdAnalyticsComponent } from './components/admin/ad-analytics/ad-analyti
     AdEditProductsComponent,
     AdEditUserComponent,
     AdSettingsComponent,
-    AdAnalyticsComponent
+    AdAnalyticsComponent,
+    Homev2Component,
+    AppPopularCategoriesv2Component,
+    SocialVideoComponent,
+    Productsgalleryv2Component,
+    CategoryPageComponent,
+    RelatedProductsComponent,
   ],
   imports: [
     BrowserModule,

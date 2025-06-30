@@ -4,6 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { handleSessionExpiration } from '../../../session-utils';
 import { Router } from '@angular/router';
+
+   declare let html2pdf: any;
 @Component({
   selector: 'app-myorders',
   templateUrl: './myorders.component.html',
@@ -51,108 +53,132 @@ toggleOrderDetails(index: number) {
   this.expandedOrderIndex = this.expandedOrderIndex === index ? null : index;
 }
 
- /**
-   * Function to generate and download receipt as PDF
-   */
- downloadReceipt(order: any) {
-  const doc = new jsPDF('p', 'mm', 'a4');
+async downloadReceipt(order: any) {
+  const wrapper = document.createElement('div');
+  wrapper.style.width = '800px';
+  wrapper.style.padding = '20px';
+  wrapper.style.fontFamily = 'Arial, sans-serif';
+  wrapper.style.fontSize = '12px';
+  wrapper.style.color = '#000';
+  wrapper.style.backgroundColor = '#fff';
+  wrapper.style.position = 'fixed';
+  wrapper.style.top = '0';
+  wrapper.style.left = '0';
+  wrapper.style.zIndex = '9999';
+  wrapper.style.visibility = 'visible';
+  wrapper.style.opacity = '1';
 
-  const receiptHTML = `
-    <div style="width: 100%; font-family: Arial, sans-serif; font-size: 12px; padding: 20px; color: #000; box-sizing: border-box;">
-      <!-- Top Header with Logo and Title -->
-      <div style="text-align: center; margin-bottom: 20px;">
-        <img src="../../../../assets/img/logo.svg" alt="Hasthshilp Logo" style="max-height: 60px; margin-bottom: 5px;" />
-        <h1 style="margin-left: 15px; font-size: 20px; color: #333;">Hasthshilp</h1>
-      </div>
-    <div style="width: 100%; font-family: Arial, sans-serif; font-size: 12px; padding: 20px; color: #000;">
-      <div style="border: 1px solid #ccc; padding: 15px;">
-        <h5 style="background: #333; color: white; padding: 10px;">Order Details</h5>
-        <p><strong>Order ID:</strong> ${order._id}</p>
-        <p><strong>Order Date:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
-        <p><strong>Total Price:</strong> ₹${order.totalPriceAfterDiscount}</p>
-        <p><strong>Order Status:</strong> ${order.orderStatus}</p>
-
-        <hr style="margin: 20px 0;">
-
-        <div style="display: flex; justify-content: space-between;">
-          <div>
-            <h5 style="color: #007BFF;">Customer Details</h5>
-            <p><strong>Id:</strong> ${order.user?._id || 'N/A'}</p>
-            <p><strong>Name:</strong> ${order.user?.firstname} ${order.user?.lastname}</p>
-            <p><strong>Email:</strong> ${order.user?.email || 'N/A'}</p>
-            <p><strong>Mobile:</strong> ${order.user?.mobile}</p>
-          </div>
-          <div>
-            <h5 style="color: #007BFF;">Shipping Address</h5>
-            <p><strong>Address:</strong> ${order.shippingInfo?.address}</p>
-            <p><strong>Landmark:</strong> ${order.shippingInfo?.other}</p>
-            <p><strong>City:</strong> ${order.shippingInfo?.city}</p>
-            <p><strong>State:</strong> ${order.shippingInfo?.state}</p>
-            <p><strong>Pincode:</strong> ${order.shippingInfo?.pincode}</p>
-            <p><strong>Country:</strong> India</p>
-          </div>
-        </div>
-
-        <hr style="margin: 20px 0;">
-
-        <h5 style="color: #007BFF;">Order Items</h5>
-        <table style="width: 100%; border-collapse: collapse; text-align: left;">
-          <thead>
-            <tr style="background-color: #f2f2f2;">
-              <th style="padding: 8px; border: 1px solid #ddd;">Product</th>
-              <th style="padding: 8px; border: 1px solid #ddd;">Variants</th>
-              <th style="padding: 8px; border: 1px solid #ddd;">Price</th>
-              <th style="padding: 8px; border: 1px solid #ddd;">Quantity</th>
-              <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${order.orderItems.map((item: any) => `
-              <tr>
-                <td style="padding: 8px; border: 1px solid #ddd;">${item.product?.title || ''}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">${this.getVariantTitles(item.color)}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">₹${item.price}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">${item.quantity}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">₹${item.quantity * item.price}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-
-        <div style="text-align: right; margin-top: 10px; font-weight: bold;">Grand Total: ₹${order.totalPriceAfterDiscount}</div>
-
-        <hr style="margin: 20px 0;">
-
-        <h5 style="color: #007BFF;">Payment Information</h5>
-        <p><strong>Order ID:</strong> ${order.paymentInfo?.razorpayOrderId || 'N/A'}</p>
-        <p><strong>Payment ID:</strong> ${order.paymentInfo?.razorpayPaymentId || 'N/A'}</p>
-      </div>
-
-      <div style="margin-top: 5px; padding-top: 10px; border-top: 1px solid #ccc; text-align: center;">
-        <p>Email: support@hasthshilp.com</p>
-        <p>Phone: +91 9027700914</p>
-      </div>
+  wrapper.innerHTML = `
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img id="receipt-logo" src="assets/img/logo.svg" alt="Hasthshilp Logo" style="max-height: 60px;" />
+      <h1 style="font-size: 20px; margin: 5px 0;">Hasthshilp</h1>
     </div>
+    <div style="border: 1px solid #ccc; padding: 15px;">
+      <h5 style="background: #333; color: white; padding: 10px;">Order Details</h5>
+      <p><strong>Order ID:</strong> ${order._id}</p>
+      <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
+      <p><strong>Total:</strong> ₹${order.totalPriceAfterDiscount}</p>
+      <p><strong>Status:</strong> ${order.orderStatus}</p>
+
+      <hr style="margin: 20px 0;" />
+
+      <div style="display: flex; justify-content: space-between; gap: 20px;">
+        <div style="width: 50%;">
+          <h5 style="color: #007BFF;">Customer</h5>
+          <p><strong>Name:</strong> ${order.user?.firstname} ${order.user?.lastname}</p>
+          <p><strong>Email:</strong> ${order.user?.email}</p>
+          <p><strong>Mobile:</strong> ${order.user?.mobile}</p>
+        </div>
+        <div style="width: 50%;">
+          <h5 style="color: #007BFF;">Shipping</h5>
+          <p><strong>Address:</strong> ${order.shippingInfo?.address}</p>
+          <p><strong>Landmark:</strong> ${order.shippingInfo?.other}</p>
+          <p><strong>City:</strong> ${order.shippingInfo?.city}</p>
+          <p><strong>State:</strong> ${order.shippingInfo?.state}</p>
+          <p><strong>Pincode:</strong> ${order.shippingInfo?.pincode}</p>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0;" />
+
+      <h5 style="color: #007BFF;">Items</h5>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ccc; padding: 8px;">Product</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Variants</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Qty</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Price</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${order.orderItems.map((item: any) => `
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 8px;">${item.product?.title}</td>
+              <td style="border: 1px solid #ccc; padding: 8px;">${this.getVariantTitles(item.color)}</td>
+              <td style="border: 1px solid #ccc; padding: 8px;">${item.quantity}</td>
+              <td style="border: 1px solid #ccc; padding: 8px;">₹${item.price}</td>
+              <td style="border: 1px solid #ccc; padding: 8px;">₹${item.price * item.quantity}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div style="text-align: right; margin-top: 10px; font-weight: bold;">Grand Total: ₹${order.totalPriceAfterDiscount}</div>
+
+      <hr style="margin: 20px 0;" />
+
+      <h5 style="color: #007BFF;">Payment Info</h5>
+      <p><strong>Razorpay Order ID:</strong> ${order.paymentInfo?.razorpayOrderId}</p>
+      <p><strong>Payment ID:</strong> ${order.paymentInfo?.razorpayPaymentId}</p>
     </div>
   `;
 
-  // Convert HTML to canvas and export as PDF
-  const receiptContainer = document.createElement('div');
-  receiptContainer.innerHTML = receiptHTML;
-  document.body.appendChild(receiptContainer);
+  document.body.appendChild(wrapper);
 
-  html2canvas(receiptContainer).then(canvas => {
-    const imgData = canvas.toDataURL('image/png');
-    const imgProps = doc.getImageProperties(imgData);
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  // Wait for logo image to load
+  const logoImg = wrapper.querySelector('#receipt-logo') as HTMLImageElement;
+  if (logoImg && !logoImg.complete) {
+    await new Promise((resolve) => {
+      logoImg.onload = () => resolve(true);
+      logoImg.onerror = () => resolve(true);
+    });
+  }
+  // Convert to JPG
+  const canvas = await html2canvas(wrapper, { scale: 2, useCORS: true });
+  const image = canvas.toDataURL('image/jpeg', 0.95);
 
-    doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    doc.save(`Receipt_${order._id}.pdf`);
-
-    document.body.removeChild(receiptContainer);
+  // 2. Convert JPG to PDF and download
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'pt',
+    format: 'a4',
   });
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const img = new Image();
+  img.src = image;
+
+  img.onload = () => {
+    const imgWidth = img.width;
+    const imgHeight = img.height;
+    const ratio = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+    const finalWidth = imgWidth * ratio;
+    const finalHeight = imgHeight * ratio;
+    const x = (pageWidth - finalWidth) / 2;
+    const y = (pageHeight - finalHeight) / 2;
+
+    pdf.addImage(image, 'JPEG', x, y, finalWidth, finalHeight);
+    pdf.save(`Receipt_${order._id}.pdf`);
+
+    document.body.removeChild(wrapper); // cleanup
+  };
 }
+
+
 
 
 getVariantTitles(color: any[]): string {

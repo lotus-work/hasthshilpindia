@@ -1,0 +1,50 @@
+<app-navbar [categories]="categories" [cartCount]="userCartProducts.length" [allProducts]="allProducts"></app-navbar>
+<section class="header">
+  <div class="container">
+    <div class="row">
+      <div class="nav-scroller py-1 mb-3">
+        <nav class="nav nav-underline justify-content-between">
+          <a *ngFor="let category of categories.slice(0, 9)" class="nav-item nav-link link-body-emphasis"
+             href="/category/{{category.title}}">
+            {{ category.title }}
+          </a>
+          <div *ngIf="categories.length > 9">
+            <a class="nav-item nav-link link-body-emphasis dropdown-toggle" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li *ngFor="let category of categories.slice(9)">
+                <a class="dropdown-item" href="/category/{{category.title}}">{{ category.title }}</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="banner">
+    <div class="row g-4 d-flex justify-content-between align-items-between px-3">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-6 text-right m-auto">
+        <img src="assets/img/header/header.svg" width="100%" alt="" />
+      </div>
+      <div class="col-lg-5">
+        <h1 class="main-heading">
+          Authentic <span id="color-blue">Handlooms</span> & Crafts of India
+        </h1>
+        <p class="mb-3 description-content fade-text" [class.fade-out]="isFading">
+          {{ currentMessage }}
+        </p>
+        <a class="btn btn-blue btn-lg" href="javascript:void(0);" (click)="scrollToSection('shoppingNow')">Shop Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-app-popular-categoriesv2 [categories]="categories"
+  [availableProductsOnlyCategories]="availableProductsOnlyCategories"></app-app-popular-categoriesv2>
+<app-productsgalleryv2 [featured]="allProducts" [wishlistProducts]="wishlistProducts"></app-productsgalleryv2>
+
+<app-social-video></app-social-video>
+<app-footer></app-footer>

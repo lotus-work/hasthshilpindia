@@ -1,0 +1,59 @@
+.header{
+    background: linear-gradient(90deg, #FFDEAC 0%, #FFC368 100%);
+    padding: 0 0 40px 0;
+}
+.intro h1{
+    color: white;
+    font-weight: 500;
+}
+
+.banner .main-heading{
+  color: #ffffff !important;
+}
+.banner #color-blue{
+    color: #0464cb !important;
+} 
+
+
+
+.nav-scroller {
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+  }
+
+  .nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .banner{
+   margin: 50px 0;
+    overflow: hidden;
+  }
+
+  .banner h1 {
+    font-size: 80px;
+  }
+  
+  @media (max-width: 576px) {
+    .banner h1 {
+      font-size: 60px;
+    }
+  }
+  
+
+  .fade-text {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }

@@ -78,7 +78,7 @@
         </div>
         <div class="price d-flex mt-4" >
           <h2 id="offer-price">₹{{ product?.price }}</h2>
-          <h4 class="mt-1 ms-2" style="text-decoration: line-through">
+          <h4 class="mt-1 ms-2" style="text-decoration: line-through; color: grey;">
             ₹{{ product?.price * 2 }}
           </h4>
           <span class="mt-1 ms-2" >
@@ -219,5 +219,5 @@
     </div>
   </div>
 </section>
-
+<app-related-products [category]="product.category"></app-related-products>
 <app-footer></app-footer>

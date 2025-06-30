@@ -36,12 +36,16 @@ import { AdEditProductsComponent } from './components/admin/ad-edit-products/ad-
 import { AdEditUserComponent } from './components/admin/ad-edit-user/ad-edit-user.component';
 import { AdSettingsComponent } from './components/admin/ad-settings/ad-settings.component';
 import { AdminAuthGuardService } from './services/admin.auth.guard/admin.auth.guard.service';
+import { Homev2Component } from './components/user/v2/homev2/homev2.component';
+import { CategoryPageComponent } from './components/user/v2/category-page/category-page.component';
 
 const routes: Routes = [
-  { path: "", component: HomeComponent, title: "Hasthshilp" },
+  // { path: "", component: HomeComponent, title: "Hasthshilp" },
+  { path: "", component: Homev2Component, title: "Hasthshilp" },
   { path: "login", component: LoginComponent, title: "Hasthshilp : Login" },
   { path: "register", component: RegisterComponent, title: "Hasthshilp : Register" },
   { path: "categories", component: CategoriesComponent, title: "Hasthshilp : Categories" },
+  { path: "category/:categoryName", component: CategoryPageComponent, title: "Hasthshilp : Categories" },
   { path: "details/:id", component: DetailsComponent, title: "Hasthshilp : Product Details" },
   { path: "myprofile", component: MyaccountComponent, title: "Hasthshilp : My Profile", canActivate: [AuthGuardService] },
   { path: "myorders", component: MyordersComponent, title: "Hasthshilp : My Orders" },

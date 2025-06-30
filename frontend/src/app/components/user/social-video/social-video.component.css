@@ -1,0 +1,45 @@
+
+/* Video section - fullscreen height */
+.fullscreen-video-wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: black;
+  position: relative;
+}
+
+/* Video fills entire area */
+.video-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Follow us section below video */
+.follow-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 10px;
+  background-color: white;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #FB564E 0%, #D9279B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+
+  margin: 0;
+}
+
+/* Instagram icon */
+.insta-icon {
+  width: 26px;
+  height: 26px;
+}

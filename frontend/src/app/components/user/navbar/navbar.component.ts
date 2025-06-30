@@ -18,17 +18,19 @@ export class NavbarComponent {
   isProfileDropdownOpen: boolean = false;
   isHomePage: boolean = false;
   constructor(public router: Router) {
-    this.loggedIn = !!localStorage.getItem('token') && !!localStorage.getItem('customer'); 
-       // Detect route changes
-       this.router.events
-       .pipe(filter(event => event instanceof NavigationEnd))
-       .subscribe((event: NavigationEnd) => {
-         this.checkIfHomePage(event.urlAfterRedirects);
-       });
+    this.loggedIn =
+      !!localStorage.getItem('token') && !!localStorage.getItem('customer');
+    // Detect route changes
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.checkIfHomePage(event.urlAfterRedirects);
+      });
   }
   checkIfHomePage(url: string) {
     // Adjust conditions according to your routing ('' or '/home')
-    this.isHomePage = (url === '/' || url === '/home' || url === '');
+    this.isHomePage =
+      url === '/' || url === '/home' || url === '' || url.includes('/catego');
   }
 
   toggleProfileDropdown() {
@@ -56,25 +58,25 @@ export class NavbarComponent {
 
   onSearchInput() {
     const query = this.searchQuery.trim().toLowerCase();
-  
+
     if (!query) {
       this.filteredProducts = [];
       this.showSearchDropdown = false;
       return;
     }
-  
-    const matchingProducts = this.allProducts.filter(product =>
-      product && product.title && product.title.toLowerCase().includes(query)
+
+    const matchingProducts = this.allProducts.filter(
+      (product) =>
+        product && product.title && product.title.toLowerCase().includes(query)
     );
-  
+
     this.filteredProducts = matchingProducts.slice(0, 5); // Show only the top 5 results
-  
+
     // Show the dropdown even if no matches found, so we can show "No match found"
     this.showSearchDropdown = true;
-  
+
     console.log('Filtered:', this.filteredProducts);
   }
-  
 
   onSearchFocus() {
     this.showSearchDropdown = this.filteredProducts.length > 0;
@@ -86,5 +88,4 @@ export class NavbarComponent {
     this.filteredProducts = [];
     this.showSearchDropdown = false;
   }
-
 }
