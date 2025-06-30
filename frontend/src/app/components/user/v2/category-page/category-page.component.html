@@ -1,5 +1,5 @@
 <app-navbar [cartCount]="userCartProducts"></app-navbar>
-<section class="header">
+<!-- <section class="header">
   <div class="container">
     <div class="row">
       <div class="nav-scroller py-1 mb-3">
@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section>
   <div *ngIf="groupedProducts.length > 1; else noCategory">
@@ -99,6 +99,7 @@
                   class="wishlist-icon"
                   (click)="toggleWishlist(product); $event.stopPropagation()"
                   [ngClass]="{ wishlisted: isWishlisted(product) }"
+                  *ngIf="i % 2 === 0"
                 >
                   <i
                     class="fa-heart"
@@ -118,7 +119,8 @@
                   />
                 </div>
 
-                <div class="card-body">
+             <div class="card-body" *ngIf="i % 2 === 0">
+
                   <p class="text-body-tertiary">{{ product.category }}</p>
                   <p class="fw-bold fs-6">
                     {{ product.title | slice : 0 : 20

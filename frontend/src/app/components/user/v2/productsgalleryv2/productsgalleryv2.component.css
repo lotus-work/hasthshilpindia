@@ -1,9 +1,8 @@
-@media (max-width: 568px) {
-  .category img {
-    width: 85%;
-  }
-}
 
-p,h5{
+p{
+  margin: 0;
+  padding: 0;
+}
+#cmn-header,h5{
   color: #0066CB;
 }

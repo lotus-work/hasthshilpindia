@@ -1,26 +1,78 @@
+<div class=" mt-5">
+<div [ngClass]="isMobile ? 'container-fluid' : 'container'" class="hero-banner">
+  <div class="row mb-4" *ngIf="categoryDetails.length > 0">
+    <div class="col-12">
+      <div class="p-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+        <img [src]="categoryDetails[0].image" class="hero-image" alt="{{ categoryDetails[0].categoryName }}" />
+        <div class="text-start text-lg-center">
+          <p class="text-primary mb-1 fw-semibold">New Arrivals</p>
+          <h2 class="fw-bold hero-title" [innerHTML]="categoryDetails[0].categoryName"></h2>
+          <h4 class="text-primary hero-subtitle mb-3">Up to 50% Off</h4>
+          <a class="btn btn-outline-dark rounded-pill px-4 py-2" href="/category/{{categoryDetails[0].categoryName}}">
+            Shop Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+</div>
+<div class="container " id="shoppingNow">
+  <!-- Row 2: 2-column split -->
+  <div class="row" *ngIf="categoryDetails.length > 3">
+    <!-- Left side (stacked) -->
+    <div class="col-md-6 col-6 m-auto">
+      <!-- Item 2 -->
+      <div class="category-block bg-light-gray p-3 mb-3 rounded d-flex justify-content-between align-items-center">
+        <div>
+          <span class="discount-badge">50% OFF</span>
+          <h5 class="fw-bold">{{ categoryDetails[1].categoryName }}</h5>
+          <p class="mb-0"> <a href="/category/{{categoryDetails[1].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
+        </div>
+        <img [src]="categoryDetails[1].image" alt="{{ categoryDetails[1].categoryName }}" class="cat-image" />
+      </div>
+
+      <!-- Item 3 -->
+      <div class="category-block bg-light-blue p-3 rounded d-flex justify-content-between align-items-center">
+        <div>
+          <span class="discount-badge">50% OFF</span>
+          <h5 class="fw-bold">{{ categoryDetails[2].categoryName }}</h5>
+         <p class="mb-0"> <a href="/category/{{categoryDetails[2].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
+        </div>
+        <img [src]="categoryDetails[2].image" alt="{{ categoryDetails[2].categoryName }}" class="cat-image" />
+      </div>
+    </div>
+
+    <!-- Right side (single) -->
+    <div class="col-md-6 col-6">
+      <div class="category-block bg-peach p-3 h-100 rounded d-flex justify-content-between align-items-center">
+        <div>
+          <p class="text-primary mb-1 fw-semibold">New Arrivals</p>
+          <h5 class="fw-bold" [innerHTML]="categoryDetails[3].categoryName"></h5>
+          <p class="text-primary mb-0">Up to 50% Off</p>
+          <p class="mb-0"> <a href="/category/{{categoryDetails[3].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
+        </div>
+        <img [src]="categoryDetails[3].image" alt="{{ categoryDetails[3].categoryName }}" class="cat-image" />
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container pt-5" id="shoppingNow">
   <div class="row mb-5">
     <div class="col-12 text-center">
-      <h1>Popular Categories</h1>
+      <h3>Popular Categories</h3>
     </div>
   </div>
 
   <div class="row justify-content-center">
-    <div
-      class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4"
-      *ngFor="let item of availableProductsOnlyCategories"
-    >
+    <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4" *ngFor="let item of availableProductsOnlyCategories">
       <div class="card item-card">
-        <a
-          class="text-center text-decoration-none"
-          href="/category/{{item.category?.title}}"
-        >
+        <a class="text-center text-decoration-none" href="/category/{{ item.category?.title }}">
           <div class="image-container">
-            <img
-              [src]="item.product.images[0]?.url"
-              class="card-img-top"
-              alt="{{ item.category.title }}"
-            />
+            <img [src]="item.product.images[0]?.url" class="card-img-top" alt="{{ item.category.title }}" />
             <div class="label-overlay">{{ item.category.title }}</div>
           </div>
         </a>

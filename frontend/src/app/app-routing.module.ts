@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: "", component: Homev2Component, title: "Hasthshilp" },
   { path: "login", component: LoginComponent, title: "Hasthshilp : Login" },
   { path: "register", component: RegisterComponent, title: "Hasthshilp : Register" },
-  { path: "categories", component: CategoriesComponent, title: "Hasthshilp : Categories" },
+  // { path: "categories", component: CategoriesComponent, title: "Hasthshilp : Categories" },
   { path: "category/:categoryName", component: CategoryPageComponent, title: "Hasthshilp : Categories" },
   { path: "details/:id", component: DetailsComponent, title: "Hasthshilp : Product Details" },
   { path: "myprofile", component: MyaccountComponent, title: "Hasthshilp : My Profile", canActivate: [AuthGuardService] },

@@ -8,13 +8,8 @@
         <img src="../../../../assets/img/logo.svg" alt="Logo" />
       </a>
 
-      <!-- Mobile Toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
-      <div class="collapse navbar-collapse me-auto" id="navbarSupportedContent">
+<div class="navbar-collapse d-flex align-items-center justify-content-between w-100 flex-wrap" id="navbarSupportedContent">
         <!-- Search Box -->
         <div class="d-flex m-auto w-80 position-relative search-container" *ngIf="isHomePage">
           <div class="input-group w-80">
@@ -58,7 +53,7 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-sm-flex justify-content-center" id="right-menu">
           <div class="row justify-content-start align-items-center mt-lg-0 mt-2">
             <!-- Wishlist Icon -->
-            <div class="col text-center position-relative">
+            <div class="col text-center position-relative d-none d-md-block">
               <a href="wishlist">
                 <img src="../../../../assets/img/navbar/wishlist.svg" alt="Wishlist" />
               </a>
@@ -69,7 +64,7 @@
               <a href="checkout/cart" class="position-relative d-inline-block">
                 <img src="../../../../assets/img/navbar/cart.svg" alt="Cart" />
                 <span *ngIf="cartCount > 0"
-                  class="badge bg-danger rounded-pill position-absolute top-0 start-100 p-1 translate-middle">
+                  class="badge bg-primary rounded-pill position-absolute top-0 start-100 p-2 translate-middle">
                   {{ cartCount }}
                 </span>
               </a>
@@ -97,6 +92,11 @@
                 <li *ngIf="!loggedIn">
                   <a class="dropdown-item" [routerLink]="['/login']">
                     <i class="bi bi-arrow-bar-right me-2"></i> Sign In
+                  </a>
+                </li>
+                  <li class="d-block d-lg-none">
+                  <a class="dropdown-item " [routerLink]="['/wishlist']">
+                    <i class="bi bi-bag-check me-2"></i> My Wishlist
                   </a>
                 </li>
                 <li>

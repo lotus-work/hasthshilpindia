@@ -1,10 +1,9 @@
 .header{
-    background: linear-gradient(90deg, #FFDEAC 0%, #FFC368 100%);
+    background: linear-gradient(90deg, #BAB3B0 0%, #AB9C95 100%);
     padding: 0 0 40px 0;
 }
 .intro h1{
     color: white;
-    font-weight: 500;
 }
 
 .banner .main-heading{
@@ -33,18 +32,14 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .banner{
-   margin: 50px 0;
-    overflow: hidden;
-  }
 
   .banner h1 {
-    font-size: 80px;
+    font-size: 50px;
   }
   
   @media (max-width: 576px) {
     .banner h1 {
-      font-size: 60px;
+      font-size: 35px;
     }
   }
   

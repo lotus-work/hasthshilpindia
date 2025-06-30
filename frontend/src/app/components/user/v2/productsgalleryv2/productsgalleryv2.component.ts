@@ -29,7 +29,7 @@ export class Productsgalleryv2Component implements OnInit {
       rawTitle:
         'Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility',
       description: 'Let the Aroma Guide You to Tranquility',
-      image: '../../../../../assets/img/categories/saree.png',
+      image: '../../../../../assets/img/categories/Saree.svg',
     },
     {
       categoryName: 'Jute',
@@ -74,7 +74,7 @@ export class Productsgalleryv2Component implements OnInit {
       categoryName: 'Unstitched Suits',
       rawTitle: 'Craft Your <span style="color:#0464cb;">Perfect Look</span>',
       description: 'Premium unstitched suits for the designer in you',
-      image: '../../../../../assets/img/categories/suits.png',
+      image: '../../../../../assets/img/categories/Suits.png',
     },
     {
       categoryName: 'Home Decor',
@@ -85,9 +85,9 @@ export class Productsgalleryv2Component implements OnInit {
     },
     {
       categoryName: 'Handloom',
-      rawTitle: 'Weave the <span style="color:#0464cb;">Legacy</span> of India',
-      description: 'Authentic handloom textiles made with tradition and care',
-      image: '../../../../../assets/img/categories/bamboo.png',
+      rawTitle: '"Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility."',
+      description: '"Let the Aroma Guide You to Tranquility."',
+      image: '../../../../../assets/img/categories/Handloom.png',
     },
     {
       categoryName: 'Purse',
@@ -109,7 +109,7 @@ export class Productsgalleryv2Component implements OnInit {
       rawTitle:
         'Ready to Wear, <span style="color:#0464cb;">Made to Impress</span>',
       description: 'Stylish stitched suits for effortless fashion',
-      image: '../../../../../assets/img/categories/suits.png',
+      image: '../../../../../assets/img/categories/Suits.png',
     },
     {
       categoryName: 'Incense Sticks',

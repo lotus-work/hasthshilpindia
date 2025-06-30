@@ -1,5 +1,5 @@
 .navbar-section {
-    background: linear-gradient(90deg, #FFDEAC 0%, #FFC368 100%);
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
 }
 
 .w-80 {
@@ -61,3 +61,75 @@ input {
     font-size: 14px;
   }
   
+  @media only screen and (max-width: 600px) {
+  .navbar-section .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* important */
+    padding: 0 6px;
+  }
+
+  .navbar-brand img {
+    width: 60px;
+    height: auto;
+  }
+
+  .search-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    margin: 0 4px;
+  }
+
+  .form-control {
+    font-size: 12px;
+    padding: 2px 6px;
+    min-width: 0;
+  }
+
+  .btn-transparent,
+  .dropdown-toggle {
+    font-size: 12px;
+    padding: 2px 6px;
+  }
+
+  #right-menu {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    margin-left: 4px;
+  }
+
+  #right-menu img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navbar-collapse {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .navbar-nav .row {
+    flex-wrap: nowrap;
+    margin: 0;
+  }
+}
+
+#right-menu .col {
+  flex: 0 0 auto;
+  width: auto;
+  margin-right: 1px; /* small space between icons */
+  text-align: center;
+}
+
+#right-menu .col:last-child {
+  margin-right: 0; /* no extra space after last icon */
+}

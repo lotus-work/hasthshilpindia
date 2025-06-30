@@ -2,10 +2,10 @@
   class="products my-5"
   *ngFor="let group of groupedProductsByCategory; let i = index"
 >
-  <div class="container-fluid">
+  <div class="">
     <!-- Background color rotating -->
     <div
-      class="py-5 category"
+      class="py-3 category container-fluid"
       [ngStyle]="{
         'background-color': backgroundColors[i % backgroundColors.length]
       }"
@@ -17,31 +17,31 @@
             <div class="col-lg-6 col-6 text-start">
               <img
                 [src]="getCategoryImage(group.category)"
-                width="40%"
+                class="responsive-img"
                 alt="{{ group.category }}"
               />
             </div>
 
-            <div class="col-lg-6 col-6 text-end m-auto">
-              <p class="fw-bold">New Arrivals</p>
-              <h1>{{ group.category }}</h1>
-              <h5>Up to 50% off</h5>
-              <h4>Shop Now</h4>
+         <div class="col-lg-6 col-6 text-start text-md-end m-auto">
+              <p class="fw-bold" id="cmn-header">New Arrivals</p>
+              <h2 class="fw-bold">{{ group.category }}</h2>
+              <p id="cmn-header">Up to 50% off</p>
+              <p class="fw-bold"><a href="/category/{{ group.category }}" style="text-decoration: none; color: black;">Shop Now</a></p>
             </div>
           </ng-container>
 
           <!-- Odd index: Text | Image -->
           <ng-template #reverseLayout>
             <div class="col-lg-6 col-6 text-start m-auto">
-              <p class="fw-bold">New Arrivals</p>
-              <h1>{{ group.category }}</h1>
-              <h5>Up to 50% off</h5>
-              <h4>Shop Now</h4>
+              <p class="fw-bold" id="cmn-header">New Arrivals</p>
+              <h2 class="fw-bold">{{ group.category }}</h2>
+              <p id="cmn-header">Up to 50% off</p>
+               <p class="fw-bold"><a href="/category/{{ group.category }}" style="text-decoration: none; color: black;">Shop Now</a></p>
             </div>
             <div class="col-lg-6 col-6 text-end">
               <img
                 [src]="getCategoryImage(group.category)"
-                width="40%"
+                class="responsive-img"
                 alt="{{ group.category }}"
               />
             </div>
@@ -53,30 +53,22 @@
     <!-- Product Grid for this category -->
     <div class="container">
       <div
-        class="row row-cols-2 row-cols-lg-5 row-cols-md-3 gy-5 mt-2 justify-content-center align-items-center"
+        class="row row-cols-3 row-cols-lg-4 row-cols-md-4 gy-5 mt-2 justify-content-center align-items-center"
       >
         <div
           class="col"
-          *ngFor="let product of group.products"
+          *ngFor="let product of group.products | slice : 0 : 3"
           [routerLink]="['/details', product._id]"
           style="cursor: pointer; position: relative"
         >
-          <div class="card product-card">
+          <div class="card product-card border border-dark">
             <div
               class="wishlist-icon"
               (click)="toggleWishlist(product); $event.stopPropagation()"
               [ngClass]="{
                 wishlisted: isWishlisted(product)
               }"
-            >
-              <i
-                class="fa-heart"
-                [ngClass]="{
-                  'fa-solid': isWishlisted(product),
-                  'fa-regular': !isWishlisted(product)
-                }"
-              ></i>
-            </div>
+            ></div>
 
             <div class="image-wrapper">
               <img
@@ -86,58 +78,17 @@
                 class="card-img-top product-image"
               />
             </div>
-
-            <div class="card-body">
-              <p class="text-body-tertiary">{{ product.category }}</p>
-              <p class="fw-bold fs-6">
-                {{ product.title | slice : 0 : 20 }}
-                {{ product.title.length > 20 ? "..." : "" }}
-              </p>
-              <p>
-                <span id="offer-price" class="fs-5">₹{{ product.price }}</span>
-                &nbsp;&nbsp;
-                <span id="original-price">
-                  ₹{{ product.originalPrice || product.price * 2 }}
-                </span>
-              </p>
-
-              <div class="d-flex align-items-center" id="reviews">
-                <ng-container *ngIf="product.totalrating > 0; else noRating">
-                  <ng-container
-                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                  >
-                    <i
-                      class="fa-star"
-                      [ngClass]="
-                        i < product.totalrating ? 'fa-solid' : 'fa-regular'
-                      "
-                    ></i>
-                  </ng-container>
-                </ng-container>
-                <ng-template #noRating>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                </ng-template>
-                <span id="review-comment">
-                  ({{ product.ratings.length || 0 }})
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Optional 'View More' button -->
-    <div class="text-center mt-4" *ngIf="group.products.length >= 15">
+    <div class="text-center mt-4" *ngIf="group.products.length >= 1">
       <a
-        class="btn btn-outline-dark px-4"
-        routerLink="/categories"
-        [queryParams]="{ name: group.category }"
+        class="btn btn-blue rounded-pill px-4"
+        href="/category/{{ group.category }}"
       >
-        View More
+        Shop {{ group.category }}
       </a>
     </div>
   </div>

@@ -44,13 +44,13 @@ export class CategoryPageComponent implements OnInit {
   };
   userCart: any;
   userCartProducts: any;
-  categoryDetails: CategoryData[] = [
+ categoryDetails: CategoryData[] = [
     {
       categoryName: 'Saree',
       rawTitle:
         'Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility',
       description: 'Let the Aroma Guide You to Tranquility',
-      image: '../../../../../assets/img/categories/saree.png',
+      image: '../../../../../assets/img/categories/Saree.svg',
     },
     {
       categoryName: 'Jute',
@@ -59,6 +59,19 @@ export class CategoryPageComponent implements OnInit {
       description:
         'Discover sustainable style with our beautifully crafted jute products',
       image: '../../../../../assets/img/categories/jute.png',
+    },
+    {
+      categoryName: 'Unstitched Suits',
+      rawTitle: 'Craft Your <span style="color:#0464cb;">Perfect Look</span>',
+      description: 'Premium unstitched suits for the designer in you',
+      image: '../../../../../assets/img/categories/Suits.png',
+    },
+    {
+      categoryName: 'Purse',
+      rawTitle:
+        'Carry <span style="color:#0464cb;">Elegance</span> in Every Step',
+      description: 'Exquisite stone purses for a touch of glam',
+      image: '../../../../../assets/img/categories/handbags.png',
     },
     {
       categoryName: 'Herbal Soap',
@@ -92,12 +105,6 @@ export class CategoryPageComponent implements OnInit {
       image: '../../../../../assets/img/categories/appreal.png',
     },
     {
-      categoryName: 'Unstitched Suits',
-      rawTitle: 'Craft Your <span style="color:#0464cb;">Perfect Look</span>',
-      description: 'Premium unstitched suits for the designer in you',
-      image: '../../../../../assets/img/categories/suits.png',
-    },
-    {
       categoryName: 'Home Decor',
       rawTitle:
         'Turn Your Home into a <span style="color:#0464cb;">Masterpiece</span>',
@@ -106,16 +113,10 @@ export class CategoryPageComponent implements OnInit {
     },
     {
       categoryName: 'Handloom',
-      rawTitle: 'Weave the <span style="color:#0464cb;">Legacy</span> of India',
-      description: 'Authentic handloom textiles made with tradition and care',
-      image: '../../../../../assets/img/categories/bamboo.png',
-    },
-    {
-      categoryName: 'Purse',
       rawTitle:
-        'Carry <span style="color:#0464cb;">Elegance</span> in Every Step',
-      description: 'Exquisite stone purses for a touch of glam',
-      image: '../../../../../assets/img/categories/handbags.png',
+        '"Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility."',
+      description: '"Let the Aroma Guide You to Tranquility."',
+      image: '../../../../../assets/img/categories/Handloom.png',
     },
     {
       categoryName: 'Stone',
@@ -130,7 +131,7 @@ export class CategoryPageComponent implements OnInit {
       rawTitle:
         'Ready to Wear, <span style="color:#0464cb;">Made to Impress</span>',
       description: 'Stylish stitched suits for effortless fashion',
-      image: '../../../../../assets/img/categories/suits.png',
+      image: '../../../../../assets/img/categories/Suits.png',
     },
     {
       categoryName: 'Incense Sticks',

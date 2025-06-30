@@ -15,7 +15,6 @@
     "/admin/settings",
     "/admin/types",
     "/admin/types/list",
-    "/categories",
     "/checkout/cart",
     "/checkout/shipping",
     "/contactus",

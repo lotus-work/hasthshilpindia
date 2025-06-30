@@ -16,7 +16,6 @@ body {
 
 h1, h2, h3,h4,h5{
   font-family: "Poppins", sans-serif;
-  font-weight: 700;
 
 }
 
@@ -82,9 +81,8 @@ li{
 
 }
 .btn-blue{
-    background: linear-gradient(90deg, #0464cb 0%, #0464cb 100%);
+    background: linear-gradient(90deg, #377DFF 100%, #ffffff 100%);
     color: rgb(255, 255, 255) !important;
-    border: #0464cb;
 }
 .btn-primary{
     background: linear-gradient(90deg, #e8aa4d 0%, #ffc368d8 100%);
@@ -111,7 +109,7 @@ li{
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s ease;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px; */
     height: 100%;
   }
   
@@ -280,8 +278,7 @@ li{
     word-break: normal;           /* Do NOT break mid-word */
     overflow-wrap: break-word;    /* Break only if word is too long */
     overflow-x: hidden;
-    line-height: 1.6;
-    font-size: 1rem;
+    font-size: 20px;
     text-align: justify !important;
   }
   
@@ -294,3 +291,19 @@ li{
     max-width: 100%;
     box-sizing: border-box;
   }
+
+  .responsive-img {
+  width: 250px;
+  object-fit: cover; /* Keeps image aspect ratio and fills the box */
+  max-width: 100%;    /* Prevents overflow on small screens */
+  height: auto;       /* Makes image responsive in height */
+
+}
+
+/* Optional: make image smaller on very small screens */
+@media screen and (max-width: 600px) {
+  .responsive-img {
+    width: 150px;
+    height: auto;
+  }
+}
