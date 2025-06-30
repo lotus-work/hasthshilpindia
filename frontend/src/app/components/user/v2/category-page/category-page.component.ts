@@ -64,7 +64,7 @@ export class CategoryPageComponent implements OnInit {
       categoryName: 'Unstitched Suits',
       rawTitle: 'Craft Your <span style="color:#0464cb;">Perfect Look</span>',
       description: 'Premium unstitched suits for the designer in you',
-      image: '../../../../../assets/img/categories/Suits.png',
+      image: '../../../../../assets/img/categories/Suits.svg',
     },
     {
       categoryName: 'Purse',
@@ -131,7 +131,7 @@ export class CategoryPageComponent implements OnInit {
       rawTitle:
         'Ready to Wear, <span style="color:#0464cb;">Made to Impress</span>',
       description: 'Stylish stitched suits for effortless fashion',
-      image: '../../../../../assets/img/categories/Suits.png',
+      image: '../../../../../assets/img/categories/Suits.svg',
     },
     {
       categoryName: 'Incense Sticks',
