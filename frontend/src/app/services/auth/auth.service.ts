@@ -25,6 +25,12 @@ export class AuthService {
 
     return this.http.put<any>(`${this.apiUrl}/user/edit-user`, userData, { headers });
   }
+   checkUserExists(data: { email: string; mobile: string }): Observable<{ exists: boolean; message: string }> {
+    return this.http.post<{ exists: boolean; message: string }>(
+      `${this.apiUrl}/user/validate/exists`,
+      data
+    );
+  }
 
   editUserByAdmin(userData: any, token: string): Observable<any> {
     const headers = new HttpHeaders({

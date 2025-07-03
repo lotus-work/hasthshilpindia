@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createUser,
   loginUserCtrl,
+  checkUserExistsCtrl,
   getallUser,
   getaUser,
   deleteaUser,
@@ -46,6 +47,7 @@ router.put("/reset-password/:token", resetPassword);
 
 router.put("/password", authMiddleware, updatePassword);
 router.post("/login", loginUserCtrl);
+router.post("/validate/exists", checkUserExistsCtrl); 
 router.post("/admin-login", loginAdmin);
 router.post("/cart", authMiddleware, userCart);
 router.post("/order/checkout", authMiddleware, checkout);

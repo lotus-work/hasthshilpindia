@@ -1,10 +1,10 @@
 <section class="d-flex justify-content-center align-items-center min-vh-100">
   <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-      <div class="col-lg-5 col-12">
+      <div class="col-lg-5 col-12" *ngIf="!otpSent">
         <!-- Logo for small and medium screens -->
         <div class="d-lg-none text-center mb-4">
-          <img src="../../../../assets/img/logo.svg" width="200" alt="Logo">
+          <img src="../../../../assets/img/logo.svg" width="200" alt="Logo" />
         </div>
 
         <main class="form-signin">
@@ -12,47 +12,111 @@
             <h5 class="mb-3 text-center text-lg-start">Create new account</h5>
 
             <div class="form-floating">
-              <input type="text" class="form-control" id="firstname" placeholder="First Name" formControlName="firstname" />
+              <input
+                type="text"
+                class="form-control"
+                id="firstname"
+                placeholder="First Name"
+                formControlName="firstname"
+              />
               <label for="firstname">First Name</label>
             </div>
 
             <div class="form-floating">
-              <input type="text" class="form-control" id="lastname" placeholder="Last Name" formControlName="lastname" />
+              <input
+                type="text"
+                class="form-control"
+                id="lastname"
+                placeholder="Last Name"
+                formControlName="lastname"
+              />
               <label for="lastname">Last Name</label>
             </div>
 
             <div class="form-floating">
-              <input type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile" />
+              <input
+                type="text"
+                class="form-control"
+                id="mobile"
+                placeholder="10-digit mobile number"
+                formControlName="mobile"
+              />
               <label for="mobile">Mobile</label>
             </div>
 
             <div class="form-floating">
-              <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email" />
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="name@example.com"
+                formControlName="email"
+              />
               <label for="email">Email address</label>
             </div>
 
             <div class="form-floating">
-              <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" />
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+                formControlName="password"
+              />
               <label for="password">Password</label>
             </div>
 
-            <button class="btn btn-primary w-100 py-2 mt-3" type="submit" [disabled]="isLoading || registerForm.invalid">
-              {{ isLoading ? 'Creating account...' : 'Create new account' }}
+            <button
+              class="btn btn-primary w-100 py-2 mt-3"
+              type="button"
+              [disabled]="isLoading || registerForm.invalid"
+              (click)="sendOtp()"
+            >
+              {{ isLoading ? "Sending OTP..." : "Create new account" }}
             </button>
-
             <a class="btn btn-dark w-100 my-2" href="/login">Login</a>
 
             <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
-            <p class="text-center" style="font-size: 12px;"><a href="/terms-of-service" class="no-underline">Terms of Service</a></p>
-            <p class="text-center" style="font-size: 12px;"><a href="/shipping-policy" class="no-underline">Shipping Policy</a></p>
+            <p class="text-center" style="font-size: 12px">
+              <a href="/terms-of-service" class="no-underline"
+                >Terms of Service</a
+              >
+            </p>
+            <p class="text-center" style="font-size: 12px">
+              <a href="/shipping-policy" class="no-underline"
+                >Shipping Policy</a
+              >
+            </p>
           </form>
         </main>
       </div>
+      <div class="col-lg-5 col-12" *ngIf="otpSent">
+        <!-- OTP Section -->
+        <div>
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="otp"
+              placeholder="Enter OTP"
+              [(ngModel)]="enteredOtp"
+            />
+            <label for="otp"
+              >Enter OTP sent to {{ "+91" + registerForm.value.mobile }}</label
+            >
+          </div>
 
+          <button class="btn btn-success w-100 py-2 mt-3" (click)="verifyOtp()">
+            Verify OTP
+          </button>
+        </div>
+      </div>
       <!-- Welcome section visible only on large screens and above -->
-      <div class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center">
+      <div
+        class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center"
+      >
         <div class="w-80">
-          <img src="../../../../assets/img/logo.svg" width="350" alt="Logo">
+          <img src="../../../../assets/img/logo.svg" width="350" alt="Logo" />
         </div>
       </div>
     </div>

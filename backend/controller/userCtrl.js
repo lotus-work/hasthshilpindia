@@ -72,6 +72,32 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   }
 });
 
+const checkUserExistsCtrl = asyncHandler(async (req, res) => {
+  const { email, mobile } = req.body;
+
+  if (!email || !mobile) {
+    res.status(400);
+    throw new Error("Email and mobile number are required");
+  }
+
+  const userExists = await User.findOne({
+    $or: [{ email }, { mobile }]
+  });
+
+  if (userExists) {
+    res.status(200).json({
+      exists: true,
+      message: "User already exists with given email or mobile number",
+    });
+  } else {
+    res.status(200).json({
+      exists: false,
+      message: "No user exists with given email or mobile number",
+    });
+  }
+});
+
+
 // admin login
 
 const loginAdmin = asyncHandler(async (req, res) => {
@@ -825,6 +851,7 @@ const getOrderAnalytics = asyncHandler(async (req, res) => {
 module.exports = {
   createUser,
   loginUserCtrl,
+  checkUserExistsCtrl,
   getallUser,
   getaUser,
   deleteaUser,
