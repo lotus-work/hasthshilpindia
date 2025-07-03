@@ -94,7 +94,7 @@ export class Productsgalleryv2Component implements OnInit {
       rawTitle:
         'Carry <span style="color:#0464cb;">Elegance</span> in Every Step',
       description: 'Exquisite stone purses for a touch of glam',
-      image: '../../../../../assets/img/categories/handbags.png',
+      image: '../../../../../assets/img/categories/handbags.svg',
     },
     {
       categoryName: 'Stone',

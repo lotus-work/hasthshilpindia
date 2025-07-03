@@ -1,7 +1,7 @@
 <div class=" mt-5">
 <div [ngClass]="isMobile ? 'container-fluid' : 'container'" class="hero-banner">
   <div class="row mb-4" *ngIf="categoryDetails.length > 0">
-    <div class="col-12">
+    <div class="col-12 border border-dark">
       <div class="p-4 rounded d-flex justify-content-between align-items-center flex-wrap">
         <img [src]="categoryDetails[0].image" class="hero-image" alt="{{ categoryDetails[0].categoryName }}" />
         <div class="text-start text-lg-center">
@@ -25,36 +25,36 @@
     <!-- Left side (stacked) -->
     <div class="col-md-6 col-6 m-auto">
       <!-- Item 2 -->
-      <div class="category-block bg-light-gray p-3 mb-3 rounded d-flex justify-content-between align-items-center">
+      <div class="category-block bg-light-gray p-3 mb-3 rounded d-flex justify-content-between align-items-center border border-dark">
         <div>
           <span class="discount-badge">50% OFF</span>
           <h5 class="fw-bold">{{ categoryDetails[1].categoryName }}</h5>
           <p class="mb-0"> <a href="/category/{{categoryDetails[1].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
         </div>
-        <img [src]="categoryDetails[1].image" alt="{{ categoryDetails[1].categoryName }}" class="cat-image" />
+        <img [src]="categoryDetails[1].image" alt="{{ categoryDetails[1].categoryName }}" class="cat-image1" />
       </div>
 
       <!-- Item 3 -->
-      <div class="category-block bg-light-blue p-3 rounded d-flex justify-content-between align-items-center">
+      <div class="category-block bg-light-blue p-3 rounded d-flex justify-content-between align-items-center border border-dark">
         <div>
           <span class="discount-badge">50% OFF</span>
           <h5 class="fw-bold">{{ categoryDetails[2].categoryName }}</h5>
          <p class="mb-0"> <a href="/category/{{categoryDetails[2].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
         </div>
-        <img [src]="categoryDetails[2].image" alt="{{ categoryDetails[2].categoryName }}" class="cat-image" />
+        <img [src]="categoryDetails[2].image" alt="{{ categoryDetails[2].categoryName }}" class="cat-image2" />
       </div>
     </div>
 
     <!-- Right side (single) -->
     <div class="col-md-6 col-6">
-      <div class="category-block bg-peach p-3 h-100 rounded d-flex justify-content-between align-items-center">
+      <div class="category-block bg-peach p-3 h-100 rounded d-flex justify-content-between align-items-center border border-dark">
         <div>
           <p class="text-primary mb-1 fw-semibold">New Arrivals</p>
           <h5 class="fw-bold" [innerHTML]="categoryDetails[3].categoryName"></h5>
           <p class="text-primary mb-0">Up to 50% Off</p>
           <p class="mb-0"> <a href="/category/{{categoryDetails[3].categoryName}}" style="text-decoration: none; color: black;">Shop Now</a></p>
         </div>
-        <img [src]="categoryDetails[3].image" alt="{{ categoryDetails[3].categoryName }}" class="cat-image" />
+        <img [src]="categoryDetails[3].image" alt="{{ categoryDetails[3].categoryName }}" class="cat-image3" />
       </div>
     </div>
   </div>

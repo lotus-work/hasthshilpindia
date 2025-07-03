@@ -1,9 +1,53 @@
-<app-navbar [categories]="categories" [cartCount]="userCartProducts.length" [allProducts]="allProducts"></app-navbar>
+<app-navbar
+  [categories]="categories"
+  [cartCount]="userCartProducts.length"
+  [allProducts]="allProducts"
+></app-navbar>
+
+<div class="mobileview">
+  <div class="row">
+    <div class="col-lg-6 text-right order-2 position-relative">
+      <div class="slider-wrapper">
+        <div class="slider">
+          <div class="slide">
+            <img
+              src="../../../../../assets/img/categories/slider-1.svg"
+              width="100%"
+              alt="Home Collection"
+            />
+          </div>
+          <div class="slide">
+            <img
+              width="100%"
+              src="../../../../../assets/img/categories/slider-2.svg"
+              alt="Saree Collection"
+            />
+          </div>
+          <div class="slide">
+            <img
+              width="100%"
+              src="../../../../../assets/img/categories/slider-3.svg"
+              alt="Unstitched Suit"
+            />
+          </div>
+          <div class="slide">
+            <img
+              width="100%"
+              src="../../../../../assets/img/categories/slider-4.svg"
+              alt="Flash Sales"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <section class="header py-5">
   <div class="banner container">
-    <div class="row g-4 d-flex justify-content-between align-items-between px-3">
-      
-      <div class="col-lg-6 m-auto order-1 ">
+    <div
+      class="row g-4 d-flex justify-content-between align-items-between px-3"
+    >
+      <div class="col-lg-6 m-auto order-1">
         <h1 class="main-heading">
           Exquisite Statues & <span id="color-blue">Artifacts</span> Reflecting
           India's Cultural <span id="color-blue">Heritage</span>
@@ -11,21 +55,35 @@
         <p class="mb-3 description-content fade-text">
           Discover the latest trends in fashion!
         </p>
-       
-        <a class="btn btn-blue btn-lg px-5 mt-2 d-none d-md-inline-block" href="javascript:void(0);" (click)="scrollToSection('shoppingNow')">Shop Now</a>
+
+        <a
+          class="btn btn-blue btn-lg px-5 mt-2 d-none d-md-inline-block"
+          href="javascript:void(0);"
+          (click)="scrollToSection('shoppingNow')"
+          >Shop Now</a
+        >
       </div>
-       <div class="col-lg-6 text-right m-auto order-2">
+      <div class="col-lg-6 text-right m-auto order-2">
         <img src="assets/img/header/header1.svg" width="100%" alt="" />
-          <a class="btn btn-blue btn-lg px-5 mt-2 d-inline-block d-md-none" href="javascript:void(0);" (click)="scrollToSection('shoppingNow')">Shop Now</a>
-     
+        <a
+          class="btn btn-blue btn-lg px-5 mt-2 d-inline-block d-md-none"
+          href="javascript:void(0);"
+          (click)="scrollToSection('shoppingNow')"
+          >Shop Now</a
+        >
       </div>
     </div>
   </div>
 </section>
 
-<app-app-popular-categoriesv2 [categories]="categories"
-  [availableProductsOnlyCategories]="availableProductsOnlyCategories"></app-app-popular-categoriesv2>
-<app-productsgalleryv2 [featured]="allProducts" [wishlistProducts]="wishlistProducts"></app-productsgalleryv2>
+<app-app-popular-categoriesv2
+  [categories]="categories"
+  [availableProductsOnlyCategories]="availableProductsOnlyCategories"
+></app-app-popular-categoriesv2>
+<app-productsgalleryv2
+  [featured]="allProducts"
+  [wishlistProducts]="wishlistProducts"
+></app-productsgalleryv2>
 
 <app-social-video></app-social-video>
 <app-footer></app-footer>

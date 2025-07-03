@@ -17,6 +17,8 @@ export class NavbarComponent {
   showSearchDropdown: boolean = false;
   isProfileDropdownOpen: boolean = false;
   isHomePage: boolean = false;
+  matchedCategories: any[] = [];
+
   constructor(public router: Router) {
     this.loggedIn =
       !!localStorage.getItem('token') && !!localStorage.getItem('customer');
@@ -56,27 +58,38 @@ export class NavbarComponent {
     }
   }
 
-  onSearchInput() {
-    const query = this.searchQuery.trim().toLowerCase();
+onSearchInput() {
+  const query = this.searchQuery.trim().toLowerCase();
 
-    if (!query) {
-      this.filteredProducts = [];
-      this.showSearchDropdown = false;
-      return;
-    }
-
-    const matchingProducts = this.allProducts.filter(
-      (product) =>
-        product && product.title && product.title.toLowerCase().includes(query)
-    );
-
-    this.filteredProducts = matchingProducts.slice(0, 5); // Show only the top 5 results
-
-    // Show the dropdown even if no matches found, so we can show "No match found"
-    this.showSearchDropdown = true;
-
-    console.log('Filtered:', this.filteredProducts);
+  if (!query) {
+    this.filteredProducts = [];
+    this.matchedCategories = [];
+    this.showSearchDropdown = false;
+    return;
   }
+
+  // Match categories
+  this.matchedCategories = this.categories.filter(
+    (cat) => cat?.title?.toLowerCase().includes(query)
+  );
+
+  // Match products
+  this.filteredProducts = this.allProducts
+    .filter(
+      (product) =>
+        product?.title?.toLowerCase().includes(query)
+    )
+    .slice(0, 5); // Limit product results
+
+  this.showSearchDropdown = true;
+}
+goToCategory(category: any) {
+  this.router.navigate(['/category', category.title]);
+  this.searchQuery = '';
+  this.filteredProducts = [];
+  this.matchedCategories = [];
+  this.showSearchDropdown = false;
+}
 
   onSearchFocus() {
     this.showSearchDropdown = this.filteredProducts.length > 0;

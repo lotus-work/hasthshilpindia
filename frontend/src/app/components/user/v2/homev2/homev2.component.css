@@ -52,3 +52,72 @@
   .fade-out {
     opacity: 0;
   }
+
+
+
+  .slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.slider {
+  display: flex;
+  width: 100%;
+  animation: slide 12s infinite;
+}
+
+.slide {
+  flex: 1 0 100%;
+  max-width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+@keyframes slide {
+  0%    { transform: translateX(0%); }
+  25%   { transform: translateX(0%); }
+
+  30%   { transform: translateX(-100%); }
+  55%   { transform: translateX(-100%); }
+
+  60%   { transform: translateX(-200%); }
+  85%   { transform: translateX(-200%); }
+
+  90%   { transform: translateX(-300%); }
+  100%  { transform: translateX(-300%); }
+}
+
+
+/* Optional - Responsive adjustments */
+@media (max-width: 768px) {
+  .slider-wrapper {
+    margin-top: 1rem;
+  }
+}
+
+
+/* Hide both by default */
+.mobileview,
+.header {
+  display: none;
+}
+
+/* Show mobileview only on tablets and smaller (below 992px) */
+@media (max-width: 991.98px) {
+  .mobileview {
+    display: block;
+  }
+}
+
+/* Show header only on desktop (992px and above) */
+@media (min-width: 992px) {
+  .header {
+    display: block;
+  }
+}
