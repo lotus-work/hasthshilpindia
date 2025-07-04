@@ -48,11 +48,11 @@ sendOtp(): void {
       this.generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
       const payload = {
-        authorization: 'YOUR_FAST2SMS_API_KEY',
+        authorization: 'mkzaYeGbOfZC5BtMI8prxh6PENJ7wU09nvyTSRWcdFi12qgXjVzdvPGDM3V4fY0oQhWCa9HXBqSRw5er',
         message: `Your OTP for registration is ${this.generatedOtp}`,
         language: 'english',
         route: 'q',
-        numbers: '+91' + mobile
+        numbers: mobile
       };
 
       fetch('https://www.fast2sms.com/dev/bulkV2', {
