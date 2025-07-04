@@ -1,52 +1,49 @@
-<app-navbar
-  [categories]="categories"
-  [cartCount]="userCartProducts.length"
-  [allProducts]="allProducts"
-></app-navbar>
+<app-navbar [categories]="categories" [cartCount]="userCartProducts.length" [allProducts]="allProducts"></app-navbar>
 
 <div class="mobileview">
-  <div class="row">
-    <div class="col-lg-6 text-right order-2 position-relative">
-      <div class="slider-wrapper">
-        <div class="slider">
-          <div class="slide">
-            <img
-              src="../../../../../assets/img/categories/slider-1.svg"
-              width="100%"
-              alt="Home Collection"
-            />
-          </div>
-          <div class="slide">
-            <img
-              width="100%"
-              src="../../../../../assets/img/categories/slider-2.svg"
-              alt="Saree Collection"
-            />
-          </div>
-          <div class="slide">
-            <img
-              width="100%"
-              src="../../../../../assets/img/categories/slider-3.svg"
-              alt="Unstitched Suit"
-            />
-          </div>
-          <div class="slide">
-            <img
-              width="100%"
-              src="../../../../../assets/img/categories/slider-4.svg"
-              alt="Flash Sales"
-            />
-          </div>
-        </div>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+        aria-label="Slide 4"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="3000">
+        <a href="#shoppingNow">
+           <img src="../../../../../assets/img/categories/slider-1.svg" class="d-block w-100"
+          alt="../../../../../assets/img/categories/slider-1.svg" />
+        </a>
+       
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <a href="category/Saree">
+          <img src="../../../../../assets/img/categories/slider-2.svg" class="d-block w-100"
+            alt="../../../../../assets/img/categories/slider-2.svg" /></a>
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <a href="category/Unstitched%20Suits">
+          <img src="../../../../../assets/img/categories/slider-3.svg" class="d-block w-100"
+            alt="../../../../../assets/img/categories/slider-3.svg" />
+        </a>
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <a href="#shoppingNow">
+          <img src="../../../../../assets/img/categories/slider-4.svg" class="d-block w-100"
+            alt="../../../../../assets/img/categories/slider-4.svg" />
+        </a>
       </div>
     </div>
   </div>
 </div>
+
 <section class="header py-5">
   <div class="banner container">
-    <div
-      class="row g-4 d-flex justify-content-between align-items-between px-3"
-    >
+    <div class="row g-4 d-flex justify-content-between align-items-between px-3">
       <div class="col-lg-6 m-auto order-1">
         <h1 class="main-heading">
           Exquisite Statues & <span id="color-blue">Artifacts</span> Reflecting
@@ -56,34 +53,21 @@
           Discover the latest trends in fashion!
         </p>
 
-        <a
-          class="btn btn-blue btn-lg px-5 mt-2 d-none d-md-inline-block"
-          href="javascript:void(0);"
-          (click)="scrollToSection('shoppingNow')"
-          >Shop Now</a
-        >
+        <a class="btn btn-blue btn-lg px-5 mt-2 d-none d-md-inline-block" href="javascript:void(0);"
+          (click)="scrollToSection('shoppingNow')">Shop Now</a>
       </div>
       <div class="col-lg-6 text-right m-auto order-2">
         <img src="assets/img/header/header1.svg" width="100%" alt="" />
-        <a
-          class="btn btn-blue btn-lg px-5 mt-2 d-inline-block d-md-none"
-          href="javascript:void(0);"
-          (click)="scrollToSection('shoppingNow')"
-          >Shop Now</a
-        >
+        <a class="btn btn-blue btn-lg px-5 mt-2 d-inline-block d-md-none" href="javascript:void(0);"
+          (click)="scrollToSection('shoppingNow')">Shop Now</a>
       </div>
     </div>
   </div>
 </section>
 
-<app-app-popular-categoriesv2
-  [categories]="categories"
-  [availableProductsOnlyCategories]="availableProductsOnlyCategories"
-></app-app-popular-categoriesv2>
-<app-productsgalleryv2
-  [featured]="allProducts"
-  [wishlistProducts]="wishlistProducts"
-></app-productsgalleryv2>
+<app-app-popular-categoriesv2 [categories]="categories"
+  [availableProductsOnlyCategories]="availableProductsOnlyCategories"></app-app-popular-categoriesv2>
+<app-productsgalleryv2 [featured]="allProducts" [wishlistProducts]="wishlistProducts"></app-productsgalleryv2>
 
 <app-social-video></app-social-video>
 <app-footer></app-footer>

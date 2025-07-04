@@ -14,38 +14,39 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
   currentYear: number = new Date().getFullYear();
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private spinner: NgxSpinnerService, private _toast: NgToastService) {
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private _toast: NgToastService
+  ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      identifier: ['', [Validators.required]], // <-- Replaces 'email'
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
     this.spinner.show();
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (res) => {
-          setTimeout(() => {
-         
-            this.spinner.hide();
-          }, 1000);
-          this._toast.success({ detail: "SUCCESS", summary: 'Login successful!', position: 'br' });
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('customer', JSON.stringify(res));
-          console.log('Login successful', res);
-          this.router.navigate(['/']);
-        },
-        error: (err) => {
-          setTimeout(() => {
-         
-            this.spinner.hide();
-          }, 1000);
-          this._toast.error({ detail: "FAILED", summary: 'Invalid email or password', position: 'br' });
-        
-          this.errorMessage = 'Invalid email or password';
-        }
-      });
-    }
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        setTimeout(() => this.spinner.hide(), 1000);
+        this._toast.success({ detail: "SUCCESS", summary: 'Login successful!', position: 'br' });
+
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('customer', JSON.stringify(res));
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        setTimeout(() => this.spinner.hide(), 1000);
+        this._toast.error({ detail: "FAILED", summary: 'Invalid credentials', position: 'br' });
+        this.errorMessage = 'Invalid credentials';
+      }
+    });
   }
 }

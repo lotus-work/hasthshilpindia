@@ -4,7 +4,7 @@
       <div class="col-lg-5 col-12">
         <!-- Logo shown only on md and smaller screens -->
         <div class="d-lg-none text-center mb-4">
-          <img src="../../../../assets/img/logo.svg" width="200" alt="Logo">
+          <img src="../../../../assets/img/logo.svg" width="200" alt="Logo" />
         </div>
 
         <main class="form-signin">
@@ -13,13 +13,13 @@
 
             <div class="form-floating">
               <input
-                type="email"
+                type="text"
                 class="form-control"
-                id="floatingInput"
-                placeholder="name@example.com"
-                formControlName="email"
+                id="floatingIdentifier"
+                placeholder="Email or Mobile"
+                formControlName="identifier"
               />
-              <label for="floatingInput">Email address</label>
+              <label for="floatingIdentifier">Email or Mobile</label>
             </div>
 
             <div class="form-floating">
@@ -31,12 +31,22 @@
                 formControlName="password"
               />
               <label for="floatingPassword">Password</label>
-              <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">
+              <div
+                *ngIf="
+                  loginForm.controls['password'].invalid &&
+                  loginForm.controls['password'].touched
+                "
+                class="text-danger"
+              >
                 Password must be at least 6 characters
               </div>
             </div>
 
-            <button class="btn btn-primary w-100 py-2 mt-3" type="submit" [disabled]="loginForm.invalid">
+            <button
+              class="btn btn-primary w-100 py-2 mt-3"
+              type="submit"
+              [disabled]="loginForm.invalid"
+            >
               Login
             </button>
 
@@ -45,20 +55,32 @@
             </a>
 
             <div class="text-center mb-4">
-              <a href="forgot-password" class="text-muted text-decoration-none">Forgot Password ?</a>
+              <a href="forgot-password" class="text-muted text-decoration-none"
+                >Forgot Password ?</a
+              >
             </div>
 
             <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
-            <p class="text-center" style="font-size: 12px;"><a routerLink="/terms-of-service" class="no-underline">Terms of Service</a></p>
-            <p class="text-center" style="font-size: 12px;"><a routerLink="/shipping-policy" class="no-underline">Shopping Policy</a></p>
+            <p class="text-center" style="font-size: 12px">
+              <a routerLink="/terms-of-service" class="no-underline"
+                >Terms of Service</a
+              >
+            </p>
+            <p class="text-center" style="font-size: 12px">
+              <a routerLink="/shipping-policy" class="no-underline"
+                >Shopping Policy</a
+              >
+            </p>
           </form>
         </main>
       </div>
 
       <!-- welcome-section visible only on lg and up -->
-      <div class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center">
+      <div
+        class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center"
+      >
         <div class="w-80">
-          <img src="../../../../assets/img/logo.svg" width="350" alt="Logo">
+          <img src="../../../../assets/img/logo.svg" width="350" alt="Logo" />
         </div>
       </div>
     </div>

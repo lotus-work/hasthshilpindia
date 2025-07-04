@@ -15,6 +15,14 @@ const sendEmail = require("./emailCtrl");
 const { addEmailJob } = require('../utils/emailQueue'); 
 const { createPasswordResetToken } = require("../models/userModel");
 
+const twilio = require('twilio');
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const verifyServiceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
+const client = twilio(accountSid, authToken);
+
+
 // Create a User ----------------------------------------------
 
 const createUser = asyncHandler(async (req, res) => {
@@ -43,29 +51,36 @@ const createUser = asyncHandler(async (req, res) => {
 
 // Login a user
 const loginUserCtrl = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  // check if user exists or not
-  const findUser = await User.findOne({ email });
+  const { identifier, password } = req.body; // 'identifier' can be email or mobile
+
+  // Check if input is a mobile number (only digits, 10+ characters)
+  const isMobile = /^[0-9]{10,}$/.test(identifier);
+
+  const findUser = await User.findOne(
+    isMobile ? { mobile: identifier } : { email: identifier }
+  );
+
   if (findUser && (await findUser.isPasswordMatched(password))) {
-    const refreshToken = await generateRefreshToken(findUser?._id);
-    const updateuser = await User.findByIdAndUpdate(
-      findUser.id,
-      {
-        refreshToken: refreshToken,
-      },
+    const refreshToken = await generateRefreshToken(findUser._id);
+
+    await User.findByIdAndUpdate(
+      findUser._id,
+      { refreshToken },
       { new: true }
     );
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-       maxAge: 27 * 24 * 60 * 60 * 1000
+      maxAge: 27 * 24 * 60 * 60 * 1000, // 27 days
     });
+
     res.json({
-      _id: findUser?._id,
-      firstname: findUser?.firstname,
-      lastname: findUser?.lastname,
-      email: findUser?.email,
-      mobile: findUser?.mobile,
-      token: generateToken(findUser?._id),
+      _id: findUser._id,
+      firstname: findUser.firstname,
+      lastname: findUser.lastname,
+      email: findUser.email,
+      mobile: findUser.mobile,
+      token: generateToken(findUser._id),
     });
   } else {
     throw new Error("Invalid Credentials");
@@ -183,9 +198,7 @@ const updatedUser = asyncHandler(async (req, res) => {
       _id,
       {
         firstname: req?.body?.firstname,
-        lastname: req?.body?.lastname,
-        email: req?.body?.email,
-        mobile: req?.body?.mobile,
+        lastname: req?.body?.lastname
       },
       {
         new: true,
@@ -845,10 +858,55 @@ const getOrderAnalytics = asyncHandler(async (req, res) => {
   }
 });
 
+// Send OTP
+const sendOtp = asyncHandler(async (req, res) => {
+  const { mobile } = req.body;
+  if (!mobile) {
+    res.status(400);
+    throw new Error('Mobile number is required');
+  }
+
+  try {
+    const verification = await client.verify.v2.services(verifyServiceSid)
+      .verifications
+      .create({ to: `+91${mobile}`, channel: 'sms' });
+
+    res.status(200).json({ success: true, status: verification.status });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Verify OTP
+const verifyOtp = asyncHandler(async (req, res) => {
+  const { mobile, otp } = req.body;
+  if (!mobile || !otp) {
+    res.status(400);
+    throw new Error('Mobile and OTP are required');
+  }
+
+  try {
+    const verificationCheck = await client.verify.v2.services(verifyServiceSid)
+      .verificationChecks
+      .create({ to: `+91${mobile}`, code: otp });
+
+    if (verificationCheck.status === 'approved') {
+      res.status(200).json({ success: true, message: 'OTP verified successfully' });
+    } else {
+      res.status(400).json({ success: false, message: 'Invalid OTP' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
 
 
 
 module.exports = {
+  sendOtp,
+  verifyOtp,
   createUser,
   loginUserCtrl,
   checkUserExistsCtrl,

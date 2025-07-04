@@ -1,6 +1,8 @@
 const express = require("express");
 const {
   createUser,
+    sendOtp,
+  verifyOtp,
   loginUserCtrl,
   checkUserExistsCtrl,
   getallUser,
@@ -41,6 +43,8 @@ const { checkout, paymentVerification } = require("../controller/paymentCtrl");
 
 const router = express.Router();
 router.post("/register", createUser);
+router.post("/sendOtp", sendOtp);
+router.post("/verifyOtp", verifyOtp);
 router.post("/forgot-password-token", forgotPasswordToken);
 
 router.put("/reset-password/:token", resetPassword);

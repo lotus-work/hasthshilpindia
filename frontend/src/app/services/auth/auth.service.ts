@@ -32,6 +32,17 @@ export class AuthService {
     );
   }
 
+  sendOtpViaTwilio(mobile: string): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  return this.http.post<any>(`${this.apiUrl}/user/sendOtp`, { mobile }, { headers });
+}
+
+verifyOtpViaTwilio(mobile: string, otp: string): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  return this.http.post<any>(`${this.apiUrl}/user/verifyOtp`, { mobile, otp }, { headers });
+}
+
+
   editUserByAdmin(userData: any, token: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,

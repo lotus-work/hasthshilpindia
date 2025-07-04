@@ -8,10 +8,10 @@
         </div>
 
         <main class="form-signin">
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="registerForm">
             <h5 class="mb-3 text-center text-lg-start">Create new account</h5>
 
-            <div class="form-floating">
+            <div class="form-floating mb-2">
               <input
                 type="text"
                 class="form-control"
@@ -22,7 +22,7 @@
               <label for="firstname">First Name</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-2">
               <input
                 type="text"
                 class="form-control"
@@ -33,7 +33,7 @@
               <label for="lastname">Last Name</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-2">
               <input
                 type="text"
                 class="form-control"
@@ -44,7 +44,7 @@
               <label for="mobile">Mobile</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-2">
               <input
                 type="email"
                 class="form-control"
@@ -55,7 +55,7 @@
               <label for="email">Email address</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
               <input
                 type="password"
                 class="form-control"
@@ -67,54 +67,50 @@
             </div>
 
             <button
-              class="btn btn-primary w-100 py-2 mt-3"
+              class="btn btn-primary w-100 py-2 mt-2"
               type="button"
               [disabled]="isLoading || registerForm.invalid"
               (click)="sendOtp()"
             >
-              {{ isLoading ? "Sending OTP..." : "Create new account" }}
+              {{ isLoading ? 'Sending OTP...' : 'Create new account' }}
             </button>
+
             <a class="btn btn-dark w-100 my-2" href="/login">Login</a>
 
             <p class="mt-2 text-center">© 2021-{{ currentYear }}</p>
             <p class="text-center" style="font-size: 12px">
-              <a href="/terms-of-service" class="no-underline"
-                >Terms of Service</a
-              >
+              <a href="/terms-of-service" class="no-underline">Terms of Service</a>
             </p>
             <p class="text-center" style="font-size: 12px">
-              <a href="/shipping-policy" class="no-underline"
-                >Shipping Policy</a
-              >
+              <a href="/shipping-policy" class="no-underline">Shipping Policy</a>
             </p>
           </form>
         </main>
       </div>
+
       <div class="col-lg-5 col-12" *ngIf="otpSent">
         <!-- OTP Section -->
         <div>
-          <div class="form-floating">
+          <div class="form-floating mb-3">
             <input
               type="text"
               class="form-control"
               id="otp"
               placeholder="Enter OTP"
               [(ngModel)]="enteredOtp"
+              name="otp"
             />
-            <label for="otp"
-              >Enter OTP sent to {{ "+91" + registerForm.value.mobile }}</label
-            >
+            <label for="otp">Enter OTP sent to {{ registerForm.value.mobile }}</label>
           </div>
 
-          <button class="btn btn-success w-100 py-2 mt-3" (click)="verifyOtp()">
+          <button class="btn btn-success w-100 py-2" (click)="verifyOtp()">
             Verify OTP
           </button>
         </div>
       </div>
-      <!-- Welcome section visible only on large screens and above -->
-      <div
-        class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center"
-      >
+
+      <!-- Welcome section for large screens -->
+      <div class="col-lg-7 d-none d-lg-flex welcome-section flex-column justify-content-center align-items-center text-white text-center">
         <div class="w-80">
           <img src="../../../../assets/img/logo.svg" width="350" alt="Logo" />
         </div>
