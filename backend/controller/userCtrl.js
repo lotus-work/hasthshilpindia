@@ -14,8 +14,12 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("./emailCtrl");
 const { addEmailJob } = require('../utils/emailQueue'); 
 const { createPasswordResetToken } = require("../models/userModel");
-
+const otpStore = new Map();
 const twilio = require('twilio');
+const axios = require("axios");
+const qs = require("qs");
+
+
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -863,15 +867,41 @@ const sendOtp = asyncHandler(async (req, res) => {
   const { mobile } = req.body;
   if (!mobile) {
     res.status(400);
-    throw new Error('Mobile number is required');
+    throw new Error("Mobile number is required");
   }
 
-  try {
-    const verification = await client.verify.v2.services(verifyServiceSid)
-      .verifications
-      .create({ to: `+91${mobile}`, channel: 'sms' });
+  // Generate 6-digit OTP
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+const message = `Your OTP from Hasthshilp is ${otp}. This code is valid for 5 minutes. Do not share it with anyone.`;
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_PHONE_NUMBER;
 
-    res.status(200).json({ success: true, status: verification.status });
+  try {
+    await axios.post(
+      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+      qs.stringify({
+        To: `+91${mobile}`,
+        From: from,
+        Body: message,
+      }),
+      {
+        auth: {
+          username: accountSid,
+          password: authToken,
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    otpStore.set(mobile, {
+      otp,
+      expiry: Date.now() + 5 * 60 * 1000,
+    });
+
+    res.status(200).json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -882,25 +912,27 @@ const verifyOtp = asyncHandler(async (req, res) => {
   const { mobile, otp } = req.body;
   if (!mobile || !otp) {
     res.status(400);
-    throw new Error('Mobile and OTP are required');
+    throw new Error("Mobile and OTP are required");
   }
 
-  try {
-    const verificationCheck = await client.verify.v2.services(verifyServiceSid)
-      .verificationChecks
-      .create({ to: `+91${mobile}`, code: otp });
+  const storedOtp = otpStore.get(mobile);
 
-    if (verificationCheck.status === 'approved') {
-      res.status(200).json({ success: true, message: 'OTP verified successfully' });
-    } else {
-      res.status(400).json({ success: false, message: 'Invalid OTP' });
-    }
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+  if (!storedOtp) {
+    return res.status(400).json({ success: false, message: "OTP not found or expired" });
   }
+
+  if (Date.now() > storedOtp.expiry) {
+    otpStore.delete(mobile);
+    return res.status(400).json({ success: false, message: "OTP expired" });
+  }
+
+  if (storedOtp.otp !== otp) {
+    return res.status(400).json({ success: false, message: "Invalid OTP" });
+  }
+
+  otpStore.delete(mobile); // Clean up on success
+  res.status(200).json({ success: true, message: "OTP verified successfully" });
 });
-
-
 
 
 
