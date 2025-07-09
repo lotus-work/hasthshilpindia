@@ -278,7 +278,6 @@ li{
     word-break: normal;           /* Do NOT break mid-word */
     overflow-wrap: break-word;    /* Break only if word is too long */
     overflow-x: hidden;
-    font-size: 20px;
     text-align: justify !important;
   }
   

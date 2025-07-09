@@ -13,76 +13,77 @@
         class="row row-cols-2 row-cols-lg-5 row-cols-md-3 gy-5 justify-content-center align-items-center"
       >
         <div
-          class="col"
-          *ngFor="let product of products"
-          [routerLink]="['/details', product._id]"
-          style="cursor: pointer; position: relative"
-        >
-          <div class="card product-card">
-            <div
-              class="wishlist-icon"
-              (click)="toggleWishlist(product); $event.stopPropagation()"
-              [ngClass]="{ wishlisted: isWishlisted(product) }"
-            >
+  class="col"
+  *ngFor="let product of products"
+  style="cursor: pointer; position: relative"
+>
+  <a
+    [routerLink]="['/details', product._id]"
+    target="_parent"
+    class="text-decoration-none text-dark"
+  >
+    <div class="card product-card">
+      <!-- Wishlist icon -->
+      <div
+        class="wishlist-icon"
+        (click)="toggleWishlist(product); $event.preventDefault(); $event.stopPropagation();"
+        [ngClass]="{ wishlisted: isWishlisted(product) }"
+      >
+        <i
+          class="fa-heart"
+          [ngClass]="{
+            'fa-solid': isWishlisted(product),
+            'fa-regular': !isWishlisted(product)
+          }"
+        ></i>
+      </div>
+
+      <!-- Image -->
+      <div class="image-wrapper">
+        <img
+          *ngIf="product.images?.length"
+          [src]="product.images[0]?.url"
+          alt="{{ product.title }}"
+          class="card-img-top product-image"
+        />
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <p class="text-body-tertiary">{{ product.category }}</p>
+        <p class="fw-bold fs-6">
+          {{ product.title | slice : 0 : 20 }}{{ product.title.length > 20 ? "..." : "" }}
+        </p>
+        <p>
+          <span id="offer-price" class="fs-5">₹{{ product.price }}</span>
+          &nbsp;&nbsp;
+          <span id="original-price">
+            ₹{{ product.originalPrice || product.price * 2 }}
+          </span>
+        </p>
+
+        <!-- Ratings -->
+        <div class="d-flex align-items-center" id="reviews">
+          <ng-container *ngIf="product.totalrating > 0; else noRating">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
               <i
-                class="fa-heart"
-                [ngClass]="{
-                  'fa-solid': isWishlisted(product),
-                  'fa-regular': !isWishlisted(product)
-                }"
+                class="fa-star"
+                [ngClass]="j < product.totalrating ? 'fa-solid' : 'fa-regular'"
               ></i>
-            </div>
-
-            <div class="image-wrapper">
-              <img
-                *ngIf="product.images?.length"
-                [src]="product.images[0]?.url"
-                alt="{{ product.title }}"
-                class="card-img-top product-image"
-              />
-            </div>
-
-            <div class="card-body">
-              <p class="text-body-tertiary">{{ product.category }}</p>
-              <p class="fw-bold fs-6">
-                {{ product.title | slice : 0 : 20
-                }}{{ product.title.length > 20 ? "..." : "" }}
-              </p>
-              <p>
-                <span id="offer-price" class="fs-5">₹{{ product.price }}</span>
-                &nbsp;&nbsp;
-                <span id="original-price">
-                  ₹{{ product.originalPrice || product.price * 2 }}
-                </span>
-              </p>
-
-              <div class="d-flex align-items-center" id="reviews">
-                <ng-container *ngIf="product.totalrating > 0; else noRating">
-                  <ng-container
-                    *ngFor="let star of [1, 2, 3, 4, 5]; let j = index"
-                  >
-                    <i
-                      class="fa-star"
-                      [ngClass]="
-                        j < product.totalrating ? 'fa-solid' : 'fa-regular'
-                      "
-                    ></i>
-                  </ng-container>
-                </ng-container>
-                <ng-template #noRating>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                </ng-template>
-                <span id="review-comment">
-                  ({{ product.ratings.length || 0 }})
-                </span>
-              </div>
-            </div>
-          </div>
+            </ng-container>
+          </ng-container>
+          <ng-template #noRating>
+            <i class="fa-solid fa-star" *ngFor="let _ of [1,2,3,4,5]"></i>
+          </ng-template>
+          <span id="review-comment">
+            ({{ product.ratings.length || 0 }})
+          </span>
         </div>
+      </div>
+    </div>
+  </a>
+</div>
+
       </div>
     </div>
   </div>
