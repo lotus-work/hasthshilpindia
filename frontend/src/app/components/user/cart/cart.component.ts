@@ -20,7 +20,9 @@ export class CartComponent {
   grandTotal: number = 0;
   token: string = '';
   showCheckoutModal: boolean = false;
-  showCheckoutForm = false;
+showCheckoutForm: boolean = false;
+
+checkoutButtonDisabled: boolean = false;
   userData: any = {};
   checkoutForm: FormGroup;
 
@@ -87,10 +89,13 @@ export class CartComponent {
         phone: this.userData.mobile,
       });
     }
+    console.log(this.userData);
     this.token = this.userData.token;
     handleSessionExpiration(this.token, this.router);
     this.loadUserCart(this.token);
     localStorage.setItem('userCart', JSON.stringify(this.userCartProducts));
+
+    console.log('User Data:', this.userData);
   }
 
   async increment(product: any): Promise<void> {
@@ -371,5 +376,17 @@ export class CartComponent {
     const rzp = new (window as any).Razorpay(options);
     rzp.open();
   }
+
+onCheckoutClick(): void {
+  this.checkoutButtonDisabled = true;
+
+  // Toggle the form immediately
+  this.showCheckoutForm = true;
+
+  // Optional: Re-enable the button after a short delay
+  setTimeout(() => {
+    this.checkoutButtonDisabled = false;
+  }, 500); // Adjust time if needed
+}
   
 }

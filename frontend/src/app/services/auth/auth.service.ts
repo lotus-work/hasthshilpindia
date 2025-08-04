@@ -25,6 +25,16 @@ export class AuthService {
 
     return this.http.put<any>(`${this.apiUrl}/user/edit-user`, userData, { headers });
   }
+
+  saveAddress(address: any, token: string): Observable<any> {
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.put<any>(`${this.apiUrl}/user/save-address`, address, { headers });
+}
+
    checkUserExists(data: { email: string; mobile: string }): Observable<{ exists: boolean; message: string }> {
     return this.http.post<{ exists: boolean; message: string }>(
       `${this.apiUrl}/user/validate/exists`,

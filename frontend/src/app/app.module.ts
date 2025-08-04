@@ -69,6 +69,9 @@ import { SocialVideoComponent } from './components/user/social-video/social-vide
 import { Productsgalleryv2Component } from './components/user/v2/productsgalleryv2/productsgalleryv2.component';
 import { CategoryPageComponent } from './components/user/v2/category-page/category-page.component';
 import { RelatedProductsComponent } from './components/user/related-products/related-products.component';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+
+const CLIENT_ID ="1077908882481-2c2hgj56b5m9rkfoirtd56c0ln05ct48.apps.googleusercontent.com";
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,10 +146,24 @@ import { RelatedProductsComponent } from './components/user/related-products/rel
     NgToastModule,
     DataTablesModule,
     NgToastModule ,
+    SocialLoginModule,
     QuillModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
+  providers: [ 
+    { 
+    provide: "SocialAuthServiceConfig",
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              CLIENT_ID
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig},
     provideClientHydration(),
     HttpClientModule
   ],

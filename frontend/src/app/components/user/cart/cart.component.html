@@ -27,15 +27,23 @@
           <div class="card">
             <div class="row g-0">
               <!-- Product Image -->
-              <div class="col-12 col-md-3 d-flex justify-content-start align-items-center text-center ms-md-auto">
-                <img [src]="
+              <div
+                class="col-12 col-md-3 d-flex justify-content-start align-items-center text-center ms-md-auto"
+              >
+                <img
+                  [src]="
                     product.productId.images[0]?.url || 'default-image.jpg'
-                  " class="w-100 h-100" style="object-fit: cover; display: block"
-                  alt="{{ product.productId.title }}" />
+                  "
+                  class="w-100 h-100"
+                  style="object-fit: cover; display: block"
+                  alt="{{ product.productId.title }}"
+                />
               </div>
 
               <!-- Product Details -->
-              <div class="col-md-7 d-flex justify-content-center align-items-center">
+              <div
+                class="col-md-7 d-flex justify-content-center align-items-center"
+              >
                 <div class="card-body">
                   <h5 class="card-title fst-italic">
                     {{ product.productId.title }}
@@ -44,34 +52,59 @@
                   <!-- Product Price under the title -->
                   <span class="fw-bold">₹ {{ product.productId.price }}</span>
 
-                  <div class="mt-2" *ngIf="product?.color && product.color.length">
-                    <span *ngFor="let variant of product.color" class="badge rounded-pill text-bg-secondary me-1">
+                  <div
+                    class="mt-2"
+                    *ngIf="product?.color && product.color.length"
+                  >
+                    <span
+                      *ngFor="let variant of product.color"
+                      class="badge rounded-pill text-bg-secondary me-1"
+                    >
                       {{ variant.title }}
                     </span>
                   </div>
                   <!-- Quantity Controls -->
                   <div class="mt-4 d-flex align-items-center">
-                    <button class="btn btn-outline-secondary" (click)="decrement(product)"
-                      [disabled]="product.quantity <= 1">
+                    <button
+                      class="btn btn-outline-secondary"
+                      (click)="decrement(product)"
+                      [disabled]="product.quantity <= 1"
+                    >
                       -
                     </button>
 
-                    <input type="number" class="form-control mx-2 text-center" style="width: 60px"
-                      [(ngModel)]="product.quantity" min="1" [max]="product.productId.quantity"
-                      (ngModelChange)="updateTotal()" />
+                    <input
+                      type="number"
+                      class="form-control mx-2 text-center"
+                      style="width: 60px"
+                      [(ngModel)]="product.quantity"
+                      min="1"
+                      [max]="product.productId.quantity"
+                      (ngModelChange)="updateTotal()"
+                    />
 
-                    <button class="btn btn-outline-secondary" (click)="increment(product)" [disabled]="
+                    <button
+                      class="btn btn-outline-secondary"
+                      (click)="increment(product)"
+                      [disabled]="
                         product.quantity >= product.productId.quantity
-                      ">
+                      "
+                    >
                       +
                     </button>
                   </div>
 
                   <div class="action-buttons mt-3">
-                    <button (click)="viewProductDetails(product.productId._id)" class="btn btn-primary m-1">
+                    <button
+                      (click)="viewProductDetails(product.productId._id)"
+                      class="btn btn-primary m-1"
+                    >
                       View Details
                     </button>
-                    <button (click)="deleteProductFromCart(product._id)" class="btn btn-dark">
+                    <button
+                      (click)="deleteProductFromCart(product._id)"
+                      class="btn btn-dark"
+                    >
                       Remove from Cart
                     </button>
                   </div>
@@ -79,10 +112,14 @@
               </div>
 
               <!-- Total per item (quantity * price) -->
-              <div class="col-md-2 d-flex justify-content-end align-items-end text-end">
+              <div
+                class="col-md-2 d-flex justify-content-end align-items-end text-end"
+              >
                 <div class="card-body">
                   <h5 class="card-text">
-                    <span class="fw-bold">₹ {{ product.productId.price * product.quantity }}</span>
+                    <span class="fw-bold"
+                      >₹ {{ product.productId.price * product.quantity }}</span
+                    >
                   </h5>
                 </div>
               </div>
@@ -94,23 +131,28 @@
       <div class="row pt-5">
         <div class="col-lg-12">
           <h2>Bill Details</h2>
-          <div class="row">
-            <div class="col-lg-6 col-6">
-              <h5>Item Total</h5>
-              <h5>Delivery Charge</h5>
-              <hr />
-              <h3>Grand Total</h3>
+          <div class="bill-details">
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="mb-0">Item Total</h5>
+              <h5 class="mb-0">₹ {{ itemTotal }}</h5>
             </div>
-            <div class="col-lg-6 col-6 text-end">
-              <h5>₹ {{ itemTotal }}</h5>
-              <h5>₹ {{ deliveryCharge }}</h5>
-              <hr />
-              <h3>₹ {{ grandTotal }}</h3>
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="mb-0">Delivery Charge</h5>
+              <h5 class="mb-0">₹ {{ deliveryCharge }}</h5>
             </div>
-            <button class="btn btn-primary mt-3 col-10 m-auto" (click)="showCheckoutForm = !showCheckoutForm">
-              Checkout
-            </button>
+            <hr />
+            <div class="d-flex justify-content-between mt-2">
+              <h3 class="mb-0">Grand Total</h3>
+              <h3 class="mb-0">₹ {{ grandTotal }}</h3>
+            </div>
           </div>
+<button
+  class="btn btn-primary mt-3 col-12 m-auto"
+  [disabled]="checkoutButtonDisabled"
+  (click)="onCheckoutClick()"
+>
+  Checkout
+</button>
         </div>
         <div class="col-lg-12" *ngIf="showCheckoutForm">
           <hr />
@@ -121,19 +163,34 @@
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" id="firstName" class="form-control" formControlName="firstName"/>
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-control"
+                      formControlName="firstName"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" id="lastName" class="form-control" formControlName="lastName" />
+                    <input
+                      type="text"
+                      id="lastName"
+                      class="form-control"
+                      formControlName="lastName"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" id="phone" class="form-control" formControlName="phone" />
+                    <input
+                      type="tel"
+                      id="phone"
+                      class="form-control"
+                      formControlName="phone"
+                    />
                   </div>
                 </div>
               </div>
@@ -142,16 +199,28 @@
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="city" class="form-label">City</label>
-                    <input type="text" id="city" class="form-control" formControlName="city" />
+                    <input
+                      type="text"
+                      id="city"
+                      class="form-control"
+                      formControlName="city"
+                      [(ngModel)]="userData.address.city"
+                    />
                   </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="state" class="form-label">State</label>
-                    <select id="state" class="form-select" formControlName="state">
+                    <select class="form-select">
                       <option value="" disabled>Select State</option>
-                      <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                      <option
+                        *ngFor="let state of states"
+                        [value]="state"
+                        [selected]="state === userData.address.state"
+                      >
+                        {{ state }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -159,7 +228,13 @@
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="zipcode" class="form-label">Zip Code</label>
-                    <input type="text" id="zipcode" class="form-control" formControlName="zipcode" />
+                    <input
+                      type="text"
+                      id="zipcode"
+                      class="form-control"
+                      formControlName="zipcode"
+                      [(ngModel)]="userData.address.zipcode"
+                    />
                   </div>
                 </div>
               </div>
@@ -168,23 +243,45 @@
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" id="address" class="form-control" formControlName="address" />
+                    <input
+                      type="text"
+                      id="address"
+                      class="form-control"
+                      formControlName="address"
+                      [(ngModel)]="userData.address.street"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
-                    <label for="address2" class="form-label">Apartment, Colony, House No ..</label>
-                    <input type="text" id="address2" class="form-control" formControlName="address2" />
+                    <label for="address2" class="form-label"
+                      >Apartment, Colony, House No ..</label
+                    >
+                    <input
+                      type="text"
+                      id="address2"
+                      class="form-control"
+                      formControlName="address2"
+                      [(ngModel)]="userData.address.apartment"
+                    />
                   </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="mt-3">
-                  <button type="button" class="btn btn-secondary" (click)="showCheckoutForm = false">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="showCheckoutForm = false"
+                  >
                     Cancel
                   </button>
-                  <button type="button" class="btn btn-secondary m-2" (click)="clearForm()">
+                  <button
+                    type="button"
+                    class="btn btn-secondary m-2"
+                    (click)="clearForm()"
+                  >
                     Clear
                   </button>
                 </div>
@@ -195,28 +292,57 @@
               <h4 class="mb-4">Choose Payment Method</h4>
 
               <div class="payment-methods bg-light p-3 rounded shadow-sm">
-                <div class="form-check border rounded p-3 mb-3 d-flex align-items-center justify-content-between"
-                  [class.border-primary]="checkoutForm.controls['paymentMethod'].value === 'razorpay'">
+                <div
+                  class="form-check border rounded p-3 mb-3 d-flex align-items-center justify-content-between"
+                  [class.border-primary]="
+                    checkoutForm.controls['paymentMethod'].value === 'razorpay'
+                  "
+                >
                   <div>
-                    <input class="form-check-input me-2" type="radio" name="paymentMethod" id="razorpay"
-                      value="razorpay" formControlName="paymentMethod"
-                      [checked]="checkoutForm.controls['paymentMethod'].value === 'razorpay'" />
+                    <input
+                      class="form-check-input me-2"
+                      type="radio"
+                      name="paymentMethod"
+                      id="razorpay"
+                      value="razorpay"
+                      formControlName="paymentMethod"
+                      [checked]="
+                        checkoutForm.controls['paymentMethod'].value ===
+                        'razorpay'
+                      "
+                    />
                     <label class="form-check-label fw-bold" for="razorpay">
-                      Razorpay <span class="badge bg-success ms-2">Recommended</span>
-                      <div class="small text-muted mt-1">Pay securely via UPI, cards or net banking.</div>
+                      Razorpay
+                      <span class="badge bg-success ms-2">Recommended</span>
+                      <div class="small text-muted mt-1">
+                        Pay securely via UPI, cards or net banking.
+                      </div>
                     </label>
                   </div>
-                  <img src="../../../../assets/img/safepayments.png" alt="Razorpay" height="32" />
+                  <img
+                    src="../../../../assets/img/safepayments.png"
+                    alt="Razorpay"
+                    height="32"
+                  />
                 </div>
 
                 <div
-                  class="form-check border rounded p-3 d-flex align-items-center justify-content-between bg-light text-muted">
+                  class="form-check border rounded p-3 d-flex align-items-center justify-content-between bg-light text-muted"
+                >
                   <div>
-                    <input class="form-check-input me-2" type="radio" name="paymentMethod" id="cod" value="cod"
-                      disabled />
+                    <input
+                      class="form-check-input me-2"
+                      type="radio"
+                      name="paymentMethod"
+                      id="cod"
+                      value="cod"
+                      disabled
+                    />
                     <label class="form-check-label fw-bold" for="cod">
                       Cash on Delivery
-                      <div class="small text-muted mt-1">Currently unavailable. Please choose Razorpay.</div>
+                      <div class="small text-muted mt-1">
+                        Currently unavailable. Please choose Razorpay.
+                      </div>
                     </label>
                   </div>
                   <i class="fa fa-ban fa-lg text-muted"></i>
@@ -224,7 +350,12 @@
               </div>
 
               <div class="text-end mt-4">
-                <button type="button" class="btn btn-primary "   [disabled]="!checkoutForm.valid" (click)="checkout()">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  [disabled]="!checkoutForm.valid"
+                  (click)="checkout()"
+                >
                   <i class="fa fa-shopping-cart me-2"></i> Place Order
                 </button>
               </div>
@@ -235,8 +366,12 @@
     </ng-container>
     <ng-template #emptyCart>
       <div class="empty-cart text-center text-muted">
-        <img src="../../../../assets/img/mis/empty-cartt.png" alt="Empty Cart" class="img-fluid"
-          style="max-width: 300px" />
+        <img
+          src="../../../../assets/img/mis/empty-cartt.png"
+          alt="Empty Cart"
+          class="img-fluid"
+          style="max-width: 300px"
+        />
         <h5 class="mt-4">Oops! Your cart is feeling lonely 😢</h5>
         <p>Why not add something awesome to it?</p>
         <a href="categories" class="btn btn-dark mt-3"> Start Shopping Now </a>

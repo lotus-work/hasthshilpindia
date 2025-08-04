@@ -84,6 +84,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
       lastname: findUser.lastname,
       email: findUser.email,
       mobile: findUser.mobile,
+      address: findUser.address,
       token: generateToken(findUser._id),
     });
   } else {
@@ -258,25 +259,28 @@ const updatedUserByAdmin = asyncHandler(async (req, res) => {
   }
 });
 
-// save user Address
-
 const saveAddress = asyncHandler(async (req, res, next) => {
   const { _id } = req.user;
   validateMongoDbId(_id);
 
   try {
+    // Only include fields that are not undefined or null
+    const addressData = {};
+    if (req.body.city) addressData.city = req.body.city;
+    if (req.body.state) addressData.state = req.body.state;
+    if (req.body.zipcode) addressData.zipcode = req.body.zipcode;
+    if (req.body.street) addressData.street = req.body.street;
+    if (req.body.apartment) addressData.apartment = req.body.apartment;
+
     const updatedUser = await User.findByIdAndUpdate(
       _id,
-      {
-        address: req?.body?.address,
-      },
-      {
-        new: true,
-      }
+      { address: addressData },
+      { new: true }
     );
+
     res.json(updatedUser);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: error.message });
   }
 });
 
