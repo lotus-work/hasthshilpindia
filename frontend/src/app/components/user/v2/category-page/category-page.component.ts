@@ -46,7 +46,7 @@ export class CategoryPageComponent implements OnInit {
   userCartProducts: any;
  categoryDetails: CategoryData[] = [
     {
-      categoryName: 'Saree',
+      categoryName: 'Sarees',
       rawTitle:
         'Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility',
       description: 'Let the Aroma Guide You to Tranquility',

@@ -30,67 +30,76 @@ const client = twilio(accountSid, authToken);
 // Create a User ----------------------------------------------
 
 const createUser = asyncHandler(async (req, res) => {
-  /**
-   * TODO:Get the email from req.body
-   */
-  const email = req.body.email;
-  /**
-   * TODO:With the help of email find the user exists or not
-   */
-  const findUser = await User.findOne({ email: email });
+  const { email, mobile, authProvider } = req.body;
 
-  if (!findUser) {
-    /**
-     * TODO:if user not found user create a new user
-     */
-    const newUser = await User.create(req.body);
-    res.json(newUser);
-  } else {
-    /**
-     * TODO:if user found then thow an error: User already exists
-     */
-    throw new Error("User Already Exists");
+  if (authProvider === 'form' && !mobile) {
+    res.status(400);
+    throw new Error("Mobile number is required for form signup");
   }
+
+  if (authProvider === 'form' && !req.body.password) {
+    res.status(400);
+    throw new Error("Password is required for form signup");
+  }
+
+  const findUser = await User.findOne({ email });
+if (findUser) {
+  return res.status(409).json({
+    status: "fail",
+    message: "User already exists"
+  });
+}
+
+  const newUser = await User.create(req.body);
+  res.json(newUser);
 });
+
 
 // Login a user
 const loginUserCtrl = asyncHandler(async (req, res) => {
-  const { identifier, password } = req.body; // 'identifier' can be email or mobile
+  const { identifier, password, authProvider } = req.body;
 
-  // Check if input is a mobile number (only digits, 10+ characters)
-  const isMobile = /^[0-9]{10,}$/.test(identifier);
-
-  const findUser = await User.findOne(
-    isMobile ? { mobile: identifier } : { email: identifier }
-  );
-
-  if (findUser && (await findUser.isPasswordMatched(password))) {
-    const refreshToken = await generateRefreshToken(findUser._id);
-
-    await User.findByIdAndUpdate(
-      findUser._id,
-      { refreshToken },
-      { new: true }
-    );
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 27 * 24 * 60 * 60 * 1000, // 27 days
-    });
-
-    res.json({
-      _id: findUser._id,
-      firstname: findUser.firstname,
-      lastname: findUser.lastname,
-      email: findUser.email,
-      mobile: findUser.mobile,
-      address: findUser.address,
-      token: generateToken(findUser._id),
-    });
-  } else {
-    throw new Error("Invalid Credentials");
+  if (authProvider === 'form') {
+    if (!password) throw new Error("Password required for form login");
+    if (/^[0-9]{10,}$/.test(identifier)) {
+      var findUser = await User.findOne({ mobile: identifier, authProvider: 'form' });
+    } else {
+      var findUser = await User.findOne({ email: identifier, authProvider: 'form' });
+    }
+    if (!findUser || !(await findUser.isPasswordMatched(password))) {
+      throw new Error("Invalid Credentials");
+    }
+  } else if (authProvider === 'google') {
+    var findUser = await User.findOne({ email: identifier, authProvider: 'google' });
+    if (!findUser) {
+      // Create account without mobile/password if new Google signup
+      findUser = await User.create({
+        email: identifier,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        authProvider: 'google'
+      });
+    }
   }
+
+  const refreshToken = await generateRefreshToken(findUser._id);
+  await User.findByIdAndUpdate(findUser._id, { refreshToken }, { new: true });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    maxAge: 27 * 24 * 60 * 60 * 1000
+  });
+
+  res.json({
+    _id: findUser._id,
+    firstname: findUser.firstname,
+    lastname: findUser.lastname,
+    email: findUser.email,
+    mobile: findUser.mobile,
+    token: generateToken(findUser._id),
+  });
 });
+
 
 const checkUserExistsCtrl = asyncHandler(async (req, res) => {
   const { email, mobile } = req.body;

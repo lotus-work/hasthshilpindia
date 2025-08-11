@@ -1,24 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+declare const google: any;
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   isLoading = false;
   currentYear: number = new Date().getFullYear();
+  private clientId =
+    '481407361526-l2pphh32lheqffn9b867ets80mdre1o8.apps.googleusercontent.com';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
-    private _toast: NgToastService
+    private _toast: NgToastService,
+    private ngZone: NgZone
   ) {
     this.registerForm = this.fb.group({
       firstname: ['', Validators.required],
@@ -29,62 +34,135 @@ export class RegisterComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.initGoogleSignUp();
+  }
+
   onSubmit(): void {
     if (this.registerForm.invalid) return;
 
     const { email, mobile } = this.registerForm.value;
-
     this.isLoading = true;
     this.spinner.show();
 
-    this.authService.checkUserExists({ email, mobile }).subscribe({
+this.authService.checkUserExists({ email, mobile }).subscribe({
+  next: (res) => {
+    if (res.exists) {
+      this._toast.error({
+        detail: 'FAILED',
+        summary: res.message || 'User already exists.',
+        position: 'br',
+      });
+      this.spinner.hide();
+      this.isLoading = false;
+      return;
+    }
+
+    const payload = { ...this.registerForm.value, authProvider: 'form' };
+    this.registerUser(payload);
+  },
+  error: (err) => {
+    this.spinner.hide();
+    this.isLoading = false;
+    this._toast.error({
+      detail: 'ERROR',
+      summary: err?.error?.message || 'Something went wrong during user check.',
+      position: 'br',
+    });
+  },
+});
+
+  }
+
+  private registerUser(payload: any): void {
+    this.authService.register(payload).subscribe({
       next: (res) => {
-        if (res.exists) {
-          this.spinner.hide();
-          this.isLoading = false;
+        if (res.status === 'fail') {
           this._toast.error({
-            detail: 'Exists',
-            summary: res.message,
+            detail: 'FAILED',
+            summary: res.message || 'Registration failed.',
             position: 'br',
           });
+          this.spinner.hide();
+          this.isLoading = false;
           return;
         }
 
-        // Proceed to registration
-        this.authService.register(this.registerForm.value).subscribe({
-          next: () => {
-            this._toast.success({
-              detail: 'SUCCESS',
-              summary: 'Registration successful!',
-              position: 'br',
-            });
-
-            this.registerForm.reset();
-            this.spinner.hide();
-
-            setTimeout(() => {
-              window.location.href = '/login';
-            }, 3000);
-          },
-          error: () => {
-            this.spinner.hide();
-            this._toast.error({
-              detail: 'FAILED',
-              summary: 'Registration failed. Please try again.',
-              position: 'br',
-            });
-          },
-          complete: () => {
-            this.isLoading = false;
-          },
+        this._toast.success({
+          detail: 'SUCCESS',
+          summary: 'Registration successful!',
+          position: 'br',
         });
+        this.registerForm.reset();
+        this.spinner.hide();
+        this.isLoading = false;
+        setTimeout(() => (window.location.href = '/login'), 3000);
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
         this.isLoading = false;
         this._toast.error({
-          detail: 'ERROR',
-          summary: 'Something went wrong during user check.',
+          detail: 'FAILED',
+          summary: err?.error?.message || 'Registration failed. Please try again.',
+          position: 'br',
+        });
+      },
+    });
+  }
+
+  initGoogleSignUp(): void {
+    google.accounts.id.initialize({
+      client_id: this.clientId,
+      callback: (response: any) => this.handleGoogleResponse(response),
+    });
+
+    google.accounts.id.renderButton(document.getElementById('googleBtn'), {
+      theme: 'outline',
+      size: 'large',
+      width: '100%',
+    });
+  }
+
+  handleGoogleResponse(response: any): void {
+    const token = response.credential;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    const userData = {
+      firstname: payload.given_name,
+      lastname: payload.family_name,
+      email: payload.email,
+      authProvider: 'google',
+    };
+
+    this.spinner.show();
+    this.authService.register(userData).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.status === 'fail') {
+          this._toast.error({
+            detail: 'FAILED',
+            summary: res.message || 'Google Sign-up failed.',
+            position: 'br',
+          });
+          this.spinner.hide();
+          return;
+        }
+
+        this._toast.success({
+          detail: 'SUCCESS',
+          summary: 'Google Sign-up successful!',
+          position: 'br',
+        });
+        this.spinner.hide();
+        this.ngZone.run(() =>
+          setTimeout(() => (window.location.href = '/login'), 2000)
+        );
+      },
+      error: (err) => {
+        this.spinner.hide();
+        this._toast.error({
+          detail: 'FAILED',
+          summary: err?.error?.message || 'Google Sign-up failed. Please try again.',
           position: 'br',
         });
       },

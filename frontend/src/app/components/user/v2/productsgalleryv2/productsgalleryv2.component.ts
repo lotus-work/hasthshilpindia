@@ -25,7 +25,7 @@ export class Productsgalleryv2Component implements OnInit {
   backgroundColors: string[] = ['#FAEEE0', '#FFDAA3', '#B9DCFF'];
  categoryDetails: CategoryData[] = [
     {
-      categoryName: 'Saree',
+      categoryName: 'Sarees',
       rawTitle:
         'Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility',
       description: 'Let the Aroma Guide You to Tranquility',

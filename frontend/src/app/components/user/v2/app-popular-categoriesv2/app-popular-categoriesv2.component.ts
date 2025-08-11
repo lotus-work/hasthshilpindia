@@ -36,7 +36,7 @@ export class AppPopularCategoriesv2Component
 
   categoryDetails: CategoryData[] = [
     {
-      categoryName: 'Saree',
+      categoryName: 'Sarees',
       rawTitle:
         'Light Up Peace, <span style="color:#0464cb;">Breathe</span> In Tranquility',
       description: 'Let the Aroma Guide You to Tranquility',
