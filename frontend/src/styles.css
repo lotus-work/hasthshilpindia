@@ -318,8 +318,31 @@ li{
   height: 42px !important;
   font-size: 16px !important;
   border-radius: 6px !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .google-btn-wrapper iframe {
   width: 100% !important;
+}
+
+.google-btn-wrapper {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important; /* optional */
+}
+
+/* register.component.css */
+.google-btn-wrapper {
+  width: 90% !important; /* Matches w-90 */
+}
+
+.google-btn-wrapper > div {
+  width: 100% !important; /* Ensures the Google button fills its wrapper */
+}
+
+.nsm7Bb-HzV7m-LgbsSe {
+  width: 595px !important;
+    max-width: 595px !important;
+    min-width: min-content !important;
 }
