@@ -212,7 +212,8 @@ const updatedUser = asyncHandler(async (req, res) => {
       _id,
       {
         firstname: req?.body?.firstname,
-        lastname: req?.body?.lastname
+        lastname: req?.body?.lastname,
+        mobile: req?.body?.mobile,
       },
       {
         new: true,

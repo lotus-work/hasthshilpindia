@@ -22,15 +22,3 @@
     position: relative;
     z-index: 1;
 }
-
-/* Make Google button match the Create New Account button */
-.google-btn-wrapper > div {
-  width: 100% !important;          /* full width */
-  height: 42px !important;         /* same height as Bootstrap .btn */
-  font-size: 16px !important;      /* match text size */
-  border-radius: 6px !important;   /* match corner radius */
-}
-
-.google-btn-wrapper iframe {
-  width: 100% !important;
-}

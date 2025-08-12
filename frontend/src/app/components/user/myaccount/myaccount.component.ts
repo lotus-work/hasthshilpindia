@@ -7,7 +7,19 @@ import { AuthService } from '../../../services/auth/auth.service';
   styleUrls: ['./myaccount.component.css']
 })
 export class MyaccountComponent implements OnInit {
-  userData: any = {};
+userData: any = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  mobile: '',
+  address: {
+    city: '',
+    state: '',
+    zipcode: '',
+    street: '',
+    apartment: ''
+  }
+};
   originalUserData: any = {};
   isEditing: boolean = false;
   userCart: any;
@@ -52,20 +64,29 @@ export class MyaccountComponent implements OnInit {
   ];
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    const storedUser = localStorage.getItem('customer');
-    if (storedUser) {
-      this.userData = JSON.parse(storedUser);
-      this.originalUserData = { ...this.userData };
-    }
+ ngOnInit(): void {
+  const storedUser = localStorage.getItem('customer');
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
 
-    const cartData = localStorage.getItem('userCart') ?? '[]';
-    this.userCart = JSON.parse(cartData);
-    console.log(this.userCart);
-    this.userCartProducts = this.userCart.length;
+    // Merge existing stored data while ensuring address always exists
+    this.userData = {
+      ...this.userData,
+      ...parsedUser,
+      address: {
+        ...this.userData.address,
+        ...(parsedUser.address || {})
+      }
+    };
 
-    console.log(this.originalUserData);
+    this.originalUserData = { ...this.userData };
   }
+
+  const cartData = localStorage.getItem('userCart') ?? '[]';
+  this.userCart = JSON.parse(cartData);
+  this.userCartProducts = this.userCart.length;
+}
+
 
   editProfile(): void {
     this.isEditing = true;
