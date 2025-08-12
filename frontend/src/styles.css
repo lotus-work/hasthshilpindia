@@ -341,8 +341,17 @@ li{
   width: 100% !important; /* Ensures the Google button fills its wrapper */
 }
 
-.nsm7Bb-HzV7m-LgbsSe {
-  width: 595px !important;
+@media screen and (min-width: 769px) {
+  .nsm7Bb-HzV7m-LgbsSe {
+    width: 595px !important;
     max-width: 595px !important;
     min-width: min-content !important;
+  }
 }
+
+
+  .nsm7Bb-HzV7m-LgbsSe {
+     width: 324px !important;
+    max-width: 400px !important;
+    min-width: min-content !important;
+  }

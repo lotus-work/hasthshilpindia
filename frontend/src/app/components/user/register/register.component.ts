@@ -123,14 +123,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  initGoogleSignUp(): void {
-    google.accounts.id.initialize({
-      client_id: this.clientId,
-      callback: (response: any) => this.handleGoogleResponse(response),
-    });
+initGoogleSignUp(): void {
+  google.accounts.id.initialize({
+    client_id: this.clientId,
+    callback: (response: any) => this.handleGoogleResponse(response),
+    auto_select: false,   // ❌ Don't auto-select existing account
+    prompt_parent_id: "googleBtn", // Optional: restrict prompt to a container
+    cancel_on_tap_outside: true,   // Optional: closes if user clicks outside
+    ux_mode: "popup"      // Avoid full-page redirect
+  });
 
-    this.renderGoogleBtn();
-  }
+  // ❌ Don't call google.accounts.id.prompt() — that shows the One Tap UI
+  this.renderGoogleBtn();
+}
+
 
 renderGoogleBtn(): void {
   const btnContainer = document.getElementById('googleBtn');
@@ -197,4 +203,8 @@ renderGoogleBtn(): void {
       },
     });
   }
+
+  
 }
+
+
