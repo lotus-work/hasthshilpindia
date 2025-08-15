@@ -310,48 +310,10 @@ li{
   height: 100px !important;
 }
 
-
-
-/* Match Google button with main buttons */
-.google-btn-wrapper > div {
-  width: 100% !important;
-  height: 42px !important;
-  font-size: 16px !important;
-  border-radius: 6px !important;
-  justify-content: center !important;
-  align-items: center !important;
+  .custom-google-btn{
+    padding: 8px;;
+    background: white;
 }
-
-.google-btn-wrapper iframe {
-  width: 100% !important;
+.custom-google-btn:hover{
+    background: #f0f0f0;
 }
-
-.google-btn-wrapper {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important; /* optional */
-}
-
-/* register.component.css */
-.google-btn-wrapper {
-  width: 90% !important; /* Matches w-90 */
-}
-
-.google-btn-wrapper > div {
-  width: 100% !important; /* Ensures the Google button fills its wrapper */
-}
-
-@media screen and (min-width: 769px) {
-  .nsm7Bb-HzV7m-LgbsSe {
-    width: 595px !important;
-    max-width: 595px !important;
-    min-width: min-content !important;
-  }
-}
-
-
-  .nsm7Bb-HzV7m-LgbsSe {
-     width: 324px !important;
-    max-width: 400px !important;
-    min-width: min-content !important;
-  }

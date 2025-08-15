@@ -8,13 +8,16 @@ const dotenv = require('dotenv');
 
 const dbConnect = require("./config/dbConnect");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
+
 dotenv.config();
 console.log('MONGODB_URL:', process.env.MONGODB_URL); 
 console.log('NODE_ENV:', process.env.NODE_ENV);
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-dbConnect();
+dbConnect(); // 🔹 This now also drops the bad index automatically
+
 app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.json());
@@ -34,8 +37,9 @@ app.use("/api/enquiry", require("./routes/enqRoute"));
 app.use("/api/upload", require("./routes/uploadRoute"));
 app.use("/api/page", require("./routes/pageSettings"));
 
- const frontendPath = path.join(__dirname, '../frontend/dist/app-name/browser');
- app.use(express.static(frontendPath));
+// Serve frontend
+const frontendPath = path.join(__dirname, '../frontend/dist/app-name/browser');
+app.use(express.static(frontendPath));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
@@ -45,5 +49,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running at PORT ${PORT}`);
+  console.log(`🚀 Server is running at PORT ${PORT}`);
 });

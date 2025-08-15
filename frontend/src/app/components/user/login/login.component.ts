@@ -1,65 +1,35 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 declare const google: any;
-
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
   currentYear: number = new Date().getFullYear();
   private clientId =
     '481407361526-l2pphh32lheqffn9b867ets80mdre1o8.apps.googleusercontent.com';
-  private resizeListener!: () => void;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private _toast: NgToastService,
-    private ngZone: NgZone,
-      private route: ActivatedRoute,
+    private _toast: NgToastService
   ) {
-    
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
-  }
-
-ngOnInit(): void {
-  const reloaded = this.route.snapshot.queryParamMap.get('reload');
-  
-  if (!reloaded) {
-    this.router.navigate([], {
-      queryParams: { reload: '1' },
-      queryParamsHandling: 'merge'
-    }).then(() => {
-      location.reload();
-    });
-    return;
-  }
-
-  this.initGoogleLogin();
-  this.resizeListener = () => this.renderGoogleBtn();
-  window.addEventListener('resize', this.resizeListener);
-}
-
-  ngOnDestroy(): void {
-    if (this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
-    }
   }
 
   onSubmit(): void {
@@ -69,77 +39,22 @@ ngOnInit(): void {
 
     const loginData = {
       ...this.loginForm.value,
-      authProvider: 'form'
+      authProvider: 'form',
     };
 
     this.authService.login(loginData).subscribe({
       next: (res) => this.handleLoginSuccess(res),
-      error: () => this.handleLoginError()
+      error: () => this.handleLoginError(),
     });
-  }
-
-   initGoogleLogin(): void {
-  google.accounts.id.initialize({
-    client_id: this.clientId,
-    callback: (response: any) => this.handleGoogleLogin(response),
-    auto_select: false,   // ❌ Don't auto-select existing account
-    prompt_parent_id: "googleBtn", // Optional: restrict prompt to a container
-    cancel_on_tap_outside: true,   // Optional: closes if user clicks outside
-    ux_mode: "popup"      // Avoid full-page redirect
-  });
-
-
-    this.renderGoogleBtn();
-  }
-
-  private renderGoogleBtn(): void {
-    const btnContainer = document.getElementById('googleLoginBtn');
-    if (!btnContainer) return;
-
-    btnContainer.innerHTML = ''; // Clear previous button
-    const width = btnContainer.offsetWidth;
-
-    google.accounts.id.renderButton(btnContainer, {
-      theme: 'outline',
-      size: 'large',
-      text: 'signin_with',
-      width: width
-    });
-  }
-
-  private handleGoogleLogin(response: any): void {
-    const payload = this.decodeJwtResponse(response.credential);
-
-    const googleData = {
-      identifier: payload.email,
-      firstname: payload.given_name || '',
-      lastname: payload.family_name || '',
-      authProvider: 'google'
-    };
-
-    this.spinner.show();
-
-    this.authService.login(googleData).subscribe({
-      next: (res) => this.handleLoginSuccess(res),
-      error: () => this.handleLoginError()
-    });
-  }
-
-  private decodeJwtResponse(token: string) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-    return JSON.parse(jsonPayload);
   }
 
   private handleLoginSuccess(res: any) {
     setTimeout(() => this.spinner.hide(), 1000);
-    this._toast.success({ detail: 'SUCCESS', summary: 'Login successful!', position: 'br' });
+    this._toast.success({
+      detail: 'SUCCESS',
+      summary: 'Login successful!',
+      position: 'br',
+    });
     localStorage.setItem('token', res.token);
     localStorage.setItem('customer', JSON.stringify(res));
     this.router.navigate(['/']);
@@ -147,7 +62,60 @@ ngOnInit(): void {
 
   private handleLoginError() {
     setTimeout(() => this.spinner.hide(), 1000);
-    this._toast.error({ detail: 'FAILED', summary: 'Invalid credentials', position: 'br' });
+    this._toast.error({
+      detail: 'FAILED',
+      summary: 'Invalid credentials',
+      position: 'br',
+    });
     this.errorMessage = 'Invalid credentials';
+  }
+
+  signInWithGoogle(): void {
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: this.clientId,
+      scope: 'email profile openid',
+      ux_mode: 'popup',
+      callback: (tokenResponse: any) => {
+        if (!tokenResponse.access_token) {
+          this._toast.error({
+            detail: 'FAILED',
+            summary: 'Google authentication failed. Please try again.',
+            position: 'br',
+          });
+          return;
+        }
+
+        // Fetch Google profile
+        fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.access_token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((userInfo) => {
+            const googleData = {
+              identifier: userInfo.email,
+              firstname: userInfo.given_name || '',
+              lastname: userInfo.family_name || '',
+              authProvider: 'google',
+            };
+
+            this.spinner.show();
+            this.authService.login(googleData).subscribe({
+              next: (res) => this.handleLoginSuccess(res),
+              error: () => this.handleLoginError(),
+            });
+          })
+          .catch(() => {
+            this._toast.error({
+              detail: 'FAILED',
+              summary: 'Failed to fetch Google profile.',
+              position: 'br',
+            });
+          });
+      },
+    });
+
+    client.requestAccessToken();
   }
 }

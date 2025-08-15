@@ -30,29 +30,51 @@ const client = twilio(accountSid, authToken);
 // Create a User ----------------------------------------------
 
 const createUser = asyncHandler(async (req, res) => {
-  const { email, mobile, authProvider } = req.body;
+  let { email, mobile, authProvider, password } = req.body;
 
-  if (authProvider === 'form' && !mobile) {
-    res.status(400);
-    throw new Error("Mobile number is required for form signup");
+  // Normalize
+  email = email?.trim().toLowerCase();
+  authProvider = authProvider || "form";
+  if (typeof mobile === "string") mobile = mobile.trim();
+  if (!mobile) mobile = undefined;
+
+  // Google signup: never store mobile if absent
+  if (authProvider !== "form") {
+    mobile = undefined;
   }
 
-  if (authProvider === 'form' && !req.body.password) {
-    res.status(400);
-    throw new Error("Password is required for form signup");
+  // Form validations
+  if (authProvider === "form") {
+    if (!mobile) {
+      return res.status(400).json({ status: "fail", message: "Mobile number is required for form signup" });
+    }
+    if (!password) {
+      return res.status(400).json({ status: "fail", message: "Password is required for form signup" });
+    }
+
+    // Uniqueness check for form signups
+    const existingMobileUser = await User.findOne({ mobile, authProvider: "form" });
+    if (existingMobileUser) {
+      return res.status(409).json({ status: "fail", message: "Mobile number already exists" });
+    }
   }
 
-  const findUser = await User.findOne({ email });
-if (findUser) {
-  return res.status(409).json({
-    status: "fail",
-    message: "User already exists"
+  // Email uniqueness
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(409).json({ status: "fail", message: "User already exists" });
+  }
+
+  const newUser = await User.create({
+    ...req.body,
+    email,
+    mobile,
+    authProvider,
   });
-}
 
-  const newUser = await User.create(req.body);
-  res.json(newUser);
+  res.status(201).json({ status: "success", data: { user: newUser } });
 });
+
 
 
 // Login a user

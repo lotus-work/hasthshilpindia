@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
@@ -11,21 +11,19 @@ declare const google: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent {
   registerForm: FormGroup;
   isLoading = false;
   currentYear: number = new Date().getFullYear();
   private clientId =
     '481407361526-l2pphh32lheqffn9b867ets80mdre1o8.apps.googleusercontent.com';
 
-  private resizeListener!: () => void;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private _toast: NgToastService,
-    private ngZone: NgZone
   ) {
     this.registerForm = this.fb.group({
       firstname: ['', Validators.required],
@@ -36,19 +34,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.initGoogleSignUp();
-
-    // Re-render Google button on window resize
-    this.resizeListener = () => this.renderGoogleBtn();
-    window.addEventListener('resize', this.resizeListener);
-  }
-
-  ngOnDestroy(): void {
-    if (this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
-    }
-  }
 
   onSubmit(): void {
     if (this.registerForm.invalid) return;
@@ -123,88 +108,47 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-initGoogleSignUp(): void {
-  google.accounts.id.initialize({
+signUpWithGoogle(): void {
+  const client = google.accounts.oauth2.initTokenClient({
     client_id: this.clientId,
-    callback: (response: any) => this.handleGoogleResponse(response),
-    auto_select: false,   // ❌ Don't auto-select existing account
-    prompt_parent_id: "googleBtn", // Optional: restrict prompt to a container
-    cancel_on_tap_outside: true,   // Optional: closes if user clicks outside
-    ux_mode: "popup"      // Avoid full-page redirect
-  });
-
-  // ❌ Don't call google.accounts.id.prompt() — that shows the One Tap UI
-  this.renderGoogleBtn();
-}
-
-
-renderGoogleBtn(): void {
-  const btnContainer = document.getElementById('googleBtn');
-  if (!btnContainer) return;
-
-  // Clear previous Google button
-  btnContainer.innerHTML = '';
-
-  // Get the container width
-  const width = btnContainer.offsetWidth;
-  console.log('Google button container width:', width);
-
-  // Render Google button with container width
-  google.accounts.id.renderButton(btnContainer, {
-    theme: 'filled',      // Filled style to look like a real button
-    size: 'large',        // Better height match with "Create new account"
-    text: 'signup_with',  // Better wording for registration
-    width: width          // Use container width directly
-  });
-}
-  handleGoogleResponse(response: any): void {
-    const token = response.credential;
-    const payload = JSON.parse(atob(token.split('.')[1]));
-
-    const userData = {
-      firstname: payload.given_name,
-      lastname: payload.family_name,
-      email: payload.email,
-      authProvider: 'google',
-    };
-
-    this.spinner.show();
-    this.authService.register(userData).subscribe({
-      next: (res) => {
-        if (res.status === 'fail') {
-          this._toast.error({
-            detail: 'FAILED',
-            summary: res.message || 'Google Sign-up failed.',
-            position: 'br',
-          });
-          this.spinner.hide();
-          return;
-        }
-
-        this._toast.success({
-          detail: 'SUCCESS',
-          summary: 'Google Sign-up successful!',
-          position: 'br',
-        });
-        this.spinner.hide();
-        this.ngZone.run(() =>
-          setTimeout(() => (window.location.href = '/login'), 2000)
-        );
-      },
-      error: (err) => {
-        this.spinner.hide();
+    scope: 'email profile openid',
+    ux_mode: 'popup',
+    callback: (tokenResponse: any) => {
+      if (!tokenResponse.access_token) {
         this._toast.error({
           detail: 'FAILED',
-          summary:
-            err?.error?.message ||
-            'Google Sign-up failed. Please try again.',
+          summary: 'Google authentication failed. Please try again.',
           position: 'br',
         });
-      },
-    });
-  }
+        return;
+      }
 
-  
+      // Fetch user info directly from Google using the access token
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      })
+        .then(res => res.json())
+        .then(userInfo => {
+          const payload = {
+            firstname: userInfo.given_name,
+            lastname: userInfo.family_name,
+            email: userInfo.email,
+            authProvider: 'google',
+          };
+          this.registerUser(payload);
+        })
+        .catch(err => {
+          this._toast.error({
+            detail: 'FAILED',
+            summary: 'Failed to fetch Google profile.',
+            position: 'br',
+          });
+        });
+    },
+  });
+
+  client.requestAccessToken();
+}  
 }
 
 
