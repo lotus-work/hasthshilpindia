@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const userSchema = new mongoose.Schema(
   {
     firstname: { type: String, required: true },
-    lastname:  { type: String, required: true },
+    lastname:  { type: String},
     email:     { type: String, required: true, unique: true },
 
     // ⬇️ no unique index here; allow undefined (not null) when absent
