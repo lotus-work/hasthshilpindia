@@ -204,7 +204,6 @@
                       id="city"
                       class="form-control"
                       formControlName="city"
-                      [(ngModel)]="userData.address.city"
                     />
                   </div>
                 </div>
@@ -212,16 +211,13 @@
                 <div class="col-lg-4 col-md-6 col-12">
                   <div class="mb-3">
                     <label for="state" class="form-label">State</label>
-                    <select class="form-select">
-                      <option value="" disabled>Select State</option>
-                      <option
-                        *ngFor="let state of states"
-                        [value]="state"
-                        [selected]="state === userData.address.state"
-                      >
-                        {{ state }}
-                      </option>
-                    </select>
+                   <select class="form-select" formControlName="state">
+  <option value="" disabled>Select State</option>
+  <option *ngFor="let state of states" [value]="state">
+    {{ state }}
+  </option>
+</select>
+
                   </div>
                 </div>
 
@@ -233,7 +229,6 @@
                       id="zipcode"
                       class="form-control"
                       formControlName="zipcode"
-                      [(ngModel)]="userData.address.zipcode"
                     />
                   </div>
                 </div>
@@ -248,7 +243,6 @@
                       id="address"
                       class="form-control"
                       formControlName="address"
-                      [(ngModel)]="userData.address.street"
                     />
                   </div>
                 </div>
@@ -262,7 +256,6 @@
                       id="address2"
                       class="form-control"
                       formControlName="address2"
-                      [(ngModel)]="userData.address.apartment"
                     />
                   </div>
                 </div>

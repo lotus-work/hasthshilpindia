@@ -81,14 +81,20 @@ checkoutButtonDisabled: boolean = false;
 
   async ngOnInit(): Promise<void> {
     const storedUser = localStorage.getItem('customer');
-    if (storedUser) {
-      this.userData = JSON.parse(storedUser);
-      this.checkoutForm.patchValue({
-        firstName: this.userData.firstname,
-        lastName: this.userData.lastname,
-        phone: this.userData.mobile,
-      });
-    }
+   if (storedUser) {
+  this.userData = JSON.parse(storedUser);
+  this.checkoutForm.patchValue({
+    firstName: this.userData.firstname || '',
+    lastName: this.userData.lastname || '',
+    phone: this.userData.mobile || '',
+    city: this.userData.address?.city || '',
+    state: this.userData.address?.state || '',
+    zipcode: this.userData.address?.zipcode || '',
+    address: this.userData.address?.street || '',
+    address2: this.userData.address?.apartment || ''
+  });
+}
+
     console.log(this.userData);
     this.token = this.userData.token;
     handleSessionExpiration(this.token, this.router);
