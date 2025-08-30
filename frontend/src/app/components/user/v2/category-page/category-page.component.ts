@@ -209,6 +209,7 @@ export class CategoryPageComponent implements OnInit {
     console.log(this.userCart);
     this.userCartProducts = this.userCart.length;
     console.log(this.currentCategory);
+    console.log("userCartProducts" + this.userCartProducts);
   }
 
   loadCategories(): void {
