@@ -54,7 +54,7 @@
 </section> -->
 
 <section>
-  <div *ngIf="groupedProducts.length > 1; else noCategory">
+  <div *ngIf="groupedProducts?.length; else noCategory">
     <div
       class="container-fluid products py-5"
       [ngStyle]="{

@@ -23,7 +23,7 @@ export class CategoryPageComponent implements OnInit {
   selectedSortOption: string = '';
   priceFrom: number | null = null;
   priceTo: number | null = null;
-  groupedProducts: any;
+groupedProducts: any[] = [];
   token: any;
   tagFilters = {
     special: false,
